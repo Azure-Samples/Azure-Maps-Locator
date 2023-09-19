@@ -1,4 +1,4 @@
-# Project Name
+# Azure Maps Locator
 
 (short, 1-3 sentenced, description of the project)
 
