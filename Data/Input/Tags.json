@@ -1,0 +1,210 @@
+[
+  {
+    "id": "cuisine",
+    "title": "Cuisine",
+    "tags": [
+      {
+        "id": "american",
+        "title": "American"
+      },
+      {
+        "id": "asian",
+        "title": "Asian"
+      },
+      {
+        "id": "barbecue",
+        "title": "Barbecue"
+      },
+      {
+        "id": "breakfast",
+        "title": "Breakfast"
+      },
+      {
+        "id": "burgers",
+        "title": "Burgers"
+      },
+      {
+        "id": "cafe",
+        "title": "Cafe"
+      },
+      {
+        "id": "chinese",
+        "title": "Chinese"
+      },
+      {
+        "id": "deli",
+        "title": "Deli"
+      },
+      {
+        "id": "dessert",
+        "title": "Dessert"
+      },
+      {
+        "id": "diner",
+        "title": "Diner"
+      },
+      {
+        "id": "fastfood",
+        "title": "Fast Food"
+      },
+      {
+        "id": "french",
+        "title": "French"
+      },
+      {
+        "id": "greek",
+        "title": "Greek"
+      },
+      {
+        "id": "indian",
+        "title": "Indian"
+      },
+      {
+        "id": "italian",
+        "title": "Italian"
+      },
+      {
+        "id": "japanese",
+        "title": "Japanese"
+      },
+      {
+        "id": "korean",
+        "title": "Korean"
+      },
+      {
+        "id": "mexican",
+        "title": "Mexican"
+      },
+      {
+        "id": "pizza",
+        "title": "Pizza"
+      },
+      {
+        "id": "seafood",
+        "title": "Seafood"
+      },
+      {
+        "id": "steakhouse",
+        "title": "Steakhouse"
+      },
+      {
+        "id": "sushi",
+        "title": "Sushi"
+      },
+      {
+        "id": "thai",
+        "title": "Thai"
+      },
+      {
+        "id": "vegetarian",
+        "title": "Vegetarian"
+      }
+    ]
+  },
+  {
+    "id": "services",
+    "title": "Services",
+    "tags": [
+      {
+        "id": "airconditioning",
+        "title": "Air conditioning"
+      },
+{
+        "id": "alcohol",
+        "title": "Alcohol"
+      },
+      {
+        "id": "bar",
+        "title": "Bar"
+      },
+      {
+        "id": "breakfast",
+        "title": "Breakfast"
+      },
+      {
+        "id": "brunch",
+        "title": "Brunch"
+      },
+      {
+        "id": "carpark",
+        "title": "Car park"
+      },
+      {
+        "id": "cashonly",
+        "title": "Cash only"
+      },
+      {
+        "id": "counterdining",
+        "title": "Counter dining"
+      },
+      {
+        "id": "creditcard",
+        "title": "Credit card / Debit card accepted"
+      },
+      {
+        "id": "creditcardnotaccepted",
+        "title": "Credit cards not accepted"
+      },
+      {
+        "id": "dinersclub",
+        "title": "Diners Club credit card"
+      },
+      {
+        "id": "disabledaccess",
+        "title": "Disabled access"
+      },
+      {
+        "id": "familyfriendly",
+        "title": "Family friendly"
+      },
+      {
+        "id": "freeinternet",
+        "title": "Free internet"
+      },
+      {
+        "id": "freeview",
+        "title": "Freeview"
+      },
+      {
+        "id": "garden",
+        "title": "Garden"
+      },
+      {
+        "id": "glutenfree",
+        "title": "Gluten free"
+      },
+      {
+        "id": "halal",
+        "title": "Halal"
+      },
+      {
+        "id": "kidsmenu",
+        "title": "Kids menu"
+      },
+      {
+        "id": "licensed",
+        "title": "Licensed"
+      },
+      {
+        "id": "liveentertainment",
+        "title": "Live entertainment"
+      },
+      {
+        "id": "livefootball",
+        "title": "Live football"
+      },
+      {
+        "id": "livejazz",
+        "title": "Live jazz"
+      },
+      {
+        "id": "livepiano",
+        "title": "Live piano"
+      },
+      {
+        "id": "livepool",
+        "title": "Live pool"
+      }
+    ]
+  }
+]

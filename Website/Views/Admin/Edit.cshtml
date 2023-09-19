@@ -1,0 +1,291 @@
+﻿@using System.Globalization;
+@model Store
+@{
+    ViewData["Title"] = "Edit " + Model.Name;
+}
+
+<h1>@Model.Name</h1>
+<p>Make any changes to this store.</p>
+
+<div id="alertPlaceholder"></div>
+
+<div class="row">
+    <div class="col-6">
+
+        <!-- General -->
+        <div class="card mb-4 rounded-3 shadow-sm">
+            <div class="card-header py-3">
+                <h4 class="my-0 fw-normal">General</h4>
+            </div>
+            <div class="card-body">
+                <form class="row g-3">
+
+                    <div class="col-md-6">
+                        <label asp-for="Name" class="form-label">Name *</label>
+                        <input asp-for="Name" type="text" class="form-control">
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Id" class="form-label">Store ID *</label>
+                        <input asp-for="Id" type="text" class="form-control">
+                        <span asp-validation-for="Id" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Address" class="form-label">Address *</label>
+                        <input asp-for="Address" type="text" class="form-control">
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="City" class="form-label">City *</label>
+                        <input asp-for="City" type="text" class="form-control">
+                        <span asp-validation-for="City" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="PostalCode" class="form-label">Postalcode</label>
+                        <input asp-for="PostalCode" type="text" class="form-control">
+                        <span asp-validation-for="PostalCode" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Country" class="form-label">Country *</label>
+                        <select asp-for="Country" class="form-select">
+                            <option selected>Choose...</option>
+                        </select>
+                        <span asp-validation-for="Country" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12">
+                        <label asp-for="WebUrl" class="form-label">Website</label>
+                        <input asp-for="WebUrl" type="url" class="form-control">
+                        <span asp-validation-for="WebUrl" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Email" class="form-label">Email address</label>
+                        <input asp-for="Email" type="email" class="form-control">
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Phone" class="form-label">Phone number</label>
+                        <input asp-for="Phone" type="tel" class="form-control">
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12">
+                        <label asp-for="Note" class="form-label">Notes</label>
+                        <textarea asp-for="Note" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="Note" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-6">
+
+        <!-- Location -->
+        <div class="card mb-4 rounded-3 shadow-sm">
+            <div class="card-header py-3">
+                <h4 class="my-0 fw-normal">Location</h4>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-12">
+                        <!-- Azure Maps Control -->
+                        <div id="locator-map" role="application" class="w-100 h-100 p-5 bg-body-tertiary border rounded-3 py-3" style="min-height: 300px;"></div>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Geocode from address</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Opening hours -->
+        <div class="list-group mb-4 rounded-3 shadow-sm">
+            <label class="list-group-item d-flex gap-3">
+                <input class="form-check-input flex-shrink-0" type="checkbox" value="" style="font-size: 1.375em;" checked>
+                <span class="pt-1 form-checked-content">
+                    <strong>Monday</strong>
+                    <small class="d-block text-body-secondary">
+                        <i class="bi bi-clock"></i> 1:00 – 2:00pm
+                    </small>
+                </span>
+            </label>
+            <label class="list-group-item d-flex gap-3">
+                <input class="form-check-input flex-shrink-0" type="checkbox" value="" style="font-size: 1.375em;">
+                <span class="pt-1 form-checked-content">
+                    <strong>Tuesday</strong>
+                    <small class="d-block text-body-secondary">
+                        <i class="bi bi-clock"></i> 1:00 – 2:00pm
+                    </small>
+                </span>
+            </label>
+            <label class="list-group-item d-flex gap-3">
+                <input class="form-check-input flex-shrink-0" type="checkbox" value="" style="font-size: 1.375em;">
+                <span class="pt-1 form-checked-content">
+                    <strong>Wednesday</strong>
+                    <small class="d-block text-body-secondary">
+                        <i class="bi bi-clock"></i> 1:00 – 2:00pm
+                    </small>
+                </span>
+            </label>
+            <label class="list-group-item d-flex gap-3">
+                <input class="form-check-input flex-shrink-0" type="checkbox" value="" style="font-size: 1.375em;">
+                <span class="pt-1 form-checked-content">
+                    <strong>Thursday</strong>
+                    <small class="d-block text-body-secondary">
+                        <i class="bi bi-clock"></i> 1:00 – 2:00pm
+                    </small>
+                </span>
+            </label>
+            <label class="list-group-item d-flex gap-3">
+                <input class="form-check-input flex-shrink-0" type="checkbox" value="" style="font-size: 1.375em;">
+                <span class="pt-1 form-checked-content">
+                    <strong>Friday</strong>
+                    <small class="d-block text-body-secondary">
+                        <i class="bi bi-clock"></i> 1:00 – 2:00pm
+                    </small>
+                </span>
+            </label>
+            <label class="list-group-item d-flex gap-3">
+                <input class="form-check-input flex-shrink-0" type="checkbox" value="" style="font-size: 1.375em;">
+                <span class="pt-1 form-checked-content">
+                    <strong>Saturday</strong>
+                    <small class="d-block text-body-secondary">
+                        <i class="bi bi-clock"></i> 1:00 – 2:00pm
+                    </small>
+                </span>
+            </label>
+            <label class="list-group-item d-flex gap-3">
+                <input class="form-check-input flex-shrink-0" type="checkbox" value="" style="font-size: 1.375em;">
+                <span class="pt-1 form-checked-content">
+                    <strong>Sunday</strong>
+                    <small class="d-block text-body-secondary">
+                        <i class="bi bi-clock"></i> 1:00 – 2:00pm
+                    </small>
+                </span>
+            </label>
+        </div>
+
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+
+        <!-- Properties -->
+        <div class="card mb-4 rounded-3 shadow-sm">
+            <div class="card-header py-3">
+                <h4 class="my-0 fw-normal">Properties</h4>
+            </div>
+            <div class="card-body">
+                TODO: Properties
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section stylesheets {
+    <!-- Azure Maps Map Control stylesheet -->
+    <link rel="stylesheet" href="https://atlas.microsoft.com/sdk/javascript/mapcontrol/3/atlas.min.css" crossorigin="anonymous">
+}
+
+@section scripts {
+    <!-- Azure Maps Map Control script -->
+    <script src="https://atlas.microsoft.com/sdk/javascript/mapcontrol/3/atlas.min.js" crossorigin="anonymous"></script>
+
+    @{
+        await Html.RenderPartialAsync("_AdminScripts");
+
+        var longitude = Convert.ToString(Model.Location.Coordinates[0], CultureInfo.InvariantCulture);
+        var latitude = Convert.ToString(Model.Location.Coordinates[1], CultureInfo.InvariantCulture);
+    }
+
+    <script>
+        $(document).ready(async function () {
+            const alertPlaceholder = $('#alertPlaceholder');
+
+            function appendAlert(message, type) {
+                const alert = `<div class="alert alert-${type} alert-dismissible" role="alert">${message}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
+                alertPlaceholder.append(alert);
+            }
+
+            const countries = await $.getJSON('/data/countries.json')
+                .fail(function () {
+                    appendAlert('Failed to load countries.', 'danger');
+                });
+
+            countries.forEach((country) => {
+                const countrySelect = $('#Country');
+                const option = document.createElement('option');
+                option.value = country.code;
+                option.text = country.name;
+
+                if (country.name === '@Model.Country') {
+                    option.selected = true;
+                }
+
+                countrySelect.append(option);
+            });
+
+        });
+
+        // Initialize an Azure Maps instance
+        var map = new atlas.Map('locator-map', {
+            zoom: 16,
+            center: [@longitude, @latitude],
+            style: 'grayscale_light',
+            view: 'Auto',
+
+            // Add authentication details for connecting to Azure Maps
+            authOptions: {
+                // Use Azure Active Directory authentication in production
+                authType: 'anonymous',
+                // Your Azure Maps client id for accessing your Azure Maps account
+                clientId: 'e6b6ab59-eb5d-4d25-aa57-581135b927f0',
+                getToken: function (resolve, reject, map) {
+                    // URL to your authentication service that retrieves an Azure Active Directory Token
+                    fetch('https://samples.azuremaps.com/api/GetAzureMapsToken')
+                        .then(function (response) {
+                            return response.text();
+                        })
+                        .then(function (token) {
+                            resolve(token);
+                        })
+                        .catch(function (error) {
+                            reject(new Error(`Failed to fetch Azure Maps token: ${error.message}`));
+                        });
+                }
+            }
+        });
+
+        // Wait until the map resources are ready.
+        map.events.add('ready', () => {
+            // Add controls to the map.
+            map.controls.add([
+                new atlas.control.ZoomControl(),
+                new atlas.control.StyleControl({
+                    mapStyles: ['road', 'satellite', 'satellite_road_labels', 'night', 'grayscale_light', 'grayscale_dark', 'road_shaded_relief', 'high_contrast_light', 'high_contrast_dark']
+                }),
+                new atlas.control.TrafficControl()
+            ], {
+                position: 'top-right'
+            });
+
+            // Add a marker to the map.
+            map.markers.add(new atlas.HtmlMarker({
+                color: 'Red',
+                position: [@longitude, @latitude]
+            }));
+        });
+    </script>
+    }

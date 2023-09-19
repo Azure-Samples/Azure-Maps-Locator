@@ -1,0 +1,311 @@
+﻿@{
+    ViewData["Title"] = "Store Finder";
+}
+
+<h1>Find a store nearby</h1>
+<p>Quickly and easily find a store nearby using our store locator.</p>
+
+<div class="row g-3">
+    <div class="col-md-4">
+
+        <!-- Search for a location -->
+        <div class="input-group">
+            <input id="locator-search" type="search" autocomplete="off" class="form-control shadow-none" placeholder="Search for a store, place or address" aria-label="Search">
+            <button class="btn btn-outline-secondary" type="button" id="btn-start-speech" onclick="handleStartSpeechButtonClick()" aria-label="Speech recognition">
+                <i class="bi bi-mic"></i>
+            </button>
+            <button type="button" class="btn btn-outline-secondary" data-bs-toggle="offcanvas" data-bs-target="#filters" aria-controls="filters" aria-label="Filters">
+                <i class="bi bi-sliders"></i>
+            </button>
+        </div>
+
+        <!-- Autocomplete dropdown -->
+        <ul id="locator-autocomplete" class="dropdown-menu">
+            <template id="template-autocomplete-locateMe">
+                <li>
+                    <a href="#" class="dropdown-item d-flex gap-3" onclick="locator.locateMe()">
+
+                        <h6 class="mb-0"><i class="bi bi-geo-alt"></i> Use my current location</h6>
+                    </a>
+                </li>
+            </template>
+            <template id="template-autocomplete-locations">
+                <li>
+                    <a href="#" class="dropdown-item d-flex gap-3 py-3" onclick="locator.searchClicked('{id}')">
+                        <div class="d-flex gap-2 w-100 justify-content-between">
+                            <div>
+                                <h6 class="mb-0">{name}</h6>
+                                <p class="mb-0 opacity-75">{description}</p>
+                            </div>
+                        </div>
+                        <i class="bi {icon} opacity-50"></i>
+                    </a>
+                </li>
+            </template>
+            <template id="template-autocomplete-stores">
+                <li>
+                    <a href="/stores/details/{id}" class="dropdown-item d-flex gap-3 py-3">
+                        <div class="d-flex gap-2 w-100 justify-content-between">
+                            <div>
+                                <h6 class="mb-0">{name}</h6>
+                                <p class="mb-0 opacity-75">{address}, {city}</p>
+                            </div>
+                        </div>
+                        <i class="bi bi-shop opacity-50"></i>
+                    </a>
+                </li>
+            </template>
+        </ul>
+
+        <!-- Filter stores by tags -->
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="filters" aria-labelledby="filter-label">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="filter-label">Search Filters</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body p-0">
+
+                <div class="d-flex flex-align-start flex-column h-100">
+                    <div class="h-100 mb-auto overflow-y-auto p-3">
+                        <div>
+                            Please select one or more features you would like to use as filters.
+                        </div>
+
+                        <ul id="locator-filters" class="list-unstyled ps-0">
+
+                            <li class="border-top my-3"></li>
+
+                            <template id="template-filters-category">
+                                <li class="mb-1">
+                                    <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#filter-{id}" aria-expanded="{expanded}">
+                                        {title}
+                                    </button>
+                                    <div class="collapse {show}" id="filter-{id}">
+                                        <div class="list-group list-group-flush">
+                                            {tags}
+                                        </div>
+                                    </div>
+                                </li>
+                            </template>
+
+                            <template id="template-filters-tag">
+                                <label class="list-group-item d-flex gap-2">
+                                    <input class="form-check-input flex-shrink-0" type="checkbox" value="">
+                                    <span>{title}</span>
+                                </label>
+                            </template>
+
+                        </ul>
+                    </div>
+
+                    <div class="d-flex flex-align-end bg-light">
+                        <div class="d-flex justify-content-between p-3 w-100">
+                            <button type="button" class="btn btn-outline-danger">Reset</button>
+                            <button type="button" class="btn btn-primary">Search</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Nearby store results -->
+        <div id="locator-results" class="list-group mt-3">
+            <template id="template-results">
+                <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" onclick="locator.storeClicked('{id}')">
+                    <i class="bi bi-{orderNumber}-circle-fill" style="font-size: 2rem; color: red;"></i>
+                    <div class="d-flex gap-2 w-100 justify-content-between">
+                        <div>
+                            <h6 class="mb-0">{name}</h6>
+                            <p class="mb-0 opacity-75">{address}, {city}</p>
+                        </div>
+                        <small class="opacity-50 text-nowrap">{distanceInKm} km</small>
+                    </div>
+                </a>
+            </template>
+        </div>
+
+    </div>
+
+    <div class="col-md-8">
+
+        <!-- Azure Maps Control -->
+        <div id="locator-map" role="application" class="w-100 h-100 bg-light border rounded" style="min-height: 600px;">
+            <template id="template-storepopup">
+                <div class="col">
+                    <div class="card shadow-sm" style="width: 18rem;">
+                        <img class="card-img-top" src="{imageUrl}" alt="{title}">
+                        <div class="card-body">
+                            <h5 class="card-title text-wrap">{name}</h5>
+                            <p class="card-text text-wrap">{address}, {city}, {country}</p>
+                            <p class="card-text">{distanceInKm} km</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a href="/stores/details/{id}" class="btn btn-sm btn-primary" role="button">
+                                        <small>Details</small>
+                                    </a>
+                                </div>
+                                <div class="btn-group">
+                                    <a target="_blank" href="{directionsUrl}" class="btn btn-sm btn-secondary" role="button">
+                                        <small>Directions</small>
+                                    </a>
+                                </div>
+                                <div class="btn-group">
+                                    <a target="_blank" href="{webUrl}" class="btn btn-sm btn-secondary" role="button">
+                                        <small>Website</small>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+
+    </div>
+</div>
+
+@section stylesheets {
+    <!-- Azure Maps Map Control stylesheet -->
+    <link rel="stylesheet" href="https://atlas.microsoft.com/sdk/javascript/mapcontrol/3/atlas.min.css" crossorigin="anonymous">
+
+    <!-- Custom style for the filters -->
+    <link rel="stylesheet" href="/styles/btn-toggle.css">
+}
+
+@section scripts {
+    <!-- Azure Maps Map Control script -->
+    <script src="https://atlas.microsoft.com/sdk/javascript/mapcontrol/3/atlas.min.js" crossorigin="anonymous"></script>
+
+    <!-- Add the Azure Maps Store Locator script to the page. -->
+    <!-- https://github.com/Azure-Samples/Azure-Maps-Store-Locator -->
+    <script asp-append-version="true" src="/js/storelocator.js"></script>
+
+    <script>
+
+        // Azure Maps Store Locator instance.
+        var locator;
+
+        // Initialize an Azure Maps instance
+        var map = new atlas.Map('locator-map', {
+            zoom: 6,
+            center: [5.534, 52.146],
+            style: 'grayscale_light',
+            view: 'Auto',
+
+            // Add authentication details for connecting to Azure Maps
+            authOptions: {
+                // Use Azure Active Directory authentication in production
+                authType: 'anonymous',
+                // Your Azure Maps client id for accessing your Azure Maps account
+                clientId: 'e6b6ab59-eb5d-4d25-aa57-581135b927f0',
+                getToken: function (resolve, reject, map) {
+                    // URL to your authentication service that retrieves an Azure Active Directory Token
+                    fetch('https://samples.azuremaps.com/api/GetAzureMapsToken')
+                        .then(function (response) {
+                            return response.text();
+                        })
+                        .then(function (token) {
+                            resolve(token);
+                        })
+                        .catch(function (error) {
+                            reject(new Error(`Failed to fetch Azure Maps token: ${error.message}`));
+                        });
+                }
+            }
+        });
+
+        // Wait until the map resources are ready.
+        map.events.add('ready', () => {
+            // Add controls to the map.
+            map.controls.add([
+                new atlas.control.ZoomControl(),
+                new atlas.control.StyleControl({
+                    mapStyles: ['road', 'satellite', 'satellite_road_labels', 'night', 'grayscale_light', 'grayscale_dark', 'road_shaded_relief', 'high_contrast_light', 'high_contrast_dark']
+                }),
+                new atlas.control.TrafficControl()
+            ], {
+                position: 'top-right'
+            });
+
+            // Create a store locator instance
+            locator = new storelocator(map, {
+                countrySet: ['NL'], // An array of country region ISO2 values to limit searches to
+                language: 'nl-NL'   // Language in which search results should be returned.
+            });
+
+            // Show all stores in the Netherlands.
+            locator.showStoresByCountry('Netherlands');
+        });
+
+    </script>
+
+    <script>
+        var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+        var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
+        var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
+
+        const startSpeechButton = document.querySelector('button#btn-start-speech');
+
+        function toggleSpeechButtonState(isListening = false) {
+            if (isListening) {
+                startSpeechButton.disabled = true;
+                startSpeechButton.className = 'btn btn-success';
+               
+                //startSpeechButton.textContent = 'Listening..';
+            } else {
+                startSpeechButton.disabled = false;
+                startSpeechButton.className = 'btn btn-outline-secondary';
+
+                //startSpeechButton.textContent = 'Speech-to-text (via Web Speech API)';
+            }
+        }
+
+        function handleStartSpeechButtonClick() {
+            toggleSpeechButtonState(true);
+
+            startSpeechToText()
+                .then((results) => {
+                    toggleSpeechButtonState(false);
+
+                    const speechResult = results[0][0].transcript.toLowerCase();
+                    console.log('Speech Result:', speechResult);
+
+                    const searchInput = document.querySelector('input#locator-search');
+                    searchInput.value = removePunctuation(speechResult);
+
+                    // FIXME: This is a hack to trigger the search.
+                    // We should refactor the locator's search trigger to better support accessibility.
+                    locator.fuzzySearch(searchInput.value);
+                })
+                .catch((error) => {
+                    toggleSpeechButtonState(false);
+                    console.error(error);
+                });
+        }
+
+        function startSpeechToText() {
+            return new Promise((resolve, reject) => {
+                recognition = new SpeechRecognition();
+                recognition.lang = 'nl-NL';
+                recognition.continuous = false;
+                recognition.interimResults = false;
+                recognition.maxAlternatives = 1;
+
+                recognition.start();
+
+                recognition.onresult = (event) => resolve(event.results);
+                recognition.onspeechend = () => recognition.stop();
+                recognition.onerror = (event) => reject(event.error);
+            });
+        }
+
+        function removePunctuation(str) {
+            return str
+                // Chinese punctuation
+                .replace(/[，。？！、；：]/g, '')
+                // English punctuation
+                .replace(/[\.\,]/g, '');
+        }
+    </script>
+}

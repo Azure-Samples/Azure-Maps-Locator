@@ -1,0 +1,114 @@
+﻿@using System.Globalization;
+@model Store
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+    <div class="col-10 col-sm-8 col-lg-6">
+        <img src="@Model.ImageUrl" class="d-block mx-lg-auto img-fluid" alt="@Model.Name" width="700" height="500" loading="lazy">
+    </div>
+    <div class="col-lg-6">
+        <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">@Model.Name</h1>
+        <p class="lead">@Model.Address, @Model.City, @Model.Country</p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+            <button type="button" class="btn btn-primary btn-lg px-4 me-md-2">Directions</button>
+            <button type="button" class="btn btn-outline-secondary btn-lg px-4">Website</button>
+        </div>
+    </div>
+</div>
+
+<div class="row align-items-md-stretch">
+    <div class="col-md-6">
+
+        <!-- Opening Hours -->
+        <div class="list-group mb-4 rounded-3 shadow-sm">
+            @{
+                foreach (var day in Model.OpeningHours)
+                {
+                    <label class="list-group-item d-flex gap-3">
+                        <span class="pt-1 form-checked-content">
+                            <strong>@day.DayOfWeek</strong>
+                            <small class="d-block text-body-secondary">
+                                <i class="bi bi-clock"></i> @day.Open – @day.Close
+                            </small>
+                        </span>
+                    </label>
+                }
+            }
+        </div>
+
+    </div>
+    <div class="col-md-6">
+        <!-- Azure Maps Control -->
+        <div id="locator-map" role="application" class="w-100 h-100 p-5 bg-body-tertiary border rounded-3" style="min-height: 300px;"></div>
+    </div>
+</div>
+
+@section stylesheets {
+    <!-- Azure Maps Map Control stylesheet -->
+    <link rel="stylesheet" href="https://atlas.microsoft.com/sdk/javascript/mapcontrol/3/atlas.min.css" crossorigin="anonymous">
+}
+
+@section scripts {
+    <!-- Azure Maps Map Control script -->
+    <script src="https://atlas.microsoft.com/sdk/javascript/mapcontrol/3/atlas.min.js" crossorigin="anonymous"></script>
+
+    @{
+        var longitude = Convert.ToString(Model.Location.Coordinates[0], CultureInfo.InvariantCulture);
+        var latitude = Convert.ToString(Model.Location.Coordinates[1], CultureInfo.InvariantCulture);
+    }
+
+    <script>
+
+        // Initialize an Azure Maps instance
+        var map = new atlas.Map('locator-map', {
+            zoom: 16,
+            center: [@longitude, @latitude],
+            style: 'grayscale_light',
+            view: 'Auto',
+
+            // Add authentication details for connecting to Azure Maps
+            authOptions: {
+                // Use Azure Active Directory authentication in production
+                authType: 'anonymous',
+                // Your Azure Maps client id for accessing your Azure Maps account
+                clientId: 'e6b6ab59-eb5d-4d25-aa57-581135b927f0',
+                getToken: function (resolve, reject, map) {
+                    // URL to your authentication service that retrieves an Azure Active Directory Token
+                    fetch('https://samples.azuremaps.com/api/GetAzureMapsToken')
+                        .then(function (response) {
+                            return response.text();
+                        })
+                        .then(function (token) {
+                            resolve(token);
+                        })
+                        .catch(function (error) {
+                            reject(new Error(`Failed to fetch Azure Maps token: ${error.message}`));
+                        });
+                }
+            }
+        });
+
+        // Wait until the map resources are ready.
+        map.events.add('ready', () => {
+            // Add controls to the map.
+            map.controls.add([
+                new atlas.control.ZoomControl(),
+                new atlas.control.StyleControl({
+                    mapStyles: ['road', 'satellite', 'satellite_road_labels', 'night', 'grayscale_light', 'grayscale_dark', 'road_shaded_relief', 'high_contrast_light', 'high_contrast_dark']
+                }),
+                new atlas.control.TrafficControl()
+            ], {
+                position: 'top-right'
+            });
+
+            // Add a marker to the map.
+            map.markers.add(new atlas.HtmlMarker({
+                color: 'Red',
+                position: [@longitude, @latitude]
+            }));
+        });
+
+    </script>
+}

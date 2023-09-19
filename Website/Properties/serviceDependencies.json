@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "secrets1": {
+      "type": "secrets",
+      "connectionId": null
+    },
+    "identityapp1": {
+      "type": "identityapp",
+      "connectionId": null
+    }
+  }
+}
