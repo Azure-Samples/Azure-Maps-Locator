@@ -1,5 +1,7 @@
 # Azure Maps Store Locator
 
+**Note: This project is currently a work in progress and may undergo changes.**
+
 Welcome to the Azure Maps Store Locator project! Enhance your website with a powerful store locator that helps potential customers easily discover your nearest locations based on their preferences. Whether it's finding stores, restaurants, office locations, lockers, or any other place of interest, the Azure Maps Store Locator offers a user-friendly and versatile solution with a comprehensive store location management system.
 
 ![Azure Maps Store Locator](Images/Animation.gif)
