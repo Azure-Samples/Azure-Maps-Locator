@@ -65,7 +65,7 @@ Follow these steps to get started with the Azure Maps Store Locator project:
 }
 ```
 
-![secrets.json](Images/Secrets.png)
+![secrets.json](Images/secrets.png)
 
 3. Execute the `Demo Data Injector` project to load the initial data into the backend.
 
