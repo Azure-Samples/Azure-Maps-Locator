@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Locator.Helpers;
-using Locator.Models;
-using Locator.Services;
+using StoreLocator.Helpers;
+using StoreLocator.Models;
+using StoreLocator.Services;
 
-namespace Locator.Controllers
+namespace StoreLocator.Controllers
 {
     [Route("api/stores")]
     [ApiController]

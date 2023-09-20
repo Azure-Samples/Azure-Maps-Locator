@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Locator.Models;
+using StoreLocator.Models;
 using System.Diagnostics;
 
-namespace Locator.Controllers
+namespace StoreLocator.Controllers
 {
     [AllowAnonymous]
     public class HomeController : Controller

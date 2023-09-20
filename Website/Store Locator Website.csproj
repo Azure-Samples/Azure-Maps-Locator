@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>Locator</RootNamespace>
+    <RootNamespace>StoreLocator</RootNamespace>
     <UserSecretsId>cbf805ce-9989-43c5-879c-0a464fc516b0</UserSecretsId>
   </PropertyGroup>
   
@@ -17,7 +17,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\Models\Models.csproj" />
+    <ProjectReference Include="..\Models\Store Locator Models.csproj" />
   </ItemGroup>
 
 </Project>

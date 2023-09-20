@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
-    <RootNamespace>Locator.Injector</RootNamespace>
+    <RootNamespace>StoreLocator.DataInjector</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
     <UserSecretsId>567c6cd4-b31b-43bb-a2e9-884c67be5451</UserSecretsId>
@@ -29,7 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Models\Models.csproj" />
+    <ProjectReference Include="..\Models\Store Locator Models.csproj" />
   </ItemGroup>
 
 </Project>

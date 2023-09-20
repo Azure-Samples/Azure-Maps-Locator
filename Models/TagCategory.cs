@@ -1,4 +1,4 @@
-﻿namespace Locator.Models
+﻿namespace StoreLocator.Models
 {
     public class TagCategory
     {

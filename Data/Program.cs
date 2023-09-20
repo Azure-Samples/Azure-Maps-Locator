@@ -2,7 +2,7 @@
 using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Fluent;
 using Microsoft.Extensions.Configuration;
-using Locator.Models;
+using StoreLocator.Models;
 
 class Program
 {
@@ -11,7 +11,7 @@ class Program
 
     static async Task Main(string[] args)
     {
-        Console.WriteLine("Azure Maps Locator - Data Injector");
+        Console.WriteLine("Azure Maps Store Locator - Demo Data Injector");
 
         var configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)

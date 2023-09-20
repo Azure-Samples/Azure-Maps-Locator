@@ -64,4 +64,4 @@ az appservice plan create --resource-group $resourceGroup -n $webserverplan --lo
 az webapp create --resource-group $resourceGroup -p $webserverplan -n $webappname -r $Runtime
 
 # Done
-Write-Output "Done, your Azure Maps Locator infrastructure is ready."
+Write-Output "Done, your Azure Maps Store Locator infrastructure is ready."

@@ -3,7 +3,7 @@ using Azure.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Locator.Controllers
+namespace StoreLocator.Controllers
 {
     [Route("api/azuremaps")]
     [ApiController]

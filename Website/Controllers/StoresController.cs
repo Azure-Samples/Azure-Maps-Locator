@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Locator.Services;
+using StoreLocator.Services;
 
-namespace Locator.Controllers
+namespace StoreLocator.Controllers
 {
     [AllowAnonymous]
     public class StoresController : Controller

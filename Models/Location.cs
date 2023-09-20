@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Locator.Models
+namespace StoreLocator.Models
 {
     public class Location
     {

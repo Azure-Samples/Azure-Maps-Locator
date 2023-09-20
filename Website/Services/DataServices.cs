@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Fluent;
-using Locator.Helpers;
-using Locator.Models;
+using StoreLocator.Helpers;
+using StoreLocator.Models;
 using System.Net;
 
-namespace Locator.Services
+namespace StoreLocator.Services
 {
     public class DataServices
     {

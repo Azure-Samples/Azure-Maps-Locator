@@ -1,4 +1,4 @@
-﻿namespace Locator.Helpers
+﻿namespace StoreLocator.Helpers
 {
     public static class GeospatialHelper
     {

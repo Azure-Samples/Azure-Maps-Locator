@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Cosmos;
-using Locator.Models;
-using Locator.Services;
+using StoreLocator.Models;
+using StoreLocator.Services;
 
-namespace Locator.Controllers
+namespace StoreLocator.Controllers
 {
     [Authorize]
     public class AdminController : Controller
