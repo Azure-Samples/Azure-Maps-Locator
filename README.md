@@ -51,7 +51,7 @@ Follow these steps to get started with the Azure Maps Store Locator project:
 
 ### Azure Infrastructure
 
-1. **(Optional)** Run the PowerShell script `.\Infrastructure.ps1`. This script sets up the initial Azure services required for this project. Before running, review the [architecture diagram](Images/Architecture.png) to understand what will be created.
+1. **(Optional)** Run the PowerShell script `.\storelocator.ps1`. This script sets up the initial Azure services required for this project. Before running, review the [architecture diagram](Images/Architecture.png) to understand what will be created.
 
 ![architecture diagram](Images/Architecture.png)
 

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azure.Identity;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Fluent;
 using StoreLocator.Helpers;
@@ -21,7 +21,7 @@ namespace StoreLocator.Services
                 PropertyNamingPolicy = CosmosPropertyNamingPolicy.CamelCase,
             };
 
-            var cosmos = new CosmosClientBuilder(configuration.GetConnectionString("CosmosDB"))
+            var cosmos = new CosmosClientBuilder(configuration["Locator:DatabaseEndpoint"], new DefaultAzureCredential())
                 .WithSerializerOptions(serializerOptions)
                 .Build();
 

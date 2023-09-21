@@ -76,7 +76,7 @@
                 clientId: 'e6b6ab59-eb5d-4d25-aa57-581135b927f0',
                 getToken: function (resolve, reject, map) {
                     // URL to your authentication service that retrieves an Azure Active Directory Token
-                    fetch('https://samples.azuremaps.com/api/GetAzureMapsToken')
+                    fetch('/api/azuremaps/token')
                         .then(function (response) {
                             return response.text();
                         })

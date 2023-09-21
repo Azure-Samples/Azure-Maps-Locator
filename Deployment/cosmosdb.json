@@ -1,0 +1,12 @@
+{
+  "RoleName": "Read Azure Cosmos DB Metadata",
+  "Type": "CustomRole",
+  "AssignableScopes": [ "/" ],
+  "Permissions": [
+    {
+      "DataActions": [
+        "Microsoft.DocumentDB/databaseAccounts/readMetadata"
+      ]
+    }
+  ]
+}
