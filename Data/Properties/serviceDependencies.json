@@ -1,7 +1,8 @@
 {
   "dependencies": {
     "secrets1": {
-      "type": "secrets"
+      "type": "secrets",
+      "connectionId": null
     }
   }
 }

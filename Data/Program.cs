@@ -6,7 +6,7 @@ using StoreLocator.Models;
 
 class Program
 {
-    private static CosmosClient cosmosClient;
+    private static CosmosClient cosmos;
     private static Database database;
 
     static async Task Main(string[] args)
@@ -18,20 +18,19 @@ class Program
             .AddUserSecrets<Program>()
             .Build();
 
-        var databaseName = configuration["Locator:DatabaseName"];
-        var cosmosEndpoint = configuration.GetConnectionString("CosmosDB");
-
+        var databaseName = configuration["Database:Name"];
+        var connectionString = configuration.GetConnectionString("CosmosDB");
         var serializerOptions = new CosmosSerializationOptions
         {
             PropertyNamingPolicy = CosmosPropertyNamingPolicy.CamelCase,
             IgnoreNullValues = true
         };
 
-        cosmosClient = new CosmosClientBuilder(cosmosEndpoint)
+        cosmos = new CosmosClientBuilder(connectionString)
             .WithSerializerOptions(serializerOptions)
             .Build();
 
-        database = await cosmosClient.CreateDatabaseIfNotExistsAsync(databaseName);
+        database = await cosmos.CreateDatabaseIfNotExistsAsync(databaseName);
 
         await InsertDataAsync<Store>("./Input/Stores.json", "stores", "/country");
         await InsertDataAsync<TagCategory>("./Input/Tags.json", "tags", "/id");

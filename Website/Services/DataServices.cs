@@ -14,14 +14,15 @@ namespace StoreLocator.Services
 
         public DataServices(IConfiguration configuration)
         {
-            var databaseName = configuration["Locator:DatabaseName"];
-
-            CosmosSerializationOptions serializerOptions = new()
+            var databaseName = configuration["Database:Name"];
+            var connectionString = configuration.GetConnectionString("CosmosDB");
+            var serializerOptions = new CosmosSerializationOptions
             {
                 PropertyNamingPolicy = CosmosPropertyNamingPolicy.CamelCase,
+                IgnoreNullValues = true
             };
 
-            var cosmos = new CosmosClientBuilder(configuration["Locator:DatabaseEndpoint"], new DefaultAzureCredential())
+            var cosmos = new CosmosClientBuilder(connectionString)
                 .WithSerializerOptions(serializerOptions)
                 .Build();
 
