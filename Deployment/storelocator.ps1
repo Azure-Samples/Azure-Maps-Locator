@@ -86,7 +86,7 @@ try {
 
     # Creating AD App registration
     echo "- Creating AD App registration..."
-    az ad app create --display-name "Azure Maps Store Locator for $webappname" --web-redirect-uris https://$webappname.azurewebsites.net/signin-oidc --enable-access-token-issuance true --enable-id-token-issuance true --sign-in-audience AzureADMyOrg | Out-Null
+    az ad app create --display-name "Azure Maps Store Locator for $webappname" --web-redirect-uris https://$webappname.azurewebsites.net/signin-oidc https://localhost:7074/signin-oidc --enable-access-token-issuance true --enable-id-token-issuance true --sign-in-audience AzureADMyOrg | Out-Null
 
     echo "- Storing App Settings..."
     $clinetId = (az ad app list --display-name "Azure Maps Store Locator for $webappname" --query '[0].appId' -o tsv)
@@ -94,7 +94,7 @@ try {
     $email = (az rest --method get --url 'https://graph.microsoft.com/v1.0/me' --query 'userPrincipalName' -o tsv)
     $domain = $email.Split('@')[1]
 
-    az webapp config appsettings set -g $group -n $webappname --settings AzureMaps:ClientId=$azuremaps Database:Name=$DatabaseName ConnectionStrings:CosmosDB=$connectionString AzureAd:Instance=https://login.microsoftonline.com/ AzureAd:Domain=$domain AzureAd:TenantId=$tenantId AzureAd:ClientId=$clinetId AzureAd:CallbackPath=/signin-oidc | Out-Null
+    az webapp config appsettings set -g $group -n $webappname --settings AzureMaps:ClientId=$azuremaps AzureMaps:TokenUrl=/api/azuremaps/token Database:Name=$DatabaseName Database:ConnectionString=$connectionString AzureAd:Instance=https://login.microsoftonline.com/ AzureAd:Domain=$domain AzureAd:TenantId=$tenantId AzureAd:ClientId=$clinetId AzureAd:CallbackPath=/signin-oidc | Out-Null
 
     # Deploy Azure Maps Store Locator
     echo "- Starting deployment website..."

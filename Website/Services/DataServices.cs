@@ -9,25 +9,35 @@ namespace StoreLocator.Services
 {
     public class DataServices
     {
-        private readonly Container _storesContainer;
-        private readonly Container _tagsContainer;
+        private Container _storesContainer;
+        private Container _tagsContainer;
+        private readonly CosmosClient _cosmosClient;
 
         public DataServices(IConfiguration configuration)
         {
             var databaseName = configuration["Database:Name"];
-            var connectionString = configuration.GetConnectionString("CosmosDB");
+            var connectionString = configuration["Database:ConnectionString"];
             var serializerOptions = new CosmosSerializationOptions
             {
                 PropertyNamingPolicy = CosmosPropertyNamingPolicy.CamelCase,
                 IgnoreNullValues = true
             };
 
-            var cosmos = new CosmosClientBuilder(connectionString)
+            _cosmosClient = new CosmosClientBuilder(connectionString)
                 .WithSerializerOptions(serializerOptions)
                 .Build();
 
-            _storesContainer = cosmos.GetContainer(databaseName, "stores");
-            _tagsContainer = cosmos.GetContainer(databaseName, "tags");
+            InitializeDatabaseAndContainer(databaseName).Wait();
+        }
+
+        private async Task InitializeDatabaseAndContainer(string databaseName)
+        {
+            // Check if the database exists
+            DatabaseResponse database = await _cosmosClient.CreateDatabaseIfNotExistsAsync(databaseName);
+
+            // Create a container if it doesn't exist
+            _storesContainer = await database.Database.CreateContainerIfNotExistsAsync("stores", "/country");
+            _tagsContainer = await database.Database.CreateContainerIfNotExistsAsync("tags", "/id");
         }
 
         // TODO: Add methods to create, update, and delete stores

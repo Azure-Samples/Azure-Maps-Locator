@@ -1,4 +1,8 @@
-﻿using System.Text.Json;
+﻿// Azure Maps Store Locator - Demo Data Injector
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// https://github.com/Azure-Samples/Azure-Maps-Locator
+
+using System.Text.Json;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Fluent;
 using Microsoft.Extensions.Configuration;
@@ -19,7 +23,7 @@ class Program
             .Build();
 
         var databaseName = configuration["Database:Name"];
-        var connectionString = configuration.GetConnectionString("CosmosDB");
+        var connectionString = configuration["Database:ConnectionString"];
         var serializerOptions = new CosmosSerializationOptions
         {
             PropertyNamingPolicy = CosmosPropertyNamingPolicy.CamelCase,

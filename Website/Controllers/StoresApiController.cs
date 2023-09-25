@@ -8,7 +8,7 @@ namespace StoreLocator.Controllers
 {
     [Route("api/stores")]
     [ApiController]
-    [AllowAnonymous] //[Authorize]
+    [Authorize]
     public class StoresApiController : ControllerBase
     {
         private readonly DataServices _database;

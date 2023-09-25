@@ -9,15 +9,22 @@ namespace StoreLocator.Controllers
     {
         private readonly DataServices _database;
         private readonly ILogger<StoresController> _logger;
+        private readonly string _azureMapsClientId;
+        private readonly string _azureMapsTokenUrl;
 
-        public StoresController(ILogger<StoresController> logger, DataServices database)
+        public StoresController(ILogger<StoresController> logger, DataServices database, IConfiguration configuration)
         {
             _logger = logger;
             _database = database;
+            _azureMapsClientId = configuration["AzureMaps:ClientId"];
+            _azureMapsTokenUrl = configuration["AzureMaps:TokenUrl"];
         }
 
         public IActionResult Index()
         {
+            ViewBag.AzureMapsClientId = _azureMapsClientId;
+            ViewBag.AzureMapsTokenUrl = _azureMapsTokenUrl;
+
             return View();
         }
 
@@ -33,6 +40,9 @@ namespace StoreLocator.Controllers
 
             if (store != null)
             {
+                ViewBag.AzureMapsClientId = _azureMapsClientId;
+                ViewBag.AzureMapsTokenUrl = _azureMapsTokenUrl;
+
                 // If a store with the specified ID is found, return it as Ok (200) response
                 return View(store);
             }
