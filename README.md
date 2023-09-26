@@ -17,17 +17,17 @@ The Azure Maps Store Locator project provides a range of powerful features, incl
 - Apply filters based on store properties or tags.
 - Explore a store detail page with an embedded map and weather conditions.
 - Access an admin page for editing and adding store details.
-- Enable auto deployment within your Azure subscription.
+- Enable auto-deployment within your Azure subscription.
 
 ## Getting Started in 5 Minutes
 
 Getting started is easy! If you're not a developer, follow these simple steps:
 
-1. **Azure Subscription**: Ensure you have a Azure subscription. If not, sign up for a free Azure subscription [here](https://azure.microsoft.com/free).
+1. **Azure Subscription**: Ensure you have an Azure subscription. If not, sign up for a free Azure subscription [here](https://azure.microsoft.com/free).
 
-2. **Azure Shell**: Login into the Azure Shell [shell.azure.com](https://shell.azure.com/)
+2. **Azure Shell**: Log in to the Azure Shell [shell.azure.com](https://shell.azure.com/).
 
-3. **Deployment script**: Run this PowerShell command (copy and past) to install the Azure Maps Store Locator: `iex (iwr "https://samples.azuremaps.com/install/storelocator.ps1").Content`
+3. **Deployment script**: Run this PowerShell command (copy and paste) to install the Azure Maps Store Locator: `iex (iwr "https://samples.azuremaps.com/install/storelocator.ps1").Content`
 
 For developers who need more control, follow the steps below to set up your development environment for the Azure Maps Store Locator.
 
@@ -53,7 +53,7 @@ Follow these steps to get started with the Azure Maps Store Locator project:
 
 1. **(Optional)** Run the PowerShell script `.\storelocator.ps1`. This script sets up the initial Azure services required for this project. Before running, review the [architecture diagram](Images/Architecture.png) to understand what will be created.
 
-![architecture diagram](Images/Architecture.png)
+![Architecture Diagram](Images/Architecture.png)
 
 ### Demo Data
 
@@ -68,7 +68,7 @@ Follow these steps to get started with the Azure Maps Store Locator project:
 }
 ```
 
-![secrets.json](Images/secrets.png)
+![Secrets.json](Images/secrets.png)
 
 3. Execute the `Demo Data Injector` project to load the initial data into the backend.
 
