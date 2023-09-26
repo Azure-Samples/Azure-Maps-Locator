@@ -98,7 +98,8 @@ try {
 
     # Deploy Azure Maps Store Locator
     echo "- Starting deployment website..."
-    az webapp deployment source config-zip -g $group -n $webappname --src release.zip | Out-Null
+    iwr "https://samples.azuremaps.com/install/storelocator.zip" -o storelocator$suffix.zip
+    az webapp deployment source config-zip -g $group -n $webappname --src storelocator$suffix.zip | Out-Null
 
     # Done
     echo "Open https://$webappname.azurewebsites.net/ to see your Store Locator."

@@ -19,17 +19,15 @@ The Azure Maps Store Locator project provides a range of powerful features, incl
 - Access an admin page for editing and adding store details.
 - Enable auto deployment within your Azure subscription.
 
-## Getting Started in 5 Minutes for Non-developers
+## Getting Started in 5 Minutes
 
 Getting started is easy! If you're not a developer, follow these simple steps:
 
 1. **Azure Subscription**: Ensure you have a Azure subscription. If not, sign up for a free Azure subscription [here](https://azure.microsoft.com/free).
 
-2. **Deployment**: Click on the deployment button, and the Azure Maps Store Locator will be automatically installed in your Azure subscription.
+2. **Azure Shell**: Login into the Azure Shell [shell.azure.com](https://shell.azure.com/)
 
-<!-- ![Deploy to Azure](https://aka.ms/deploytoazurebutton) -->
-
-<!-- https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/deploy-to-azure-button -->
+3. **Deployment script**: Run this PowerShell command (copy and past) to install the Azure Maps Store Locator: `iex (iwr "https://samples.azuremaps.com/install/storelocator.ps1").Content`
 
 For developers who need more control, follow the steps below to set up your development environment for the Azure Maps Store Locator.
 
@@ -63,7 +61,10 @@ Follow these steps to get started with the Azure Maps Store Locator project:
 
 ```json
 {
-  "ConnectionStrings:CosmosDB": "AccountEndpoint=https://localhost:8081/;AccountKey=YOUR_LOCAL_KEY;"
+  "Database": {
+    "Name": "storelocator",
+    "ConnectionString": "AccountEndpoint=https://localhost:8081/;AccountKey=[your_key]"
+  }
 }
 ```
 
@@ -71,9 +72,30 @@ Follow these steps to get started with the Azure Maps Store Locator project:
 
 3. Execute the `Demo Data Injector` project to load the initial data into the backend.
 
-### Run the Application
+### Run the Store Locator Application
 
 4. Update the connection string in the `Secrets.json` file for the Cosmos DB in the `Store Locator Website` project.
+
+```json
+{
+  "Database": {
+    "Name": "storelocator",
+    "ConnectionString": "AccountEndpoint=https://localhost:8081/;AccountKey=[your_key]"
+  },
+  "AzureMaps": {
+    "ClientId": "11111111-1111-1111-1111-111111111111",
+    "TokenUrl": "https://[your_storelocator_url].azurewebsites.net/api/azuremaps/token"
+  },
+  "AzureAd": {
+    "Instance": "https://login.microsoftonline.com/",
+    "Domain": "[your_domain].onmicrosoft.com",
+    "TenantId": "11111111-1111-1111-1111-111111111111",
+    "ClientId": "22222222-2222-2222-2222-222222222222",
+    "CallbackPath": "/signin-oidc",
+    "Scopes": ""
+  }
+}
+```
 
 5. Run the `Store Locator Website` project to see the application in action.
 
