@@ -29,6 +29,23 @@ Getting started is easy! If you're not a developer, follow these simple steps:
 
 3. **Deployment script**: Run this PowerShell command (copy and paste) to install the Azure Maps Store Locator: `iex (iwr "https://samples.azuremaps.com/install/storelocator.ps1").Content`
 
+The output should look similar to this:
+
+```txt
+Starting...
+- Creating a Resource Group named 'rg-storelocator' in the 'westeurope' location...
+- Creating an Azure Maps account named 'map-storelocator'...
+- Creating an Azure Cosmos DB server named 'db-storelocator318564045'...
+- Creating a database named 'storelocator'...
+- Creating a Webserver plan named 'plan-storelocator' for the Website 'web-storelocator318564045'...
+- Utilizing managed identities for Azure Maps...
+- Creating an Azure AD App registration...
+- Storing App Settings...
+- Initiating the deployment of the website...
+Open https://web-storelocator318564045.azurewebsites.net/ to access your Store Locator.
+Done! Your Azure Maps Store Locator infrastructure and website are ready.
+```
+
 For developers who need more control, follow the steps below to set up your development environment for the Azure Maps Store Locator.
 
 ## Prerequisites for Developers
@@ -97,6 +114,8 @@ Follow these steps to get started with the Azure Maps Store Locator project:
 }
 ```
 
-5. Run the `Store Locator Website` project to see the application in action.
+5. Add in the Azure Portal the URL `https://localhost:7074` to the CORS list for the website and Azure Maps.
+
+6. Run the `Store Locator Website` project to see the application in action.
 
 Thank you for your interest in this project! We are actively working to improve and enhance it. If you encounter any issues or have suggestions, please feel free to contribute or reach out to us. Happy coding!
