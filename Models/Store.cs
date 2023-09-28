@@ -22,7 +22,7 @@ namespace StoreLocator.Models
         [StringLength(64, ErrorMessage = "City cannot exceed 64 characters.")]
         public string City { get; set; }
 
-        [StringLength(16, ErrorMessage = "PostalCode cannot exceed 16 characters.")]
+        [StringLength(16, ErrorMessage = "Postcode cannot exceed 16 characters.")]
         public string PostalCode { get; set; }
 
         [Required(ErrorMessage = "Country is required.")]

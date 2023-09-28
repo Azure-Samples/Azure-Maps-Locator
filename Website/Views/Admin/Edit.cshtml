@@ -18,7 +18,7 @@
                 <h4 class="my-0 fw-normal">General</h4>
             </div>
             <div class="card-body">
-                <form class="row g-3">
+                <form id="storedetails" class="row g-3">
 
                     <div class="col-md-6">
                         <label asp-for="Name" class="form-label">Name *</label>
@@ -43,7 +43,7 @@
                     </div>
 
                     <div class="col-md-6">
-                        <label asp-for="PostalCode" class="form-label">Postalcode</label>
+                        <label asp-for="PostalCode" class="form-label">Postcode</label>
                         <input asp-for="PostalCode" type="text" class="form-control">
                         <span asp-validation-for="PostalCode" class="text-danger"></span>
                     </div>
@@ -55,10 +55,27 @@
                         <span asp-validation-for="Country" class="text-danger"></span>
                     </div>
 
+                    <div class="col-md-6">
+                        <label asp-for="Location.Coordinates[0]" class="form-label">Longitude</label>
+                        <input asp-for="Location.Coordinates[0]" type="number" class="form-control">
+                        <span asp-validation-for="Location.Coordinates[0]" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Location.Coordinates[1]" class="form-label">Latitude</label>
+                        <input asp-for="Location.Coordinates[1]" type="number" class="form-control">
+                        <span asp-validation-for="Location.Coordinates[1]" class="text-danger"></span>
+                    </div>
+
                     <div class="col-12">
                         <label asp-for="WebUrl" class="form-label">Website</label>
                         <input asp-for="WebUrl" type="url" class="form-control">
                         <span asp-validation-for="WebUrl" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12">
+                        <label asp-for="ImageUrl" class="form-label">Store logo or photo Url</label>
+                        <input asp-for="ImageUrl" type="url" class="form-control">
+                        <span asp-validation-for="ImageUrl" class="text-danger"></span>
                     </div>
 
                     <div class="col-md-6">
@@ -211,30 +228,72 @@
     }
 
     <script>
-        $(document).ready(async function () {
+
+        $(document).ready(async () => {
             const alertPlaceholder = $('#alertPlaceholder');
+            const countrySelect = $('#Country');
 
             function appendAlert(message, type) {
-                const alert = `<div class="alert alert-${type} alert-dismissible" role="alert">${message}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
-                alertPlaceholder.append(alert);
+                alertPlaceholder.append(`<div class="alert alert-${type} alert-dismissible" role="alert">${message}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`);
             }
 
-            const countries = await $.getJSON('/data/countries.json')
-                .fail(function () {
-                    appendAlert('Failed to load countries.', 'danger');
+            try {
+                const countries = await $.getJSON('/data/countries.json');
+                countries.forEach(country => {
+                    const option = `<option value="${country.code}" ${country.name.toLowerCase() === '@Model.Country.ToLower()' ? 'selected' : ''}>${country.name}</option>`;
+                    countrySelect.append(option);
                 });
+            } catch (error) {
+                appendAlert('Failed to load countries.', 'danger');
+            }
 
-            countries.forEach((country) => {
-                const countrySelect = $('#Country');
-                const option = document.createElement('option');
-                option.value = country.code;
-                option.text = country.name;
+            $('#storedetails').submit(event => {
+                event.preventDefault();
 
-                if (country.name === '@Model.Country') {
-                    option.selected = true;
-                }
+                const store = {
+                    id: $('#Id').val(),
+                    name: $('#Name').val(),
+                    address: $('#Address').val(),
+                    city: $('#City').val(),
+                    postalCode: $('#PostalCode').val(),
+                    country: $('#Country').val(),
+                    email: $('#Email').val(),
+                    phone: $('#Phone').val(),
+                    location: { coordinates: [$('#Location_Coordinates_0_').val(), $('#Location_Coordinates_1_').val()] },
+                    imageUrl: $('#ImageUrl').val(),
+                    webUrl: $('#WebUrl').val(),
+                    openingHours: [
+                        { dayOfWeek: 'Monday', open: '10:00', close: '20:30' },
+                        { dayOfWeek: 'Tuesday', open: '10:00', close: '20:30' },
+                        { dayOfWeek: 'Wednesday', open: '10:00', close: '20:30' },
+                        { dayOfWeek: 'Thursday', open: '10:00', close: '20:30' },
+                        { dayOfWeek: 'Friday', open: '10:00', close: '21:00' },
+                        { dayOfWeek: 'Saturday', open: '10:00', close: '21:00' },
+                        { dayOfWeek: 'Sunday', open: '10:00', close: '21:00' }
+                    ],
+                    tags: [],
+                    note: $('#Note').val()
+                };
 
-                countrySelect.append(option);
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/stores',
+                    contentType: 'application/json',
+                    data: JSON.stringify(store),
+                    success: () => appendAlert('Store details saved successfully.', 'success'),
+                    error: e => {
+                        if (e.responseJSON && e.responseJSON.errors) {
+                            const errors = e.responseJSON.errors;
+                            for (const key in errors) {
+                                if (errors.hasOwnProperty(key)) {
+                                    errors[key].forEach(errorMessage => appendAlert(`Validation Error: ${errorMessage}`, 'danger'));
+                                }
+                            }
+                        } else {
+                            appendAlert('Failed to save store details, please try again!', 'danger');
+                        }
+                    }
+                });
             });
 
         });
