@@ -8,7 +8,8 @@ namespace StoreLocator.Controllers
 {
     [Route("api/stores")]
     [ApiController]
-    [Authorize]
+    [AllowAnonymous]
+     //[Authorize]
     public class StoresApiController : ControllerBase
     {
         private readonly DataServices _database;
@@ -39,7 +40,7 @@ namespace StoreLocator.Controllers
             return Ok(tags);
         }
 
-        
+
 
         // GET api/stores/search?query={query}&limit={limit}&country={country}&tags={tag1,tag2,tag3}&latitude={latitude}&longitude={longitude}&rangeInKm={rangeInKm}
         [HttpGet("search")]
@@ -55,7 +56,7 @@ namespace StoreLocator.Controllers
         {
             if (!string.IsNullOrEmpty(query))
             {
-                if (query.Length < 3 || query.Length > 63)
+                if (query.Length < 3 || query.Length > 64)
                 {
                     return BadRequest("Invalid input value for query parameter.");
                 }
@@ -63,7 +64,7 @@ namespace StoreLocator.Controllers
 
             if (!string.IsNullOrEmpty(country))
             {
-                if (country.Length < 3 || country.Length > 63)
+                if (country.Length < 3 || country.Length > 64)
                 {
                     return BadRequest("Invalid input value for country parameter.");
                 }
@@ -87,7 +88,7 @@ namespace StoreLocator.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> GetStoreByIdAsync(string id)
         {
-            if (string.IsNullOrWhiteSpace(id) || id.Length > 63)
+            if (string.IsNullOrWhiteSpace(id) || id.Length > 64)
             {
                 return BadRequest("Invalid input value.");
             }
@@ -106,7 +107,7 @@ namespace StoreLocator.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteStoreAsync(string id)
         {
-            if (string.IsNullOrWhiteSpace(id) || id.Length > 63)
+            if (string.IsNullOrWhiteSpace(id) || id.Length > 64)
             {
                 return BadRequest("Invalid input value.");
             }
@@ -122,7 +123,24 @@ namespace StoreLocator.Controllers
             {
                 await _database.DeleteStoreAsync(store);
 
-                return NoContent(); // 204 No Content indicates successful deletion
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        // Update or create a new store
+        // POST: api/stores/
+        [HttpPost()]
+        public async Task<ActionResult> SaveStoreAsync([FromBody] Store store)
+        {
+            try
+            {
+                await _database.UpsertStore(store);
+
+                return Ok();
             }
             catch (Exception ex)
             {

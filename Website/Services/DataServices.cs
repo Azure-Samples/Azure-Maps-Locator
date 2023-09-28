@@ -1,5 +1,4 @@
-﻿using Azure.Identity;
-using Microsoft.Azure.Cosmos;
+﻿using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Fluent;
 using StoreLocator.Helpers;
 using StoreLocator.Models;
@@ -166,6 +165,16 @@ namespace StoreLocator.Services
             if (response.StatusCode != HttpStatusCode.NoContent)
             {
                 throw new Exception($"Failed to delete store. Status code: {response.StatusCode}");
+            }
+        }
+
+        public async Task UpsertStore(Store store)
+        {
+            var response = await _storesContainer.UpsertItemAsync<Store>(store);
+
+            if (response.StatusCode != HttpStatusCode.OK && response.StatusCode != HttpStatusCode.Created)
+            {
+                throw new Exception($"Failed to save store. Status code: {response.StatusCode}");
             }
         }
 

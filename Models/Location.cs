@@ -1,14 +1,19 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using StoreLocator.Models.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace StoreLocator.Models
 {
     public class Location
     {
-        [Required]
-        public string Type { get; set; }
+        public Location()
+        {
+            Type = "Point";
+        }
 
-        [Required]
-        [MaxLength(2)]
+        public string Type { get; private set; }
+
+        [Required(ErrorMessage = "Coordinates are required.")]
+        [CoordinateValidation]
         public List<double> Coordinates { get; set; }
     }
 }

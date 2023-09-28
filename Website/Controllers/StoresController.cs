@@ -31,7 +31,7 @@ namespace StoreLocator.Controllers
         public async Task<IActionResult> Details(string id)
         {
             // Validate input values
-            if (string.IsNullOrWhiteSpace(id) || id.Length > 63)
+            if (string.IsNullOrWhiteSpace(id) || id.Length > 64)
             {
                 return BadRequest("Invalid input value.");
             }
