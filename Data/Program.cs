@@ -1,6 +1,9 @@
 ﻿// Azure Maps Store Locator - Demo Data Injector
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // https://github.com/Azure-Samples/Azure-Maps-Locator
+//
+// This source code is licensed under the MIT license found in the
+// LICENSE file in the root directory of this source tree.
 
 using System.Text.Json;
 using Microsoft.Azure.Cosmos;
@@ -36,8 +39,8 @@ class Program
 
         database = await cosmos.CreateDatabaseIfNotExistsAsync(databaseName);
 
-        await InsertDataAsync<Store>("./Input/Stores.json", "stores", "/country");
-        await InsertDataAsync<TagCategory>("./Input/Tags.json", "tags", "/id");
+        await InsertDataAsync<Store>("./Input/Stores.json", "stores", "/address/countryCode");
+        await InsertDataAsync<Feature>("./Input/Features.json", "features", "/id");
 
         Console.WriteLine("Done");
     }

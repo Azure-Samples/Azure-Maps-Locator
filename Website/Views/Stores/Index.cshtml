@@ -78,7 +78,7 @@
                             <template id="template-filters-category">
                                 <li class="mb-1">
                                     <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#filter-{id}" aria-expanded="{expanded}">
-                                        {title}
+                                        {name}
                                     </button>
                                     <div class="collapse {show}" id="filter-{id}">
                                         <div class="list-group list-group-flush">
@@ -91,7 +91,7 @@
                             <template id="template-filters-tag">
                                 <label class="list-group-item d-flex gap-2">
                                     <input class="form-check-input flex-shrink-0" type="checkbox" value="">
-                                    <span>{title}</span>
+                                    <span>{name}</span>
                                 </label>
                             </template>
 
@@ -179,7 +179,7 @@
 
     <!-- Add the Azure Maps Store Locator script to the page. -->
     <!-- https://github.com/Azure-Samples/Azure-Maps-Locator -->
-    <script src="/js/storelocator.min.js"></script>
+    <script asp-append-version="true" src="/js/storelocator.js"></script>
 
     <script>
 
@@ -235,7 +235,7 @@
             });
 
             // Show all stores in the Netherlands.
-            locator.showStoresByCountry('Netherlands');
+            locator.showStoresByCountry('NL');
         });
 
     </script>

@@ -91,7 +91,7 @@ class storelocator {
 
     initializeFilters() {
 
-        this.getTags().then((categories) => {
+        this.getFeatures().then((categories) => {
             const control = document.getElementById('locator-filters');
             const categoryTemplate = document.getElementById('template-filters-category').innerHTML;
             const tagTemplate = document.getElementById('template-filters-tag').innerHTML;
@@ -103,12 +103,12 @@ class storelocator {
                 for (const tag of category.tags) {
                     innerHtml += tagTemplate
                         .replaceAll('{id}', tag.id)
-                        .replace('{title}', tag.title);
+                        .replace('{name}', tag.name);
                 }
 
                 html += categoryTemplate
                     .replaceAll('{id}', category.id)
-                    .replace('{title}', category.title)
+                    .replace('{name}', category.name)
                     .replace('{expanded}', html == '' ? 'true' : 'false')
                     .replace('{show}', html == '' ? 'show' : '')
                     .replace('{tags}', innerHtml);
@@ -208,9 +208,9 @@ class storelocator {
                 .replace('{webUrl}', store.webUrl)
                 .replace('{title}', store.name)
                 .replace('{name}', store.name)
-                .replace('{address}', store.address)
-                .replace('{city}', store.city)
-                .replace('{country}', store.country)
+                .replace('{address}', store.address.streetAddressLine1)
+                .replace('{city}', store.address.city)
+                .replace('{country}', store.address.countryName)
                 .replace('{distanceInKm}', store.distanceInKm.toFixed(1))
                 .replace('{distanceInMile}', this.convertToMiles(store.distanceInKm).toFixed(1))
                 .replace('{directionsUrl}', `https://www.bing.com/maps?rtp=pos.${this.search.userLocation[1]}_${this.search.userLocation[0]}_My%20current%20location~pos.${store.location.coordinates[1]}_${store.location.coordinates[0]}_${store.name}`),
@@ -409,9 +409,9 @@ class storelocator {
                     .replace('{webUrl}', store.webUrl)
                     .replace('{title}', store.name)
                     .replace('{name}', store.name)
-                    .replace('{address}', store.address)
-                    .replace('{city}', store.city)
-                    .replace('{country}', store.country);
+                    .replace('{address}', store.address.streetAddressLine1)
+                    .replace('{city}', store.address.city)
+                    .replace('{country}', store.address.countryName);
             }
 
             if (response[1].length == 0)
@@ -516,9 +516,9 @@ class storelocator {
                         .replace('{id}', store.id)
                         .replace('{imageUrl}', store.imageUrl)
                         .replace('{name}', store.name)
-                        .replace('{address}', store.address)
-                        .replace('{city}', store.city)
-                        .replace('{country}', store.country)
+                        .replace('{address}', store.address.streetAddressLine1)
+                        .replace('{city}', store.address.city)
+                        .replace('{country}', store.address.countryName)
                         .replace('{distanceInKm}', store.distanceInKm.toFixed(1))
                         .replace('{distanceInMile}', this.convertToMiles(store.distanceInKm).toFixed(1))
                         .replace('{orderNumber}', store.orderNumber)
@@ -615,8 +615,8 @@ class storelocator {
         return await response.json();
     }
 
-    async getTags() {
-        const response = await fetch('/api/stores/tags');
+    async getFeatures() {
+        const response = await fetch('/api/stores/features');
 
         if (!response.ok) {
             throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);

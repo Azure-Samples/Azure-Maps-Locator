@@ -30,12 +30,12 @@ namespace StoreLocator.Controllers
             return Ok(stores);
         }
 
-        // GET: api/stores/tags
-        [HttpGet("tags")]
+        // GET: api/stores/features
+        [HttpGet("features")]
         [AllowAnonymous]
-        public async Task<ActionResult<List<TagCategory>>> GetAllTagsAsync()
+        public async Task<ActionResult<List<Feature>>> GetAllFeaturesAsync()
         {
-            var tags = await _database.GetAllTagsAsync();
+            var tags = await _database.GetAllFeaturesAsync();
 
             return Ok(tags);
         }
@@ -64,7 +64,7 @@ namespace StoreLocator.Controllers
 
             if (!string.IsNullOrEmpty(country))
             {
-                if (country.Length < 3 || country.Length > 64)
+                if (country.Length != 2)
                 {
                     return BadRequest("Invalid input value for country parameter.");
                 }
@@ -131,14 +131,31 @@ namespace StoreLocator.Controllers
             }
         }
 
-        // Update or create a new store
+        // Create a new store
         // POST: api/stores/
         [HttpPost()]
-        public async Task<ActionResult> SaveStoreAsync([FromBody] Store store)
+        public async Task<ActionResult> CreateStoreAsync([FromBody] Store store)
         {
             try
             {
-                await _database.UpsertStore(store);
+                await _database.CreateStoreAsync(store);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        // Update an existing store
+        // PUT: api/stores/
+        [HttpPut()]
+        public async Task<ActionResult> UpdateStoreAsync([FromBody] Store store)
+        {
+            try
+            {
+                await _database.UpdateStoreAsync(store);
 
                 return Ok();
             }

@@ -10,8 +10,8 @@ namespace StoreLocator.Models
         [IdValidation]
         public string Id { get; set; }
 
-        [Required(ErrorMessage = "Title is required.")]
-        [StringLength(128, ErrorMessage = "Title cannot exceed 128 characters.")]
-        public string Title { get; set; }
+        [Required(ErrorMessage = "Name is required.")]
+        [StringLength(128, ErrorMessage = "Name cannot exceed 128 characters.")]
+        public string Name { get; set; }
     }
 }

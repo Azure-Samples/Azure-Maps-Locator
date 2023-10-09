@@ -18,7 +18,7 @@
                 <h4 class="my-0 fw-normal">General</h4>
             </div>
             <div class="card-body">
-                <form id="storedetails" class="row g-3">
+                <form id="storeDetails" class="row g-3">
 
                     <div class="col-md-6">
                         <label asp-for="Name" class="form-label">Name *</label>
@@ -32,27 +32,27 @@
                     </div>
 
                     <div class="col-md-6">
-                        <label asp-for="Address" class="form-label">Address *</label>
-                        <input asp-for="Address" type="text" class="form-control">
-                        <span asp-validation-for="Address" class="text-danger"></span>
+                        <label asp-for="Address.StreetAddressLine1" class="form-label">Address *</label>
+                        <input asp-for="Address.StreetAddressLine1" type="text" class="form-control">
+                        <span asp-validation-for="Address.StreetAddressLine1" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
-                        <label asp-for="City" class="form-label">City *</label>
-                        <input asp-for="City" type="text" class="form-control">
-                        <span asp-validation-for="City" class="text-danger"></span>
+                        <label asp-for="Address.City" class="form-label">City *</label>
+                        <input asp-for="Address.City" type="text" class="form-control">
+                        <span asp-validation-for="Address.City" class="text-danger"></span>
                     </div>
 
                     <div class="col-md-6">
-                        <label asp-for="PostalCode" class="form-label">Postcode</label>
-                        <input asp-for="PostalCode" type="text" class="form-control">
-                        <span asp-validation-for="PostalCode" class="text-danger"></span>
+                        <label asp-for="Address.PostalCode" class="form-label">Postcode</label>
+                        <input asp-for="Address.PostalCode" type="text" class="form-control">
+                        <span asp-validation-for="Address.PostalCode" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
-                        <label asp-for="Country" class="form-label">Country *</label>
-                        <select asp-for="Country" class="form-select">
+                        <label asp-for="Address.CountryName" class="form-label">Country *</label>
+                        <select asp-for="Address.CountryName" class="form-select">
                             <option selected>Choose...</option>
                         </select>
-                        <span asp-validation-for="Country" class="text-danger"></span>
+                        <span asp-validation-for="Address.CountryName" class="text-danger"></span>
                     </div>
 
                     <div class="col-md-6">
@@ -84,9 +84,9 @@
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
-                        <label asp-for="Phone" class="form-label">Phone number</label>
-                        <input asp-for="Phone" type="tel" class="form-control">
-                        <span asp-validation-for="Phone" class="text-danger"></span>
+                        <label asp-for="PhoneNumber" class="form-label">Phone number</label>
+                        <input asp-for="PhoneNumber" type="tel" class="form-control">
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                     </div>
 
                     <div class="col-12">
@@ -198,13 +198,13 @@
 <div class="row">
     <div class="col-12">
 
-        <!-- Properties -->
+        <!-- Features -->
         <div class="card mb-4 rounded-3 shadow-sm">
             <div class="card-header py-3">
-                <h4 class="my-0 fw-normal">Properties</h4>
+                <h4 class="my-0 fw-normal">Features</h4>
             </div>
             <div class="card-body">
-                TODO: Properties
+                TODO: Features
             </div>
         </div>
 
@@ -231,7 +231,7 @@
 
         $(document).ready(async () => {
             const alertPlaceholder = $('#alertPlaceholder');
-            const countrySelect = $('#Country');
+            const countrySelect = $('#Address_CountryName');
 
             function appendAlert(message, type) {
                 alertPlaceholder.append(`<div class="alert alert-${type} alert-dismissible" role="alert">${message}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`);
@@ -240,28 +240,36 @@
             try {
                 const countries = await $.getJSON('/data/countries.json');
                 countries.forEach(country => {
-                    const option = `<option value="${country.code}" ${country.name.toLowerCase() === '@Model.Country.ToLower()' ? 'selected' : ''}>${country.name}</option>`;
+                    const option = `<option value="${country.code}" ${country.code.toLowerCase() === '@Model.Address.CountryCode.ToLower()' ? 'selected' : ''}>${country.name}</option>`;
                     countrySelect.append(option);
                 });
             } catch (error) {
                 appendAlert('Failed to load countries.', 'danger');
             }
 
-            $('#storedetails').submit(event => {
+            $('#storeDetails').submit(event => {
                 event.preventDefault();
 
                 const store = {
                     id: $('#Id').val(),
+                    storeNumber: "",
                     name: $('#Name').val(),
-                    address: $('#Address').val(),
-                    city: $('#City').val(),
-                    postalCode: $('#PostalCode').val(),
-                    country: $('#Country').val(),
+                    address: {
+                        streetAddressLine1: $('#Address_StreetAddressLine1').val(),
+                        streetAddressLine2: "",
+                        streetAddressLine3: "",
+                        city: $('#Address_City').val(),
+                        postalCode: $('#Address_PostalCode').val(),
+                        countrySubdivisionCode: "",
+                        countryCode: $('#Address_CountryName').val(),
+                        countryName: $('#Address_CountryName option:selected').text(),
+                    },
                     email: $('#Email').val(),
-                    phone: $('#Phone').val(),
+                    phone: $('#PhoneNumber').val(),
                     location: { coordinates: [$('#Location_Coordinates_0_').val(), $('#Location_Coordinates_1_').val()] },
                     imageUrl: $('#ImageUrl').val(),
                     webUrl: $('#WebUrl').val(),
+                    timeZoneUtc: 0, // UTC
                     openingHours: [
                         { dayOfWeek: 'Monday', open: '10:00', close: '20:30' },
                         { dayOfWeek: 'Tuesday', open: '10:00', close: '20:30' },
@@ -271,12 +279,12 @@
                         { dayOfWeek: 'Saturday', open: '10:00', close: '21:00' },
                         { dayOfWeek: 'Sunday', open: '10:00', close: '21:00' }
                     ],
-                    tags: [],
+                    features: [],
                     note: $('#Note').val()
                 };
 
                 $.ajax({
-                    type: 'POST',
+                    type: 'PUT',
                     url: '/api/stores',
                     contentType: 'application/json',
                     data: JSON.stringify(store),

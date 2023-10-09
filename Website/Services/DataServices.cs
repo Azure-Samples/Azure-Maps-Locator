@@ -9,7 +9,7 @@ namespace StoreLocator.Services
     public class DataServices
     {
         private Container _storesContainer;
-        private Container _tagsContainer;
+        private Container _featuresContainer;
         private readonly CosmosClient _cosmosClient;
 
         public DataServices(IConfiguration configuration)
@@ -35,11 +35,9 @@ namespace StoreLocator.Services
             DatabaseResponse database = await _cosmosClient.CreateDatabaseIfNotExistsAsync(databaseName);
 
             // Create a container if it doesn't exist
-            _storesContainer = await database.Database.CreateContainerIfNotExistsAsync("stores", "/country");
-            _tagsContainer = await database.Database.CreateContainerIfNotExistsAsync("tags", "/id");
+            _storesContainer = await database.Database.CreateContainerIfNotExistsAsync("stores", "/address/countryCode");
+            _featuresContainer = await database.Database.CreateContainerIfNotExistsAsync("features", "/id");
         }
-
-        // TODO: Add methods to create, update, and delete stores
 
         public async Task<List<Store>> GetAllStoresAsync()
         {
@@ -49,12 +47,21 @@ namespace StoreLocator.Services
             return await QueryStoresAsync<Store>(queryDefinition);
         }
 
-        public async Task<List<TagCategory>> GetAllTagsAsync()
+        public async Task<List<Feature>> GetAllFeaturesAsync()
         {
-            var queryText = "SELECT * FROM t";
+            var queryText = "SELECT * FROM f";
             var queryDefinition = new QueryDefinition(queryText);
 
-            return await QueryTagsAsync<TagCategory>(queryDefinition);
+            var queryResult = _featuresContainer.GetItemQueryIterator<Feature>(queryDefinition);
+            var items = new List<Feature>();
+
+            while (queryResult.HasMoreResults)
+            {
+                var response = await queryResult.ReadNextAsync();
+                items.AddRange(response);
+            }
+
+            return items;
         }
 
         public async Task<Store> GetStoreByIdAsync(string id)
@@ -66,7 +73,7 @@ namespace StoreLocator.Services
             return (await QueryStoresAsync<Store>(queryDefinition)).FirstOrDefault();
         }
 
-        public async Task<List<StoreWithDistance>> GetStoresBySearchAsync(string query, int? limit, string country, string tags, double? latitude, double? longitude, double? rangeInKm)
+        public async Task<List<StoreWithDistance>> GetStoresBySearchAsync(string query, int? limit, string countryCode, string tags, double? latitude, double? longitude, double? rangeInKm)
         {
             var sqlQuery = "SELECT * FROM s WHERE ";
             var queryParams = new List<(string, object)>();
@@ -77,20 +84,20 @@ namespace StoreLocator.Services
                 parameterCount++;
 
                 var searchText = query.ToLower();
-                sqlQuery += "LOWER(s.name) LIKE @name OR LOWER(s.city) LIKE @city";
+                sqlQuery += "LOWER(s.name) LIKE @name OR LOWER(s.address.city) LIKE @city";
                 queryParams.Add(("@name", $"%{searchText}%"));
                 queryParams.Add(("@city", $"{searchText}%"));
             }
 
-            if (!string.IsNullOrEmpty(country))
+            if (!string.IsNullOrEmpty(countryCode))
             {
                 parameterCount++;
 
                 if (queryParams.Any())
                     sqlQuery += " AND ";
 
-                sqlQuery += "LOWER(s.country) = @country";
-                queryParams.Add(("@country", country.ToLower()));
+                sqlQuery += "LOWER(s.address.countryCode) = @country";
+                queryParams.Add(("@country", countryCode.ToLower()));
             }
 
             if (!string.IsNullOrEmpty(tags))
@@ -126,12 +133,13 @@ namespace StoreLocator.Services
                 queryParams.Add(("@rangeInKm", rangeInKm));
             }
 
-            // if no parameters are specified, return all stores
+            // If no parameters are specified, return all stores
             if (parameterCount == 0)
             {
                 sqlQuery += " 1 = 1";
             }
 
+            // Do not use limit if you are using a range search
             if (limit.HasValue)
             {
                 sqlQuery += " OFFSET 0 LIMIT @limit";
@@ -160,7 +168,7 @@ namespace StoreLocator.Services
 
         public async Task DeleteStoreAsync(Store store)
         {
-            var response = await _storesContainer.DeleteItemAsync<Store>(store.Id, new PartitionKey(store.Country));
+            var response = await _storesContainer.DeleteItemAsync<Store>(store.Id, new PartitionKey(store.Address.CountryCode));
 
             if (response.StatusCode != HttpStatusCode.NoContent)
             {
@@ -168,13 +176,23 @@ namespace StoreLocator.Services
             }
         }
 
-        public async Task UpsertStore(Store store)
+        public async Task CreateStoreAsync(Store store)
         {
-            var response = await _storesContainer.UpsertItemAsync<Store>(store);
+            var response = await _storesContainer.CreateItemAsync<Store>(store, new PartitionKey(store.Address.CountryCode));
 
             if (response.StatusCode != HttpStatusCode.OK && response.StatusCode != HttpStatusCode.Created)
             {
-                throw new Exception($"Failed to save store. Status code: {response.StatusCode}");
+                throw new Exception($"Failed to create a store. Status code: {response.StatusCode}");
+            }
+        }
+
+        public async Task UpdateStoreAsync(Store store)
+        {
+            var response = await _storesContainer.ReplaceItemAsync<Store>(store, store.Id, new PartitionKey(store.Address.CountryCode));
+
+            if (response.StatusCode != HttpStatusCode.OK)
+            {
+                throw new Exception($"Failed to update store details. Status code: {response.StatusCode}");
             }
         }
 
@@ -192,18 +210,5 @@ namespace StoreLocator.Services
             return items;
         }
 
-        private async Task<List<T>> QueryTagsAsync<T>(QueryDefinition queryDefinition)
-        {
-            var queryResult = _tagsContainer.GetItemQueryIterator<T>(queryDefinition);
-            var items = new List<T>();
-
-            while (queryResult.HasMoreResults)
-            {
-                var response = await queryResult.ReadNextAsync();
-                items.AddRange(response);
-            }
-
-            return items;
-        }
     }
 }

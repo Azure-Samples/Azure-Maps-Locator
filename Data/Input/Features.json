@@ -1,0 +1,202 @@
+[
+  {
+    "id": "services",
+    "name": "Services",
+    "tags": [
+      {
+        "id": "airconditioning",
+        "name": "Air conditioning"
+      },
+      {
+        "id": "carpark",
+        "name": "Car park"
+      },
+      {
+        "id": "cashonly",
+        "name": "Cash only"
+      },
+      {
+        "id": "creditcard",
+        "name": "Credit card / Debit card accepted"
+      },
+      {
+        "id": "disabledaccess",
+        "name": "Disabled access"
+      },
+      {
+        "id": "freeinternet",
+        "name": "Free internet"
+      }
+    ]
+  },
+  {
+    "id": "foodanddining",
+    "name": "Food and Dining",
+    "tags": [
+      {
+        "id": "vegetarianoptions",
+        "name": "Vegetarian options"
+      },
+      {
+        "id": "veganoptions",
+        "name": "Vegan options"
+      },
+      {
+        "id": "glutenfreeoptions",
+        "name": "Gluten-free options"
+      },
+      {
+        "id": "childfriendly",
+        "name": "Child-friendly"
+      },
+      {
+        "id": "outdoorseating",
+        "name": "Outdoor seating"
+      },
+      {
+        "id": "takeoutavailable",
+        "name": "Takeout available"
+      },
+      {
+        "id": "deliveryavailable",
+        "name": "Delivery available"
+      }
+    ]
+  },
+  {
+    "id": "clothingandapparel",
+    "name": "Clothing and Apparel",
+    "tags": [
+      {
+        "id": "mensclothing",
+        "name": "Men's clothing"
+      },
+      {
+        "id": "womensclothing",
+        "name": "Women's clothing"
+      },
+      {
+        "id": "childrensclothing",
+        "name": "Children's clothing"
+      },
+      {
+        "id": "formalwear",
+        "name": "Formal wear"
+      },
+      {
+        "id": "casualwear",
+        "name": "Casual wear"
+      },
+      {
+        "id": "athleticwear",
+        "name": "Athletic wear"
+      },
+      {
+        "id": "accessories",
+        "name": "Accessories"
+      }
+    ]
+  },
+  {
+    "id": "electronics",
+    "name": "Electronics",
+    "tags": [
+      {
+        "id": "computersandlaptops",
+        "name": "Computers and laptops"
+      },
+      {
+        "id": "mobilephones",
+        "name": "Mobile phones"
+      },
+      {
+        "id": "audioandheadphones",
+        "name": "Audio and headphones"
+      },
+      {
+        "id": "tvsandhomeentertainment",
+        "name": "TVs and home entertainment"
+      },
+      {
+        "id": "gamingconsoles",
+        "name": "Gaming consoles"
+      },
+      {
+        "id": "smarthomedevices",
+        "name": "Smart home devices"
+      },
+      {
+        "id": "camerasandphotography",
+        "name": "Cameras and photography"
+      }
+    ]
+  },
+  {
+    "id": "healthandwellness",
+    "name": "Health and Wellness",
+    "tags": [
+      {
+        "id": "pharmacy",
+        "name": "Pharmacy"
+      },
+      {
+        "id": "vitaminsandsupplements",
+        "name": "Vitamins and supplements"
+      },
+      {
+        "id": "fitnessequipment",
+        "name": "Fitness equipment"
+      },
+      {
+        "id": "healthconsultations",
+        "name": "Health consultations"
+      },
+      {
+        "id": "personalcareproducts",
+        "name": "Personal care products"
+      },
+      {
+        "id": "medicalsupplies",
+        "name": "Medical supplies"
+      },
+      {
+        "id": "alternativemedicine",
+        "name": "Alternative medicine"
+      }
+    ]
+  },
+  {
+    "id": "homeandfurniture",
+    "name": "Home and Furniture",
+    "tags": [
+      {
+        "id": "furniture",
+        "name": "Furniture"
+      },
+      {
+        "id": "appliances",
+        "name": "Appliances"
+      },
+      {
+        "id": "homedecor",
+        "name": "Home decor"
+      },
+      {
+        "id": "beddingandlinens",
+        "name": "Bedding and linens"
+      },
+      {
+        "id": "kitchenware",
+        "name": "Kitchenware"
+      },
+      {
+        "id": "outdoorfurniture",
+        "name": "Outdoor furniture"
+      },
+      {
+        "id": "lighting",
+        "name": "Lighting"
+      }
+    ]
+  }
+]

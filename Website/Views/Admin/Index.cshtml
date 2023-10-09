@@ -3,7 +3,7 @@
 }
 
 <h1>Store Management</h1>
-<p>Easly edit or add a new store to you store collection.</p>
+<p>Easley edit or add a new store to you store collection.</p>
 
 <div id="alertPlaceholder"></div>
 
@@ -60,9 +60,9 @@
                 },
                 columns: [
                     { data: 'name' },
-                    { data: 'address' },
-                    { data: 'city' },
-                    { data: 'country' },
+                    { data: 'address.streetAddressLine1' },
+                    { data: 'address.city' },
+                    { data: 'address.countryName' },
                     {
                         width: '15px',
                         data: null,
