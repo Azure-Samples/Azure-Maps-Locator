@@ -1,8 +1,8 @@
 [
   {
-    "outputFileName": "wwwroot/js/locator.min.js",
+    "outputFileName": "wwwroot/js/storelocator.min.js",
     "inputFiles": [
-      "wwwroot/js/locator.js"
+      "wwwroot/js/storelocator.js"
     ]
   }
 ]

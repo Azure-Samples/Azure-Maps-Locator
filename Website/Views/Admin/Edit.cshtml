@@ -27,7 +27,7 @@
                     </div>
                     <div class="col-md-6">
                         <label asp-for="Id" class="form-label">Store ID *</label>
-                        <input asp-for="Id" type="text" class="form-control">
+                        <input asp-for="Id" disabled type="text" class="form-control">
                         <span asp-validation-for="Id" class="text-danger"></span>
                     </div>
 
@@ -49,7 +49,7 @@
                     </div>
                     <div class="col-md-6">
                         <label asp-for="Address.CountryName" class="form-label">Country *</label>
-                        <select asp-for="Address.CountryName" class="form-select">
+                        <select asp-for="Address.CountryName" class="form-select" disabled>
                             <option selected>Choose...</option>
                         </select>
                         <span asp-validation-for="Address.CountryName" class="text-danger"></span>
@@ -118,7 +118,7 @@
                         <div id="locator-map" role="application" class="w-100 h-100 p-5 bg-body-tertiary border rounded-3 py-3" style="min-height: 300px;"></div>
                     </div>
                     <div class="col-12">
-                        <button type="submit" class="btn btn-primary">Geocode from address</button>
+                        <button id="geocodeButton" class="btn btn-primary">Geocode from address</button>
                     </div>
                 </div>
             </div>
@@ -229,14 +229,18 @@
 
     <script>
 
+        let map, marker;
+
+        const alertPlaceholder = $('#alertPlaceholder');
+        const countrySelect = $('#Address_CountryName');
+
+        // Show an alert on the page.
+        function appendAlert(message, type) {
+            alertPlaceholder.append(`<div class="alert alert-${type} alert-dismissible" role="alert">${message}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`);
+        }
+
+        // Load the countries for in the store details form.
         $(document).ready(async () => {
-            const alertPlaceholder = $('#alertPlaceholder');
-            const countrySelect = $('#Address_CountryName');
-
-            function appendAlert(message, type) {
-                alertPlaceholder.append(`<div class="alert alert-${type} alert-dismissible" role="alert">${message}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`);
-            }
-
             try {
                 const countries = await $.getJSON('/data/countries.json');
                 countries.forEach(country => {
@@ -246,68 +250,106 @@
             } catch (error) {
                 appendAlert('Failed to load countries.', 'danger');
             }
+        });
 
-            $('#storeDetails').submit(event => {
-                event.preventDefault();
+        // Geocode button click
+        $('#geocodeButton').click(async (event) => {
+            const address = $('#Address_StreetAddressLine1').val();
+            const city = $('#Address_City').val();
+            const country = $('#Address_CountryName option:selected').text();
 
-                const store = {
-                    id: $('#Id').val(),
-                    storeNumber: "",
-                    name: $('#Name').val(),
-                    address: {
-                        streetAddressLine1: $('#Address_StreetAddressLine1').val(),
-                        streetAddressLine2: "",
-                        streetAddressLine3: "",
-                        city: $('#Address_City').val(),
-                        postalCode: $('#Address_PostalCode').val(),
-                        countrySubdivisionCode: "",
-                        countryCode: $('#Address_CountryName').val(),
-                        countryName: $('#Address_CountryName option:selected').text(),
-                    },
-                    email: $('#Email').val(),
-                    phone: $('#PhoneNumber').val(),
-                    location: { coordinates: [$('#Location_Coordinates_0_').val(), $('#Location_Coordinates_1_').val()] },
-                    imageUrl: $('#ImageUrl').val(),
-                    webUrl: $('#WebUrl').val(),
-                    timeZoneUtc: 0, // UTC
-                    openingHours: [
-                        { dayOfWeek: 'Monday', open: '10:00', close: '20:30' },
-                        { dayOfWeek: 'Tuesday', open: '10:00', close: '20:30' },
-                        { dayOfWeek: 'Wednesday', open: '10:00', close: '20:30' },
-                        { dayOfWeek: 'Thursday', open: '10:00', close: '20:30' },
-                        { dayOfWeek: 'Friday', open: '10:00', close: '21:00' },
-                        { dayOfWeek: 'Saturday', open: '10:00', close: '21:00' },
-                        { dayOfWeek: 'Sunday', open: '10:00', close: '21:00' }
-                    ],
-                    features: [],
-                    note: $('#Note').val()
-                };
+            if (address && city && country) {
+                const requestUrl = `https://{azMapsDomain}/geocode?api-version=2022-12-01-preview&query=${address} ${city} ${country}`;
+                const response = await this.processRequest(requestUrl);
 
-                $.ajax({
-                    type: 'PUT',
-                    url: '/api/stores',
-                    contentType: 'application/json',
-                    data: JSON.stringify(store),
-                    success: () => appendAlert('Store details saved successfully.', 'success'),
-                    error: e => {
-                        if (e.responseJSON && e.responseJSON.errors) {
-                            const errors = e.responseJSON.errors;
-                            for (const key in errors) {
-                                if (errors.hasOwnProperty(key)) {
-                                    errors[key].forEach(errorMessage => appendAlert(`Validation Error: ${errorMessage}`, 'danger'));
-                                }
+                if (response && response.features) {
+                    // We only take the first geocoded address coordinates.
+                    var coordinates = response.features[0].geometry.coordinates;
+
+                    // Store the coordinates in the form
+                    $('#Location_Coordinates_0_').val(coordinates[0]);
+                    $('#Location_Coordinates_1_').val(coordinates[1]);
+
+                    // Update the marker on the map
+                    marker.setOptions({
+                        position: coordinates
+                    });
+
+                    // Center the map on the marker
+                    map.setCamera({
+                        center: coordinates,
+                        zoom: 16
+                    });
+                } else {
+                    appendAlert('Apologies, we were unable to perform geocoding for the provided address details.', 'danger');
+                }
+            } else {
+                appendAlert('Please provide the address details before we can proceed with geocoding.', 'warning');
+            }
+        });
+
+        // Save button click.
+        $('#storeDetails').submit(event => {
+            event.preventDefault();
+
+            // Process store details before save.
+            const store = {
+                id: $('#Id').val(),
+                storeNumber: "",
+                name: $('#Name').val(),
+                address: {
+                    streetAddressLine1: $('#Address_StreetAddressLine1').val(),
+                    streetAddressLine2: "",
+                    streetAddressLine3: "",
+                    city: $('#Address_City').val(),
+                    postalCode: $('#Address_PostalCode').val(),
+                    countrySubdivisionCode: "",
+                    countryCode: $('#Address_CountryName').val(),
+                    countryName: $('#Address_CountryName option:selected').text(),
+                },
+                email: $('#Email').val(),
+                phone: $('#PhoneNumber').val(),
+                location: { coordinates: [$('#Location_Coordinates_0_').val(), $('#Location_Coordinates_1_').val()] },
+                imageUrl: $('#ImageUrl').val(),
+                webUrl: $('#WebUrl').val(),
+                timeZoneUtc: 0, // UTC
+                openingHours: [
+                    { dayOfWeek: 'Monday', open: '10:00', close: '20:30' },
+                    { dayOfWeek: 'Tuesday', open: '10:00', close: '20:30' },
+                    { dayOfWeek: 'Wednesday', open: '10:00', close: '20:30' },
+                    { dayOfWeek: 'Thursday', open: '10:00', close: '20:30' },
+                    { dayOfWeek: 'Friday', open: '10:00', close: '21:00' },
+                    { dayOfWeek: 'Saturday', open: '10:00', close: '21:00' },
+                    { dayOfWeek: 'Sunday', open: '10:00', close: '21:00' }
+                ],
+                features: [],
+                note: $('#Note').val()
+            };
+
+            // Save store details
+            $.ajax({
+                type: 'PUT',
+                url: '/api/stores',
+                contentType: 'application/json',
+                data: JSON.stringify(store),
+                success: () => appendAlert('Store details saved successfully.', 'success'),
+                error: e => {
+                    if (e.responseJSON && e.responseJSON.errors) {
+                        const errors = e.responseJSON.errors;
+                        for (const key in errors) {
+                            if (errors.hasOwnProperty(key)) {
+                                errors[key].forEach(errorMessage => appendAlert(`Validation Error: ${errorMessage}`, 'danger'));
                             }
-                        } else {
-                            appendAlert('Failed to save store details, please try again!', 'danger');
                         }
+                    } else {
+                        appendAlert('Failed to save store details, please try again!', 'danger');
                     }
-                });
+                }
             });
-
         });
 
         // Initialize an Azure Maps instance
-        var map = new atlas.Map('locator-map', {
+        map = new atlas.Map('locator-map', {
             zoom: 16,
             center: [@longitude, @latitude],
             style: 'grayscale_light',
@@ -348,11 +390,52 @@
                 position: 'top-right'
             });
 
-            // Add a marker to the map.
-            map.markers.add(new atlas.HtmlMarker({
+            // Create a draggable HTML marker.
+            marker = new atlas.HtmlMarker({
+                draggable: true,
                 color: 'Red',
                 position: [@longitude, @latitude]
-            }));
+            });
+
+            // Add a drag event to get the position of the marker.
+            // Markers support drag, dragstart and dragend events.
+            map.events.add('drag', marker, function () {
+                var pos = marker.getOptions().position;
+
+                // Round longitude,latitude values to 5 decimal places.
+                $('#Location_Coordinates_0_').val(Math.round(pos[0] * 100000) / 100000);
+                $('#Location_Coordinates_1_').val(Math.round(pos[1] * 100000) / 100000);
+            });
+
+            // Add the marker to the map.
+            map.markers.add(marker);
         });
+
+        // This is a reusable function that sets the Azure Maps platform domain,
+        // signs the request, and makes use of any transformRequest set on the map.
+        async function processRequest(url) {
+            // Replace the domain placeholder to ensure the same Azure Maps is used throughout the app.
+            url = url.replace('{azMapsDomain}', atlas.getDomain());
+
+            // Get the authentication details from the map for use in the request.
+            var requestParams = map.authentication.signRequest({ url: url });
+
+            // Transform the request.
+            var transform = map.getServiceOptions().tranformRequest;
+            if (transform) requestParams = transform(url);
+
+            const response = await fetch(requestParams.url, {
+                method: 'GET',
+                mode: 'cors',
+                headers: new Headers(requestParams.headers)
+            });
+
+            if (!response.ok) {
+                throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
+            }
+
+            return await response.json();
+        }
+
     </script>
 }

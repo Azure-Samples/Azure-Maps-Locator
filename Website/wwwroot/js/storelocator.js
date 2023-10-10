@@ -4,6 +4,7 @@
 //
 // This source code is licensed under the MIT license found in the
 // LICENSE file in the root directory of this source tree.
+
 class storelocator {
 
     map = null;                            // Azure Maps control
@@ -659,14 +660,13 @@ class storelocator {
         return await response.json();
     }
 
-
     /**
-     * This is a reusable function that sets the Azure Maps platform domain,
-     * signs the request, and makes use of any transformRequest set on the map.
-     * @param {string} url - The URL for the API request.
-     * @returns {Promise} A Promise that resolves to the parsed JSON data from the API response.
-     * @throws {Error} Throws an error if the network response is not successful.
-     */
+    * This is a reusable function that sets the Azure Maps platform domain,
+    * signs the request, and makes use of any transformRequest set on the map.
+    * @param {string} url - The URL for the API request.
+    * @returns {Promise} A Promise that resolves to the parsed JSON data from the API response.
+    * @throws {Error} Throws an error if the network response is not successful.
+    */
     async processRequest(url) {
         // Replace the domain placeholder to ensure the same Azure Maps is used throughout the app.
         url = url.replace('{azMapsDomain}', atlas.getDomain());
@@ -690,7 +690,6 @@ class storelocator {
 
         return await response.json();
     }
-
 
     /**
      * Convert kilometers to miles.
