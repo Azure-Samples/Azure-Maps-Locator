@@ -1,4 +1,4 @@
-﻿// Azure Maps Store Locator (version 0.1 preview)
+﻿// Azure Maps Store Locator (version 1.0-rc.1)
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // https://github.com/Azure-Samples/Azure-Maps-Locator
 //
@@ -534,6 +534,11 @@ class storelocator {
 
             // Add stores to the list in the UI.
             this.search.resultsControl.innerHTML = html;
+
+            // If no stores are found, display a message to the user.
+            if (stores.length == 0) {
+                this.search.resultsControl.innerHTML = '<div class="alert alert-warning alert-dismissible" role="alert">No Results Found.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
+            }
 
             this.map.resize();
         });

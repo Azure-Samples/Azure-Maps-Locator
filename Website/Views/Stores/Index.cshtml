@@ -241,24 +241,16 @@
     </script>
 
     <script>
-        var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
-        var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
-        var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
+        // Speech Recognition
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const SpeechGrammarList = window.SpeechGrammarList || window.webkitSpeechGrammarList;
+        const SpeechRecognitionEvent = window.SpeechRecognitionEvent || window.webkitSpeechRecognitionEvent;
 
-        const startSpeechButton = document.querySelector('button#btn-start-speech');
+        const startSpeechButton = document.querySelector('#btn-start-speech');
 
         function toggleSpeechButtonState(isListening = false) {
-            if (isListening) {
-                startSpeechButton.disabled = true;
-                startSpeechButton.className = 'btn btn-success';
-               
-                //startSpeechButton.textContent = 'Listening..';
-            } else {
-                startSpeechButton.disabled = false;
-                startSpeechButton.className = 'btn btn-outline-secondary';
-
-                //startSpeechButton.textContent = 'Speech-to-text (via Web Speech API)';
-            }
+            startSpeechButton.disabled = isListening;
+            startSpeechButton.className = isListening ? 'btn btn-success' : 'btn btn-outline-secondary';
         }
 
         function handleStartSpeechButtonClick() {
@@ -269,9 +261,7 @@
                     toggleSpeechButtonState(false);
 
                     const speechResult = results[0][0].transcript.toLowerCase();
-                    console.log('Speech Result:', speechResult);
-
-                    const searchInput = document.querySelector('input#locator-search');
+                    const searchInput = document.querySelector('#locator-search');
                     searchInput.value = removePunctuation(speechResult);
 
                     // FIXME: This is a hack to trigger the search.
@@ -286,7 +276,7 @@
 
         function startSpeechToText() {
             return new Promise((resolve, reject) => {
-                recognition = new SpeechRecognition();
+                const recognition = new SpeechRecognition();
                 recognition.lang = 'nl-NL';
                 recognition.continuous = false;
                 recognition.interimResults = false;
@@ -302,10 +292,8 @@
 
         function removePunctuation(str) {
             return str
-                // Chinese punctuation
                 .replace(/[，。？！、；：]/g, '')
-                // English punctuation
-                .replace(/[\.\,]/g, '');
+                .replace(/[\.,]/g, '');
         }
     </script>
 }

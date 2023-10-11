@@ -1,6 +1,9 @@
-# Azure Maps Store Locator deployment IaC (version 0.1 preview)
+# Azure Maps Store Locator (version 1.0-rc.1)
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # https://github.com/Azure-Samples/Azure-Maps-Locator
+#
+# This source code is licensed under the MIT license found in the
+# LICENSE file in the root directory of this source tree.
 
 [CmdletBinding()]
 param(
