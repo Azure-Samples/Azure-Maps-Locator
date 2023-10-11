@@ -160,8 +160,24 @@
             <div class="card-header py-3">
                 <h4 class="my-0 fw-normal">Features</h4>
             </div>
-            <div class="card-body">
-                TODO: Features
+            <div class="card-body d-flex gap-3" id="locator-filters">
+
+                <template id="template-filters-category">
+                    <ul class="list-group" id="filter-{id}">
+                        <li class="list-group-item">
+                            <strong>{name}</strong>
+                        </li>
+                        {tags}
+                    </ul>
+                </template>
+
+                <template id="template-filters-tag">
+                    <li class="list-group-item">
+                        <input class="form-check-input me-1" type="checkbox" value="" id="tag-{id}">
+                        <label class="form-check-label" for="tag-{id}">{name}</label>
+                    </li>
+                </template>
+
             </div>
         </div>
 
@@ -206,6 +222,34 @@
                 });
             } catch (error) {
                 appendAlert('Failed to load countries.', 'danger');
+            }
+
+            try {
+                const control = document.getElementById('locator-filters');
+                const categoryTemplate = document.getElementById('template-filters-category').innerHTML;
+                const tagTemplate = document.getElementById('template-filters-tag').innerHTML;
+                const features = await $.getJSON('/api/stores/features');
+
+                var html = '';
+                for (const category of features) {
+
+                    var innerHtml = '';
+                    for (const tag of category.tags) {
+                        innerHtml += tagTemplate
+                            .replaceAll('{id}', tag.id)
+                            .replace('{name}', tag.name);
+                    }
+
+                    html += categoryTemplate
+                        .replaceAll('{id}', category.id)
+                        .replace('{name}', category.name)
+                        .replace('{tags}', innerHtml);
+                }
+
+                control.innerHTML += html;
+
+            } catch (error) {
+                appendAlert('Failed to load features.', 'danger');
             }
         });
 
