@@ -2,6 +2,8 @@
 @model Store
 @{
     ViewData["Title"] = "Edit " + Model.Name;
+
+    string[] daysOfWeek = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
 }
 
 <h1>@Model.Name</h1>
@@ -15,7 +17,7 @@
         <!-- General -->
         <div class="card mb-4 rounded-3 shadow-sm">
             <div class="card-header py-3">
-                <h4 class="my-0 fw-normal">General</h4>
+                <h4 class="my-0 fw-normal">Store Details</h4>
             </div>
             <div class="card-body">
                 <form id="storeDetails" class="row g-3">
@@ -126,71 +128,26 @@
 
         <!-- Opening hours -->
         <div class="list-group mb-4 rounded-3 shadow-sm">
-            <label class="list-group-item d-flex gap-3">
-                <input class="form-check-input flex-shrink-0" type="checkbox" value="" style="font-size: 1.375em;" checked>
-                <span class="pt-1 form-checked-content">
-                    <strong>Monday</strong>
-                    <small class="d-block text-body-secondary">
-                        <i class="bi bi-clock"></i> 1:00 – 2:00pm
-                    </small>
-                </span>
-            </label>
-            <label class="list-group-item d-flex gap-3">
-                <input class="form-check-input flex-shrink-0" type="checkbox" value="" style="font-size: 1.375em;">
-                <span class="pt-1 form-checked-content">
-                    <strong>Tuesday</strong>
-                    <small class="d-block text-body-secondary">
-                        <i class="bi bi-clock"></i> 1:00 – 2:00pm
-                    </small>
-                </span>
-            </label>
-            <label class="list-group-item d-flex gap-3">
-                <input class="form-check-input flex-shrink-0" type="checkbox" value="" style="font-size: 1.375em;">
-                <span class="pt-1 form-checked-content">
-                    <strong>Wednesday</strong>
-                    <small class="d-block text-body-secondary">
-                        <i class="bi bi-clock"></i> 1:00 – 2:00pm
-                    </small>
-                </span>
-            </label>
-            <label class="list-group-item d-flex gap-3">
-                <input class="form-check-input flex-shrink-0" type="checkbox" value="" style="font-size: 1.375em;">
-                <span class="pt-1 form-checked-content">
-                    <strong>Thursday</strong>
-                    <small class="d-block text-body-secondary">
-                        <i class="bi bi-clock"></i> 1:00 – 2:00pm
-                    </small>
-                </span>
-            </label>
-            <label class="list-group-item d-flex gap-3">
-                <input class="form-check-input flex-shrink-0" type="checkbox" value="" style="font-size: 1.375em;">
-                <span class="pt-1 form-checked-content">
-                    <strong>Friday</strong>
-                    <small class="d-block text-body-secondary">
-                        <i class="bi bi-clock"></i> 1:00 – 2:00pm
-                    </small>
-                </span>
-            </label>
-            <label class="list-group-item d-flex gap-3">
-                <input class="form-check-input flex-shrink-0" type="checkbox" value="" style="font-size: 1.375em;">
-                <span class="pt-1 form-checked-content">
-                    <strong>Saturday</strong>
-                    <small class="d-block text-body-secondary">
-                        <i class="bi bi-clock"></i> 1:00 – 2:00pm
-                    </small>
-                </span>
-            </label>
-            <label class="list-group-item d-flex gap-3">
-                <input class="form-check-input flex-shrink-0" type="checkbox" value="" style="font-size: 1.375em;">
-                <span class="pt-1 form-checked-content">
-                    <strong>Sunday</strong>
-                    <small class="d-block text-body-secondary">
-                        <i class="bi bi-clock"></i> 1:00 – 2:00pm
-                    </small>
-                </span>
-            </label>
-        </div>
+            @foreach (var day in daysOfWeek)
+            {
+                var details = Model.OpeningHours.FirstOrDefault(o => o.DayOfWeek == day);
 
+                <label class="list-group-item d-flex gap-3">
+                    <input id="@day" class="form-check-input flex-shrink-0" type="checkbox" style="font-size: 1.375em;" @(details != null ? "checked" : "")>
+                    <span class="pt-1">
+                        <strong>@day</strong>
+                    </span>
+                    <span class="pt-1">
+                        <label for="@(day)Open" class="form-label">Open</label>
+                        <input type="time" id="@(day)Open" value="@(details != null ? details.Open : "")" class="form-control">
+                    </span>
+                    <span class="pt-1">
+                        <label for="@(day)Close" class="form-label">Close</label>
+                        <input type="time" id="@(day)Close" value="@(details != null ? details.Close : "")" class="form-control">
+                    </span>
+                </label>
+            }
+        </div>
 
     </div>
 </div>
@@ -313,18 +270,21 @@
                 imageUrl: $('#ImageUrl').val(),
                 webUrl: $('#WebUrl').val(),
                 timeZoneUtc: 0, // UTC
-                openingHours: [
-                    { dayOfWeek: 'Monday', open: '10:00', close: '20:30' },
-                    { dayOfWeek: 'Tuesday', open: '10:00', close: '20:30' },
-                    { dayOfWeek: 'Wednesday', open: '10:00', close: '20:30' },
-                    { dayOfWeek: 'Thursday', open: '10:00', close: '20:30' },
-                    { dayOfWeek: 'Friday', open: '10:00', close: '21:00' },
-                    { dayOfWeek: 'Saturday', open: '10:00', close: '21:00' },
-                    { dayOfWeek: 'Sunday', open: '10:00', close: '21:00' }
-                ],
+                openingHours: [],
                 features: [],
                 note: $('#Note').val()
             };
+
+            const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+            for (const day of daysOfWeek) {
+                const open = $(`#${day}Open`).val();
+                const close = $(`#${day}Close`).val();
+
+                if ($(`#${day}`).is(':checked')) {
+                    store.openingHours.push({ dayOfWeek: day, open: open, close: close });
+                }
+            }
 
             // Save store details
             $.ajax({
