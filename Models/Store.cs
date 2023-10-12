@@ -5,6 +5,15 @@ namespace StoreLocator.Models
 {
     public class Store
     {
+        public Store()
+        {
+            Id = Guid.NewGuid().ToString();
+            Address = new Address();
+            Location = new Location();
+            OpeningHours = new List<OpeningHour>();
+            Features = new List<string>();
+        }
+
         [Required(ErrorMessage = "Id is required.")]
         [MaxLength(64, ErrorMessage = "Id cannot exceed 64 characters.")]
         [IdValidation]

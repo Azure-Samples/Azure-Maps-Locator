@@ -4,6 +4,11 @@ namespace StoreLocator.Models
 {
     public class Address
     {
+        public Address()
+        {
+            CountryCode = "";
+        }
+
         [Required(ErrorMessage = "Address is required.")]
         [StringLength(64, ErrorMessage = "Address cannot exceed 64 characters.")]
         public string StreetAddressLine1 { get; set; }

@@ -26,6 +26,18 @@ namespace StoreLocator.Controllers
             return View();
         }
 
+        public async Task<IActionResult> New()
+        {
+            var store = new Store();
+            store.Location.Coordinates.Add(0.0);
+            store.Location.Coordinates.Add(0.0);
+            var features = await _database.GetFeaturesAsync();
+            var countries = await _database.GetCountriesAsync();
+
+            // return View with store and features
+            return View(new EditStoreModel(store, features, countries, _azureMapsClientId, _azureMapsTokenUrl));
+        }
+
         public async Task<IActionResult> Edit(string id)
         {
             // Validate input values

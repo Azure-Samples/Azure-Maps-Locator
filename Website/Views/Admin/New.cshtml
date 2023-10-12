@@ -1,13 +1,13 @@
 ﻿@using System.Globalization;
 @model EditStoreModel
 @{
-    ViewData["Title"] = "Edit " + Model.Store.Name;
+    ViewData["Title"] = "New Store";
 
     string[] daysOfWeek = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
 }
 
-<h1>@Model.Store.Name</h1>
-<p>Make any changes to this store.</p>
+<h1>New Store</h1>
+<p>Make any changes to this new store.</p>
 
 <div id="alertPlaceholder"></div>
 
@@ -29,7 +29,7 @@
                     </div>
                     <div class="col-md-6">
                         <label asp-for="Store.Id" class="form-label">Store ID *</label>
-                        <input asp-for="Store.Id" disabled type="text" class="form-control">
+                        <input asp-for="Store.Id" type="text" class="form-control">
                         <span asp-validation-for="Store.Id" class="text-danger"></span>
                     </div>
 
@@ -51,7 +51,7 @@
                     </div>
                     <div class="col-md-6">
                         <label asp-for="Store.Address.CountryName" class="form-label">Country *</label>
-                        <select asp-for="Store.Address.CountryName" class="form-select" disabled>
+                        <select asp-for="Store.Address.CountryName" class="form-select">
                             <option>Choose...</option>
                             @foreach (var country in Model.Countries)
                             {
@@ -315,7 +315,7 @@
 
             // Save store details
             $.ajax({
-                type: 'PUT',
+                type: 'POST',
                 url: '/api/stores',
                 contentType: 'application/json',
                 data: JSON.stringify(store),

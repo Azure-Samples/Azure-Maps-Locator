@@ -8,6 +8,7 @@ namespace StoreLocator.Models
         public Location()
         {
             Type = "Point";
+            Coordinates = new List<double>();
         }
 
         public string Type { get; private set; }
