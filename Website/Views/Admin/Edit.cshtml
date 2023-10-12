@@ -1,7 +1,14 @@
 ﻿@using System.Globalization;
 @model EditStoreModel
 @{
-    ViewData["Title"] = "Edit " + Model.Store.Name;
+    if (Model.IsNew)
+    {
+        ViewData["Title"] = "Add New Store";
+    }
+    else
+    {
+        ViewData["Title"] = "Edit " + Model.Store.Name;
+    }
 
     string[] daysOfWeek = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
 }
@@ -29,7 +36,7 @@
                     </div>
                     <div class="col-md-6">
                         <label asp-for="Store.Id" class="form-label">Store ID *</label>
-                        <input asp-for="Store.Id" disabled type="text" class="form-control">
+                        <input asp-for="Store.Id" type="text" class="form-control">
                         <span asp-validation-for="Store.Id" class="text-danger"></span>
                     </div>
 
@@ -51,7 +58,7 @@
                     </div>
                     <div class="col-md-6">
                         <label asp-for="Store.Address.CountryName" class="form-label">Country *</label>
-                        <select asp-for="Store.Address.CountryName" class="form-select" disabled>
+                        <select asp-for="Store.Address.CountryName" class="form-select">
                             <option>Choose...</option>
                             @foreach (var country in Model.Countries)
                             {
@@ -227,6 +234,12 @@
             }
         }
 
+        @if(!Model.IsNew)
+        {
+            @Html.Raw("$('#Store_Id').disabled = true;");
+            @Html.Raw("$('#Store_Address_CountryName').disabled = true;");
+        }
+
         const alertPlaceholder = $('#alertPlaceholder');
 
         // Show an alert on the page.
@@ -315,7 +328,7 @@
 
             // Save store details
             $.ajax({
-                type: 'PUT',
+                type: '@(Model.IsNew ? "POST" : "PUT")',
                 url: '/api/stores',
                 contentType: 'application/json',
                 data: JSON.stringify(store),

@@ -354,6 +354,7 @@ class storelocator {
     /**
     * Performs a fuzzy search using the given query to find locations and points of interest.
     * @param {string} query - The search query to find locations and points of interest.
+    * @param {string[]} filters - The search filters to apply to the search.
     */
     fuzzySearch(query) {
         const searchRequestUrl = this.search.url.replace('{query}', encodeURIComponent(query))
@@ -638,9 +639,9 @@ class storelocator {
      * @returns {Promise} A Promise that resolves to the parsed JSON data from the API response.
      * @throws {Error} Throws an error if the network response is not successful.
      */
-    async getNearbyStores(position) {
+    async getNearbyStores(position, filters = []) {
         // Get the stores within the specified range.
-        const response = await fetch(`/api/stores/search?latitude=${position[1]}&longitude=${position[0]}&rangeInKm=${this.options.rangeInKm}`);
+        const response = await fetch(`/api/stores/search?latitude=${position[1]}&longitude=${position[0]}&rangeInKm=${this.options.rangeInKm}&tags=${filters}`);
 
         if (!response.ok) {
             throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);

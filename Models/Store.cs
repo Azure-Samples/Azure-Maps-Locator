@@ -14,10 +14,19 @@ namespace StoreLocator.Models
             Features = new List<string>();
         }
 
+        private string _id;
+
         [Required(ErrorMessage = "Id is required.")]
         [MaxLength(64, ErrorMessage = "Id cannot exceed 64 characters.")]
         [IdValidation]
-        public string Id { get; set; }
+        public string Id
+        {
+            get { return _id; }
+            set
+            {
+                _id = value.ToLower();
+            }
+        }
 
         [MaxLength(64, ErrorMessage = "Store Number cannot exceed 64 characters.")]
         public string StoreNumber { get; set; }

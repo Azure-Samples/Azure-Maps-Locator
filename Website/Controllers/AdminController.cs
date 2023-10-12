@@ -28,14 +28,21 @@ namespace StoreLocator.Controllers
 
         public async Task<IActionResult> New()
         {
-            var store = new Store();
-            store.Location.Coordinates.Add(0.0);
-            store.Location.Coordinates.Add(0.0);
-            var features = await _database.GetFeaturesAsync();
-            var countries = await _database.GetCountriesAsync();
+            var model = new EditStoreModel
+            {
+                IsNew = true,
+                Store = new Store(),
+                Features = await _database.GetFeaturesAsync(),
+                Countries = await _database.GetCountriesAsync(),
+                AzureMapsClientId = _azureMapsClientId,
+                AzureMapsTokenUrl = _azureMapsTokenUrl
+            };
+
+            model.Store.Location.Coordinates.Add(0.0);
+            model.Store.Location.Coordinates.Add(0.0);
 
             // return View with store and features
-            return View(new EditStoreModel(store, features, countries, _azureMapsClientId, _azureMapsTokenUrl));
+            return View("Edit", model);
         }
 
         public async Task<IActionResult> Edit(string id)
@@ -50,11 +57,18 @@ namespace StoreLocator.Controllers
 
             if (store != null)
             {
-                var features = await _database.GetFeaturesAsync();
-                var countries = await _database.GetCountriesAsync();
+                var model = new EditStoreModel
+                {
+                    IsNew = false,
+                    Store = store,
+                    Features = await _database.GetFeaturesAsync(),
+                    Countries = await _database.GetCountriesAsync(),
+                    AzureMapsClientId = _azureMapsClientId,
+                    AzureMapsTokenUrl = _azureMapsTokenUrl
+                };
 
                 // return View with store and features
-                return View(new EditStoreModel(store, features, countries, _azureMapsClientId, _azureMapsTokenUrl));
+                return View(model);
             }
 
             // If no store is found with the specified ID, return NotFound (404) response

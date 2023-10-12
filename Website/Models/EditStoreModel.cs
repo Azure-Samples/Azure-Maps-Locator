@@ -2,19 +2,11 @@
 {
     public class EditStoreModel
     {
-        public readonly Store Store;
-        public readonly List<Feature> Features;
-        public readonly List<Country> Countries;
-        public readonly string AzureMapsClientId;
-        public readonly string AzureMapsTokenUrl;
-
-        public EditStoreModel(Store store, List<Feature> features, List<Country> countries, string azureMapsClientId, string zzureMapsTokenUrl)
-        {
-            Store = store;
-            Features = features;
-            Countries = countries;
-            AzureMapsClientId = azureMapsClientId;
-            AzureMapsTokenUrl = zzureMapsTokenUrl;
-        }
+        public bool IsNew { get; set; }
+        public Store Store { get; set; }
+        public List<Feature> Features { get; set; }
+        public List<Country> Countries { get; set; }
+        public string AzureMapsClientId { get; set; }
+        public string AzureMapsTokenUrl { get; set; }
     }
 }

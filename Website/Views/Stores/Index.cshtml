@@ -89,7 +89,7 @@
 
                             <template id="template-filters-tag">
                                 <label class="list-group-item d-flex gap-2">
-                                    <input class="form-check-input flex-shrink-0" type="checkbox" value="">
+                                    <input class="form-check-input flex-shrink-0" type="checkbox" value="{id}" onchange="handleCheckboxChange(this)">
                                     <span>{name}</span>
                                 </label>
                             </template>
@@ -99,8 +99,8 @@
 
                     <div class="d-flex flex-align-end bg-light">
                         <div class="d-flex justify-content-between p-3 w-100">
-                            <button type="button" class="btn btn-outline-danger">Reset</button>
-                            <button type="button" class="btn btn-primary">Search</button>
+                            <button type="button" onclick="resetButtonClick(event)" class="btn btn-outline-danger">Reset</button>
+                            <button type="button" onclick="filterButtonClick(event)" class="btn btn-primary">Search</button>
                         </div>
                     </div>
                 </div>
@@ -185,6 +185,9 @@
         // Azure Maps Store Locator instance.
         var locator;
 
+        // Array of features to filter by.
+        var features = [];
+
         // Initialize an Azure Maps instance
         var map = new atlas.Map('locator-map', {
             zoom: 6,
@@ -236,6 +239,32 @@
             // Show all stores in the Netherlands.
             locator.showStoresByCountry('US');
         });
+
+        const searchInput = document.getElementById('locator-search');
+
+        // Handle the filter button click event.
+        function filterButtonClick(e) {
+            // showNearbyStores
+        }
+
+        // Handle the reset button click event.
+        function resetButtonClick(e) {
+            features = [];
+            // showNearbyStores
+        }
+
+        // Handle checkbox change events for the filters.
+        function handleCheckboxChange(checkbox) {
+            if (checkbox.checked) {
+                features.push(checkbox.value);
+            } else {
+                var index = features.indexOf(checkbox.value);
+
+                if (index !== -1) {
+                    features.splice(index, 1);
+                }
+            }
+        }
     </script>
 
     <script>
@@ -259,11 +288,7 @@
                     toggleSpeechButtonState(false);
 
                     const speechResult = results[0][0].transcript.toLowerCase();
-                    const searchInput = document.querySelector('#locator-search');
                     searchInput.value = removePunctuation(speechResult);
-
-                    // FIXME: This is a hack to trigger the search.
-                    // We should refactor the locator's search trigger to better support accessibility.
                     locator.fuzzySearch(searchInput.value);
                 })
                 .catch((error) => {

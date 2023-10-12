@@ -29,16 +29,6 @@ namespace StoreLocator.Controllers
             return Ok(stores);
         }
 
-        // GET: api/stores/countries
-        [HttpGet("countries")]
-        [AllowAnonymous]
-        public async Task<ActionResult<List<Feature>>> GetCountriesAsync()
-        {
-            var countries = await _database.GetCountriesAsync();
-
-            return Ok(countries);
-        }
-
         // GET: api/stores/features
         [HttpGet("features")]
         [AllowAnonymous]
