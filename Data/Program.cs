@@ -39,9 +39,9 @@ class Program
 
         database = await cosmos.CreateDatabaseIfNotExistsAsync(databaseName);
 
-        await InsertDataAsync<Store>("./Input/stores.json", "stores", "/address/countryCode");
-        await InsertDataAsync<Feature>("./Input/features.json", "features", "/id");
-        await InsertDataAsync<Country>("./Input/countries.json", "countries", "/id");
+        await InsertDataAsync<Store>("./Data/stores.json", "stores", "/address/countryCode");
+        await InsertDataAsync<Feature>("./Data/features.json", "features", "/id");
+        await InsertDataAsync<Country>("./Data/countries.json", "countries", "/id");
 
         Console.WriteLine("Done");
     }

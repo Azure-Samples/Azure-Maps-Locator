@@ -49,7 +49,6 @@ try {
     $group = "rg-$Name"
     $azuremaps = "map-$Name"
     $cosmosdb = "db-$Name$suffix"
-    $database = "storelocator"
     $webserverplan = "plan-$Name"
     $webappname = "web-$Name$suffix"
 
@@ -65,20 +64,8 @@ try {
     echo "- Creating an Azure Cosmos DB server named '$cosmosdb'..."
     az cosmosdb create -g $group --name $cosmosdb --locations regionName=$Location --capabilities EnableServerless | Out-Null
 
-    echo "- Creating a database named '$DatabaseName'..."
-    az cosmosdb sql database create -g $group --account-name $cosmosdb --name $DatabaseName | Out-Null
-
-    iwr "https://samples.azuremaps.com/storelocator/stores.json" -o stores$suffix.json
-    az cosmosdb sql container import --account-name $cosmosdb --database-name $DatabaseName --container-name "stores" --input-file stores$suffix.json --partition-key-path /address/countryCode | Out-Null
-    Remove-Item stores$suffix.json | Out-Null
-
-    iwr "https://samples.azuremaps.com/storelocator/features.json" -o features$suffix.json
-    az cosmosdb sql container import --account-name $cosmosdb --database-name $DatabaseName --container-name "features" --input-file features$suffix.json --partition-key-path /id | Out-Null
-    Remove-Item features$suffix.json | Out-Null
-
-    iwr "https://samples.azuremaps.com/storelocator/countries.json" -o countries$suffix.json
-    az cosmosdb sql container import --account-name $cosmosdb --database-name $DatabaseName --container-name "countries" --input-file countries$suffix.json --partition-key-path /id | Out-Null
-    Remove-Item countries$suffix.json | Out-Null
+    #echo "- Creating a database named '$DatabaseName'..."
+    #az cosmosdb sql database create -g $group --account-name $cosmosdb --name $DatabaseName | Out-Null
 
     # Get Cosmos DB connection string
     $connectionString = $(az cosmosdb keys list -g $group --name $cosmosdb --type connection-strings --query 'connectionStrings[0].connectionString' -o tsv)

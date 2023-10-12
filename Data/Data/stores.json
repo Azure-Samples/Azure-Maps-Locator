@@ -21,7 +21,7 @@
         40.76053
       ]
     },
-    "imageUrl": "https://samples.azuremaps.com/images/stores/store.webp",
+    "imageUrl": "https://samples.azuremaps.com/storelocator/store.webp",
     "webUrl": "https://www.microsoft.com/en-us/store/locations",
     "timeZoneUtc": -4,
     "openingHours": [
@@ -86,7 +86,7 @@
         52.398851
       ]
     },
-    "imageUrl": "https://samples.azuremaps.com/images/stores/store.webp",
+    "imageUrl": "https://samples.azuremaps.com/storelocator/store.webp",
     "webUrl": "https://www.microsoft.com/en-us/store/locations",
     "timeZoneUtc": 1,
     "openingHours": [
@@ -151,7 +151,7 @@
         52.353247
       ]
     },
-    "imageUrl": "https://samples.azuremaps.com/images/stores/store.webp",
+    "imageUrl": "https://samples.azuremaps.com/storelocator/store.webp",
     "webUrl": "https://www.microsoft.com/en-us/store/locations",
     "timeZoneUtc": 1,
     "openingHours": [
@@ -216,7 +216,7 @@
         52.370026
       ]
     },
-    "imageUrl": "https://samples.azuremaps.com/images/stores/store.webp",
+    "imageUrl": "https://samples.azuremaps.com/storelocator/store.webp",
     "webUrl": "https://www.microsoft.com/en-us/store/locations",
     "timeZoneUtc": 1,
     "openingHours": [
@@ -281,7 +281,7 @@
         52.331
       ]
     },
-    "imageUrl": "https://samples.azuremaps.com/images/stores/store.webp",
+    "imageUrl": "https://samples.azuremaps.com/storelocator/store.webp",
     "webUrl": "https://www.microsoft.com/en-us/store/locations",
     "timeZoneUtc": 1,
     "openingHours": [
@@ -346,7 +346,7 @@
         52.365251
       ]
     },
-    "imageUrl": "https://samples.azuremaps.com/images/stores/store.webp",
+    "imageUrl": "https://samples.azuremaps.com/storelocator/store.webp",
     "webUrl": "https://www.microsoft.com/en-us/store/locations",
     "timeZoneUtc": 1,
     "openingHours": [

@@ -188,7 +188,7 @@
         // Initialize an Azure Maps instance
         var map = new atlas.Map('locator-map', {
             zoom: 6,
-            center: [5.534, 52.146],
+            center: [-73.975346, 40.76053],
             style: 'grayscale_light',
             view: 'Auto',
 
@@ -229,12 +229,12 @@
 
             // Create a store locator instance
             locator = new storelocator(map, {
-                countrySet: ['NL'], // An array of country region ISO2 values to limit searches to
-                language: 'nl-NL'   // Language in which search results should be returned.
+                countrySet: ['US'], // An array of country region ISO2 values to limit searches to
+                language: 'en-US'   // Language in which search results should be returned.
             });
 
             // Show all stores in the Netherlands.
-            locator.showStoresByCountry('NL');
+            locator.showStoresByCountry('US');
         });
     </script>
 

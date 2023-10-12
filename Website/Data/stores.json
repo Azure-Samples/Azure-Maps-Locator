@@ -1,0 +1,392 @@
+[
+  {
+    "id": "microsoft-experience-center",
+    "storeNumber": "1",
+    "name": "Microsoft Experience Center - Fifth Avenue",
+    "address": {
+      "streetAddressLine1": "677 Fifth Avenue",
+      "streetAddressLine2": null,
+      "streetAddressLine3": null,
+      "city": "New York",
+      "postalCode": "10022",
+      "countrySubdivisionCode": "NY",
+      "countryCode": "US",
+      "countryName": "United States of America"
+    },
+    "email": "experience-center@microsoft.com",
+    "phoneNumber": "+1 212-824-3100",
+    "location": {
+      "coordinates": [
+        -73.975346,
+        40.76053
+      ]
+    },
+    "imageUrl": "https://samples.azuremaps.com/storelocator/store.webp",
+    "webUrl": "https://www.microsoft.com/en-us/store/locations",
+    "timeZoneUtc": -4,
+    "openingHours": [
+      {
+        "dayOfWeek": "Monday",
+        "open": "10:00",
+        "close": "20:00"
+      },
+      {
+        "dayOfWeek": "Tuesday",
+        "open": "10:00",
+        "close": "20:00"
+      },
+      {
+        "dayOfWeek": "Wednesday",
+        "open": "10:00",
+        "close": "20:00"
+      },
+      {
+        "dayOfWeek": "Thursday",
+        "open": "10:00",
+        "close": "20:00"
+      },
+      {
+        "dayOfWeek": "Friday",
+        "open": "10:00",
+        "close": "20:00"
+      },
+      {
+        "dayOfWeek": "Saturday",
+        "open": "10:00",
+        "close": "20:00"
+      },
+      {
+        "dayOfWeek": "Sunday",
+        "open": "11:00",
+        "close": "18:00"
+      }
+    ],
+    "features": [ "creditcard", "freeinternet" ],
+    "note": "Find us on Fifth Avenue, between 53rd and 54th Streets. Closest parking is available in the ICON Parking Garage located on 53rd and 54th (entrance on both sides) and between 5th and 6th Avenues. Parking not validated."
+  },
+  {
+    "id": "buikslotermeerplein-201",
+    "storeNumber": "1000",
+    "name": "Amsterdam Buikslotermeer",
+    "address": {
+      "streetAddressLine1": "Buikslotermeerplein 201",
+      "streetAddressLine2": null,
+      "streetAddressLine3": null,
+      "city": "Amsterdam",
+      "postalCode": "1025 XB",
+      "countrySubdivisionCode": "NH",
+      "countryCode": "NL",
+      "countryName": "Netherlands"
+    },
+    "email": "info@contoso.com",
+    "phoneNumber": "+1 555-2368",
+    "location": {
+      "coordinates": [
+        4.938129,
+        52.398851
+      ]
+    },
+    "imageUrl": "https://samples.azuremaps.com/storelocator/store.webp",
+    "webUrl": "https://www.microsoft.com/en-us/store/locations",
+    "timeZoneUtc": 1,
+    "openingHours": [
+      {
+        "dayOfWeek": "Monday",
+        "open": "13:00",
+        "close": "17:30"
+      },
+      {
+        "dayOfWeek": "Tuesday",
+        "open": "10:00",
+        "close": "17:30"
+      },
+      {
+        "dayOfWeek": "Wednesday",
+        "open": "10:00",
+        "close": "17:30"
+      },
+      {
+        "dayOfWeek": "Thursday",
+        "open": "10:00",
+        "close": "17:30"
+      },
+      {
+        "dayOfWeek": "Friday",
+        "open": "10:00",
+        "close": "17:30"
+      },
+      {
+        "dayOfWeek": "Saturday",
+        "open": "10:00",
+        "close": "17:00"
+      },
+      {
+        "dayOfWeek": "Sunday",
+        "open": "12:00",
+        "close": "17:00"
+      }
+    ],
+    "features": [ "womensclothing" ],
+    "note": ""
+  },
+  {
+    "id": "ferdinand-bolstraat-124",
+    "storeNumber": "1001",
+    "name": "Amsterdam Ferdinand Bolstraat",
+    "address": {
+      "streetAddressLine1": "Ferdinand Bolstraat 124",
+      "streetAddressLine2": null,
+      "streetAddressLine3": null,
+      "city": "Amsterdam",
+      "postalCode": "1072 LE",
+      "countrySubdivisionCode": "NH",
+      "countryCode": "NL",
+      "countryName": "Netherlands"
+    },
+    "email": "info@contoso.com",
+    "phoneNumber": "+1 555-2368",
+    "location": {
+      "coordinates": [
+        4.890771,
+        52.353247
+      ]
+    },
+    "imageUrl": "https://samples.azuremaps.com/storelocator/store.webp",
+    "webUrl": "https://www.microsoft.com/en-us/store/locations",
+    "timeZoneUtc": 1,
+    "openingHours": [
+      {
+        "dayOfWeek": "Monday",
+        "open": "12:00",
+        "close": "18:00"
+      },
+      {
+        "dayOfWeek": "Tuesday",
+        "open": "10:00",
+        "close": "18:00"
+      },
+      {
+        "dayOfWeek": "Wednesday",
+        "open": "10:00",
+        "close": "18:00"
+      },
+      {
+        "dayOfWeek": "Thursday",
+        "open": "10:00",
+        "close": "18:00"
+      },
+      {
+        "dayOfWeek": "Friday",
+        "open": "10:00",
+        "close": "18:00"
+      },
+      {
+        "dayOfWeek": "Saturday",
+        "open": "10:00",
+        "close": "18:00"
+      },
+      {
+        "dayOfWeek": "Sunday",
+        "open": "12:00",
+        "close": "17:00"
+      }
+    ],
+    "features": [ "womensclothing" ],
+    "note": ""
+  },
+  {
+    "id": "kalverstraat-110",
+    "storeNumber": "1002",
+    "name": "Amsterdam Flagship Kalverstr.",
+    "address": {
+      "streetAddressLine1": "Kalverstraat 110",
+      "streetAddressLine2": null,
+      "streetAddressLine3": null,
+      "city": "Amsterdam",
+      "postalCode": "1012 PJ",
+      "countrySubdivisionCode": "NH",
+      "countryCode": "NL",
+      "countryName": "Netherlands"
+    },
+    "email": "info@contoso.com",
+    "phoneNumber": "+1 555-2368",
+    "location": {
+      "coordinates": [
+        4.89116,
+        52.370026
+      ]
+    },
+    "imageUrl": "https://samples.azuremaps.com/storelocator/store.webp",
+    "webUrl": "https://www.microsoft.com/en-us/store/locations",
+    "timeZoneUtc": 1,
+    "openingHours": [
+      {
+        "dayOfWeek": "Monday",
+        "open": "11:00",
+        "close": "18:00"
+      },
+      {
+        "dayOfWeek": "Tuesday",
+        "open": "10:00",
+        "close": "18:00"
+      },
+      {
+        "dayOfWeek": "Wednesday",
+        "open": "10:00",
+        "close": "20:00"
+      },
+      {
+        "dayOfWeek": "Thursday",
+        "open": "10:00",
+        "close": "20:00"
+      },
+      {
+        "dayOfWeek": "Friday",
+        "open": "10:00",
+        "close": "20:00"
+      },
+      {
+        "dayOfWeek": "Saturday",
+        "open": "10:00",
+        "close": "20:00"
+      },
+      {
+        "dayOfWeek": "Sunday",
+        "open": "11:00",
+        "close": "18:00"
+      }
+    ],
+    "features": [ "cashonly", "airconditioning", "womensclothing" ],
+    "note": ""
+  },
+  {
+    "id": "groot-gelderlandplein-115",
+    "storeNumber": "1003",
+    "name": "Amsterdam Gr Gelderlandplein",
+    "address": {
+      "streetAddressLine1": "Groot Gelderlandplein 115",
+      "streetAddressLine2": null,
+      "streetAddressLine3": null,
+      "city": "Amsterdam",
+      "postalCode": "1082 LV",
+      "countrySubdivisionCode": "NH",
+      "countryCode": "NL",
+      "countryName": "Netherlands"
+    },
+    "email": "info@contoso.com",
+    "phoneNumber": "+1 555-2368",
+    "location": {
+      "coordinates": [
+        4.877354,
+        52.331
+      ]
+    },
+    "imageUrl": "https://samples.azuremaps.com/storelocator/store.webp",
+    "webUrl": "https://www.microsoft.com/en-us/store/locations",
+    "timeZoneUtc": 1,
+    "openingHours": [
+      {
+        "dayOfWeek": "Monday",
+        "open": "12:00",
+        "close": "18:00"
+      },
+      {
+        "dayOfWeek": "Tuesday",
+        "open": "9:30",
+        "close": "18:00"
+      },
+      {
+        "dayOfWeek": "Wednesday",
+        "open": "9:30",
+        "close": "18:00"
+      },
+      {
+        "dayOfWeek": "Thursday",
+        "open": "9:30",
+        "close": "18:00"
+      },
+      {
+        "dayOfWeek": "Friday",
+        "open": "9:30",
+        "close": "18:00"
+      },
+      {
+        "dayOfWeek": "Saturday",
+        "open": "9:30",
+        "close": "18:00"
+      },
+      {
+        "dayOfWeek": "Sunday",
+        "open": "12:00",
+        "close": "17:00"
+      }
+    ],
+    "features": [ "carpark", "womensclothing" ],
+    "note": ""
+  },
+  {
+    "id": "kinkerstraat-231",
+    "storeNumber": "1004",
+    "name": "Amsterdam Kinkerstraat",
+    "address": {
+      "streetAddressLine1": "Kinkerstraat 231",
+      "streetAddressLine2": null,
+      "streetAddressLine3": null,
+      "city": "Amsterdam",
+      "postalCode": "1053 EP",
+      "countrySubdivisionCode": "NH",
+      "countryCode": "NL",
+      "countryName": "Netherlands"
+    },
+    "email": "info@contoso.com",
+    "phoneNumber": "+1 555-2368",
+    "location": {
+      "coordinates": [
+        4.865332,
+        52.365251
+      ]
+    },
+    "imageUrl": "https://samples.azuremaps.com/storelocator/store.webp",
+    "webUrl": "https://www.microsoft.com/en-us/store/locations",
+    "timeZoneUtc": 1,
+    "openingHours": [
+      {
+        "dayOfWeek": "Monday",
+        "open": "12:00",
+        "close": "18:00"
+      },
+      {
+        "dayOfWeek": "Tuesday",
+        "open": "10:00",
+        "close": "18:00"
+      },
+      {
+        "dayOfWeek": "Wednesday",
+        "open": "10:00",
+        "close": "18:00"
+      },
+      {
+        "dayOfWeek": "Thursday",
+        "open": "10:00",
+        "close": "18:00"
+      },
+      {
+        "dayOfWeek": "Friday",
+        "open": "10:00",
+        "close": "18:00"
+      },
+      {
+        "dayOfWeek": "Saturday",
+        "open": "10:00",
+        "close": "18:00"
+      },
+      {
+        "dayOfWeek": "Sunday",
+        "open": "12:00",
+        "close": "17:00"
+      }
+    ],
+    "features": [ "airconditioning", "carpark", "womensclothing" ],
+    "note": ""
+  }
+]

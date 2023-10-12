@@ -22,9 +22,9 @@ namespace StoreLocator.Controllers
 
         // GET: api/stores
         [HttpGet()]
-        public async Task<ActionResult<List<Store>>> GetAllStoresAsync()
+        public async Task<ActionResult<List<Store>>> GetStoresAsync()
         {
-            var stores = await _database.GetAllStoresAsync();
+            var stores = await _database.GetStoresAsync();
 
             return Ok(stores);
         }
@@ -32,9 +32,9 @@ namespace StoreLocator.Controllers
         // GET: api/stores/countries
         [HttpGet("countries")]
         [AllowAnonymous]
-        public async Task<ActionResult<List<Feature>>> GetAllCountriesAsync()
+        public async Task<ActionResult<List<Feature>>> GetCountriesAsync()
         {
-            var countries = await _database.GetAllCountriesAsync();
+            var countries = await _database.GetCountriesAsync();
 
             return Ok(countries);
         }
@@ -42,9 +42,9 @@ namespace StoreLocator.Controllers
         // GET: api/stores/features
         [HttpGet("features")]
         [AllowAnonymous]
-        public async Task<ActionResult<List<Feature>>> GetAllFeaturesAsync()
+        public async Task<ActionResult<List<Feature>>> GetFeaturesAsync()
         {
-            var tags = await _database.GetAllFeaturesAsync();
+            var tags = await _database.GetFeaturesAsync();
 
             return Ok(tags);
         }

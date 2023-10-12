@@ -11,6 +11,7 @@
     <div class="col-lg-6">
         <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">@Model.Name</h1>
         <p class="lead">@Model.Address.StreetAddressLine1, @Model.Address.City, @Model.Address.CountryName</p>
+        <p class="lead">@Model.Note</p>
         <div class="d-grid gap-2 d-md-flex justify-content-md-start">
             <button type="button" class="btn btn-primary btn-lg px-4 me-md-2" onclick="window.location.href = 'https://bing.com/maps/?where1=@Model.Address.StreetAddressLine1,@Model.Address.City,@Model.Address.CountryName'">Directions</button>
             <button type="button" class="btn btn-outline-secondary btn-lg px-4" onclick="window.location.href = '@Model.WebUrl'">Website</button>

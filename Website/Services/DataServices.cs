@@ -3,6 +3,7 @@ using Microsoft.Azure.Cosmos.Fluent;
 using StoreLocator.Helpers;
 using StoreLocator.Models;
 using System.Net;
+using System.Text.Json;
 
 namespace StoreLocator.Services
 {
@@ -39,9 +40,60 @@ namespace StoreLocator.Services
             _storesContainer = await database.Database.CreateContainerIfNotExistsAsync("stores", "/address/countryCode");
             _featuresContainer = await database.Database.CreateContainerIfNotExistsAsync("features", "/id");
             _countriesContainer = await database.Database.CreateContainerIfNotExistsAsync("countries", "/id");
+
+            if (database.StatusCode == HttpStatusCode.Created)
+            {
+                // Load initial demo data
+                await InsertDataAsync<Store>("./Data/stores.json", _storesContainer);
+                await InsertDataAsync<Feature>("./Data/features.json", _featuresContainer);
+                await InsertDataAsync<Country>("./Data/countries.json", _countriesContainer);
+            }
         }
 
-        public async Task<List<Store>> GetAllStoresAsync()
+        private static async Task InsertDataAsync<T>(string jsonFilePath, Container container)
+        {
+            try
+            {
+                if (!File.Exists(jsonFilePath))
+                {
+                    throw new Exception($"JSON file '{jsonFilePath}' not found. Make sure the file exists and try again.");
+                }
+
+                string jsonContent = File.ReadAllText(jsonFilePath);
+
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+
+                var items = JsonSerializer.Deserialize<List<T>>(jsonContent, options);
+
+                foreach (var item in items)
+                {
+                    await container.UpsertItemAsync(item);
+                }
+            }
+            catch (JsonException ex)
+            {
+                Console.WriteLine($"Invalid JSON format in the file '{jsonFilePath}'. Please make sure the JSON is valid. - {ex.Message}");
+
+                throw;
+            }
+            catch (CosmosException ex)
+            {
+                Console.WriteLine($"Cosmos DB error: {ex.StatusCode} - {ex.Message}");
+
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while inserting {typeof(T).Name} data: {ex.Message}");
+
+                throw;
+            }
+        }
+
+        public async Task<List<Store>> GetStoresAsync()
         {
             var queryText = "SELECT * FROM s";
             var queryDefinition = new QueryDefinition(queryText);
@@ -49,7 +101,7 @@ namespace StoreLocator.Services
             return await QueryStoresAsync<Store>(queryDefinition);
         }
 
-        public async Task<List<Feature>> GetAllFeaturesAsync()
+        public async Task<List<Feature>> GetFeaturesAsync()
         {
             var queryText = "SELECT * FROM f";
             var queryDefinition = new QueryDefinition(queryText);
@@ -66,7 +118,7 @@ namespace StoreLocator.Services
             return items;
         }
 
-        public async Task<List<Country>> GetAllCountriesAsync()
+        public async Task<List<Country>> GetCountriesAsync()
         {
             var queryText = "SELECT * FROM c";
             var queryDefinition = new QueryDefinition(queryText);

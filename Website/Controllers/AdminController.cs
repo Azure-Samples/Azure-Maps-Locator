@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.Cosmos;
 using StoreLocator.Models;
 using StoreLocator.Services;
 
@@ -39,11 +38,11 @@ namespace StoreLocator.Controllers
 
             if (store != null)
             {
-                ViewBag.AzureMapsClientId = _azureMapsClientId;
-                ViewBag.AzureMapsTokenUrl = _azureMapsTokenUrl;
+                var features = await _database.GetFeaturesAsync();
+                var countries = await _database.GetCountriesAsync();
 
-                // If a store with the specified ID is found, return it as Ok (200) response
-                return View(store);
+                // return View with store and features
+                return View(new EditStoreModel(store, features, countries, _azureMapsClientId, _azureMapsTokenUrl));
             }
 
             // If no store is found with the specified ID, return NotFound (404) response

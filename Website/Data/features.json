@@ -1,0 +1,84 @@
+[
+  {
+    "id": "services",
+    "name": "Services",
+    "tags": [
+      {
+        "id": "airconditioning",
+        "name": "Air conditioning"
+      },
+      {
+        "id": "carpark",
+        "name": "Car park"
+      },
+      {
+        "id": "cashonly",
+        "name": "Cash only"
+      },
+      {
+        "id": "creditcard",
+        "name": "Credit card / Debit card accepted"
+      },
+      {
+        "id": "disabledaccess",
+        "name": "Disabled access"
+      },
+      {
+        "id": "freeinternet",
+        "name": "Free internet"
+      }
+    ]
+  },
+  {
+    "id": "foodanddining",
+    "name": "Food and Dining",
+    "tags": [
+      {
+        "id": "vegetarianoptions",
+        "name": "Vegetarian options"
+      },
+      {
+        "id": "veganoptions",
+        "name": "Vegan options"
+      },
+      {
+        "id": "glutenfreeoptions",
+        "name": "Gluten-free options"
+      },
+      {
+        "id": "childfriendly",
+        "name": "Child-friendly"
+      },
+      {
+        "id": "outdoorseating",
+        "name": "Outdoor seating"
+      },
+      {
+        "id": "takeoutavailable",
+        "name": "Takeout available"
+      },
+      {
+        "id": "deliveryavailable",
+        "name": "Delivery available"
+      }
+    ]
+  },
+  {
+    "id": "clothingandapparel",
+    "name": "Clothing and Apparel",
+    "tags": [
+      {
+        "id": "mensclothing",
+        "name": "Men's clothing"
+      },
+      {
+        "id": "womensclothing",
+        "name": "Women's clothing"
+      },
+      {
+        "id": "childrensclothing",
+        "name": "Children's clothing"
+      }
+    ]
+  }
+]

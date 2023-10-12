@@ -15,7 +15,7 @@ The Azure Maps Store Locator project provides a range of powerful features, incl
 - Show travel time for both walking and driving.
 - Present store details via popups and directions.
 - Apply filters based on store properties or tags.
-- Explore a store detail page with an embedded map and weather conditions.
+- Explore a store detail page with an embedded map.
 - Access an admin page for editing and adding store details.
 - Enable auto-deployment within your Azure subscription.
 
