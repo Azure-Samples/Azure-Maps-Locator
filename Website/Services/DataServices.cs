@@ -10,6 +10,7 @@ namespace StoreLocator.Services
     {
         private Container _storesContainer;
         private Container _featuresContainer;
+        private Container _countriesContainer;
         private readonly CosmosClient _cosmosClient;
 
         public DataServices(IConfiguration configuration)
@@ -37,6 +38,7 @@ namespace StoreLocator.Services
             // Create a container if it doesn't exist
             _storesContainer = await database.Database.CreateContainerIfNotExistsAsync("stores", "/address/countryCode");
             _featuresContainer = await database.Database.CreateContainerIfNotExistsAsync("features", "/id");
+            _countriesContainer = await database.Database.CreateContainerIfNotExistsAsync("countries", "/id");
         }
 
         public async Task<List<Store>> GetAllStoresAsync()
@@ -54,6 +56,23 @@ namespace StoreLocator.Services
 
             var queryResult = _featuresContainer.GetItemQueryIterator<Feature>(queryDefinition);
             var items = new List<Feature>();
+
+            while (queryResult.HasMoreResults)
+            {
+                var response = await queryResult.ReadNextAsync();
+                items.AddRange(response);
+            }
+
+            return items;
+        }
+
+        public async Task<List<Country>> GetAllCountriesAsync()
+        {
+            var queryText = "SELECT * FROM c";
+            var queryDefinition = new QueryDefinition(queryText);
+
+            var queryResult = _countriesContainer.GetItemQueryIterator<Country>(queryDefinition);
+            var items = new List<Country>();
 
             while (queryResult.HasMoreResults)
             {

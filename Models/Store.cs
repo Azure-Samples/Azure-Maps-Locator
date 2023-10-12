@@ -40,7 +40,7 @@ namespace StoreLocator.Models
         public string WebUrl { get; set; }
 
         [Required(ErrorMessage = "Time Zone UTC is required.")]
-        public byte TimeZoneUtc { get; set; }
+        public int TimeZoneUtc { get; set; }
 
         [Required(ErrorMessage = "Opening Hours are required.")]
         public List<OpeningHour> OpeningHours { get; set; }

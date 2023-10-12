@@ -78,22 +78,6 @@
       {
         "id": "childrensclothing",
         "name": "Children's clothing"
-      },
-      {
-        "id": "formalwear",
-        "name": "Formal wear"
-      },
-      {
-        "id": "casualwear",
-        "name": "Casual wear"
-      },
-      {
-        "id": "athleticwear",
-        "name": "Athletic wear"
-      },
-      {
-        "id": "accessories",
-        "name": "Accessories"
       }
     ]
   }

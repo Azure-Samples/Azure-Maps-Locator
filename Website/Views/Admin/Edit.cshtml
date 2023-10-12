@@ -215,9 +215,9 @@
         // Load the countries for in the store details form.
         $(document).ready(async () => {
             try {
-                const countries = await $.getJSON('/data/countries.json');
+                const countries = await $.getJSON('/api/stores/countries');
                 countries.forEach(country => {
-                    const option = `<option value="${country.code}" ${country.code.toLowerCase() === '@Model.Address.CountryCode.ToLower()' ? 'selected' : ''}>${country.name}</option>`;
+                    const option = `<option value="${country.id}" ${country.id.toLowerCase() === '@Model.Address.CountryCode.ToLower()' ? 'selected' : ''}>${country.name}</option>`;
                     countrySelect.append(option);
                 });
             } catch (error) {
@@ -257,10 +257,11 @@
         $('#geocodeButton').click(async (event) => {
             const address = $('#Address_StreetAddressLine1').val();
             const city = $('#Address_City').val();
+            const postalcode = $('#Address_PostalCode').val();
             const country = $('#Address_CountryName option:selected').text();
 
             if (address && city && country) {
-                const requestUrl = `https://{azMapsDomain}/geocode?api-version=2022-12-01-preview&query=${address} ${city} ${country}`;
+                const requestUrl = `https://{azMapsDomain}/geocode?api-version=2022-12-01-preview&query=${address}, ${city}, ${postalcode}, ${country}`;
                 const response = await this.processRequest(requestUrl);
 
                 if (response && response.features) {

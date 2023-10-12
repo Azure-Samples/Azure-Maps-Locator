@@ -1,5 +1,70 @@
 [
   {
+    "id": "microsoft-experience-center",
+    "storeNumber": "1",
+    "name": "Microsoft Experience Center - Fifth Avenue",
+    "address": {
+      "streetAddressLine1": "677 Fifth Avenue",
+      "streetAddressLine2": null,
+      "streetAddressLine3": null,
+      "city": "New York",
+      "postalCode": "10022",
+      "countrySubdivisionCode": "NY",
+      "countryCode": "US",
+      "countryName": "United States of America"
+    },
+    "email": "experience-center@microsoft.com",
+    "phoneNumber": "+1 212-824-3100",
+    "location": {
+      "coordinates": [
+        -73.975346,
+        40.76053
+      ]
+    },
+    "imageUrl": "https://samples.azuremaps.com/images/stores/store.webp",
+    "webUrl": "https://www.microsoft.com/en-us/store/locations",
+    "timeZoneUtc": -4,
+    "openingHours": [
+      {
+        "dayOfWeek": "Monday",
+        "open": "10:00",
+        "close": "20:00"
+      },
+      {
+        "dayOfWeek": "Tuesday",
+        "open": "10:00",
+        "close": "20:00"
+      },
+      {
+        "dayOfWeek": "Wednesday",
+        "open": "10:00",
+        "close": "20:00"
+      },
+      {
+        "dayOfWeek": "Thursday",
+        "open": "10:00",
+        "close": "20:00"
+      },
+      {
+        "dayOfWeek": "Friday",
+        "open": "10:00",
+        "close": "20:00"
+      },
+      {
+        "dayOfWeek": "Saturday",
+        "open": "10:00",
+        "close": "20:00"
+      },
+      {
+        "dayOfWeek": "Sunday",
+        "open": "11:00",
+        "close": "18:00"
+      }
+    ],
+    "features": [ "creditcard", "freeinternet" ],
+    "note": "Find us on Fifth Avenue, between 53rd and 54th Streets. Closest parking is available in the ICON Parking Garage located on 53rd and 54th (entrance on both sides) and between 5th and 6th Avenues. Parking not validated."
+  },
+  {
     "id": "buikslotermeerplein-201",
     "storeNumber": "1000",
     "name": "Amsterdam Buikslotermeer",
@@ -14,7 +79,7 @@
       "countryName": "Netherlands"
     },
     "email": "info@contoso.com",
-    "phoneNumber": "+1 425-555-0100",
+    "phoneNumber": "+1 555-2368",
     "location": {
       "coordinates": [
         4.938129,
@@ -79,7 +144,7 @@
       "countryName": "Netherlands"
     },
     "email": "info@contoso.com",
-    "phoneNumber": "+1 425-555-0100",
+    "phoneNumber": "+1 555-2368",
     "location": {
       "coordinates": [
         4.890771,
@@ -144,7 +209,7 @@
       "countryName": "Netherlands"
     },
     "email": "info@contoso.com",
-    "phoneNumber": "+1 425-555-0100",
+    "phoneNumber": "+1 555-2368",
     "location": {
       "coordinates": [
         4.89116,
@@ -209,7 +274,7 @@
       "countryName": "Netherlands"
     },
     "email": "info@contoso.com",
-    "phoneNumber": "+1 425-555-0100",
+    "phoneNumber": "+1 555-2368",
     "location": {
       "coordinates": [
         4.877354,
@@ -274,7 +339,7 @@
       "countryName": "Netherlands"
     },
     "email": "info@contoso.com",
-    "phoneNumber": "+1 425-555-0100",
+    "phoneNumber": "+1 555-2368",
     "location": {
       "coordinates": [
         4.865332,

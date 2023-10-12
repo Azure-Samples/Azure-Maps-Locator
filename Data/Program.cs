@@ -39,8 +39,9 @@ class Program
 
         database = await cosmos.CreateDatabaseIfNotExistsAsync(databaseName);
 
-        await InsertDataAsync<Store>("./Input/Stores.json", "stores", "/address/countryCode");
-        await InsertDataAsync<Feature>("./Input/Features.json", "features", "/id");
+        await InsertDataAsync<Store>("./Input/stores.json", "stores", "/address/countryCode");
+        await InsertDataAsync<Feature>("./Input/features.json", "features", "/id");
+        await InsertDataAsync<Country>("./Input/countries.json", "countries", "/id");
 
         Console.WriteLine("Done");
     }
@@ -76,9 +77,9 @@ class Program
 
             Console.WriteLine();
         }
-        catch (JsonException)
+        catch (JsonException ex)
         {
-            Console.WriteLine($"Invalid JSON format in the file '{jsonFilePath}'. Please make sure the JSON is valid.");
+            Console.WriteLine($"Invalid JSON format in the file '{jsonFilePath}'. Please make sure the JSON is valid. - {ex.Message}");
         }
         catch (CosmosException ex)
         {

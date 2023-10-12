@@ -8,8 +8,7 @@ namespace StoreLocator.Controllers
 {
     [Route("api/stores")]
     [ApiController]
-    [AllowAnonymous]
-     //[Authorize]
+    [Authorize]
     public class StoresApiController : ControllerBase
     {
         private readonly DataServices _database;
@@ -30,6 +29,16 @@ namespace StoreLocator.Controllers
             return Ok(stores);
         }
 
+        // GET: api/stores/countries
+        [HttpGet("countries")]
+        [AllowAnonymous]
+        public async Task<ActionResult<List<Feature>>> GetAllCountriesAsync()
+        {
+            var countries = await _database.GetAllCountriesAsync();
+
+            return Ok(countries);
+        }
+
         // GET: api/stores/features
         [HttpGet("features")]
         [AllowAnonymous]
@@ -39,8 +48,6 @@ namespace StoreLocator.Controllers
 
             return Ok(tags);
         }
-
-
 
         // GET api/stores/search?query={query}&limit={limit}&country={country}&tags={tag1,tag2,tag3}&latitude={latitude}&longitude={longitude}&rangeInKm={rangeInKm}
         [HttpGet("search")]

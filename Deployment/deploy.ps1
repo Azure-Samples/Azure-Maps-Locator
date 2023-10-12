@@ -19,7 +19,7 @@ param(
 function DisplayHelp {
     @"
 Usage:
-    .\storelocator.ps1 [-Location <location>] [-Name <name>] [-DatabaseName <dbname>]
+    .\deploy.ps1 [-Location <location>] [-Name <name>] [-DatabaseName <dbname>]
 
 Options:
     -Location       Azure region where resources will be created. Default is 'westeurope'.
@@ -29,7 +29,7 @@ Options:
     -Help           Display this help message.
 
 Example:
-    .\storelocator.ps1 -Location "northcentralus" -Name "myapp" -DatabaseName "mydb"
+    .\deploy.ps1 -Location "northcentralus" -Name "myapp" -DatabaseName "mydb"
 "@
     exit
 }
@@ -49,6 +49,7 @@ try {
     $group = "rg-$Name"
     $azuremaps = "map-$Name"
     $cosmosdb = "db-$Name$suffix"
+    $database = "storelocator"
     $webserverplan = "plan-$Name"
     $webappname = "web-$Name$suffix"
 
@@ -66,6 +67,18 @@ try {
 
     echo "- Creating a database named '$DatabaseName'..."
     az cosmosdb sql database create -g $group --account-name $cosmosdb --name $DatabaseName | Out-Null
+
+    iwr "https://samples.azuremaps.com/storelocator/stores.json" -o stores$suffix.json
+    az cosmosdb sql container import --account-name $cosmosdb --database-name $DatabaseName --container-name "stores" --input-file stores$suffix.json --partition-key-path /address/countryCode | Out-Null
+    Remove-Item stores$suffix.json | Out-Null
+
+    iwr "https://samples.azuremaps.com/storelocator/features.json" -o features$suffix.json
+    az cosmosdb sql container import --account-name $cosmosdb --database-name $DatabaseName --container-name "features" --input-file features$suffix.json --partition-key-path /id | Out-Null
+    Remove-Item features$suffix.json | Out-Null
+
+    iwr "https://samples.azuremaps.com/storelocator/countries.json" -o countries$suffix.json
+    az cosmosdb sql container import --account-name $cosmosdb --database-name $DatabaseName --container-name "countries" --input-file countries$suffix.json --partition-key-path /id | Out-Null
+    Remove-Item countries$suffix.json | Out-Null
 
     # Get Cosmos DB connection string
     $connectionString = $(az cosmosdb keys list -g $group --name $cosmosdb --type connection-strings --query 'connectionStrings[0].connectionString' -o tsv)
@@ -103,7 +116,7 @@ try {
 
     # Deploy Azure Maps Store Locator
     echo "- Initiating the deployment of the Store Locator website..."
-    iwr "https://samples.azuremaps.com/install/storelocator.zip" -o storelocator$suffix.zip
+    iwr "https://samples.azuremaps.com/storelocator/storelocator.zip" -o storelocator$suffix.zip
     az webapp deployment source config-zip -g $group -n $webappname --src storelocator$suffix.zip | Out-Null
     Remove-Item storelocator$suffix.zip | Out-Null
 
