@@ -4,5 +4,11 @@
     "inputFiles": [
       "wwwroot/js/storelocator.js"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/styles/btn-toggle.min.css",
+    "inputFiles": [
+      "wwwroot/styles/btn-toggle.css"
+    ]
   }
 ]

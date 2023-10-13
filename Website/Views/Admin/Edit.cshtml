@@ -30,23 +30,23 @@
                 <form id="storeDetails" class="row g-3">
 
                     <div class="col-md-6">
-                        <label asp-for="Store.Name" class="form-label">Name *</label>
+                        <label asp-for="Store.Name" class="form-label">Name</label>
                         <input asp-for="Store.Name" type="text" class="form-control">
                         <span asp-validation-for="Store.Name" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
-                        <label asp-for="Store.Id" class="form-label">Store ID *</label>
+                        <label asp-for="Store.Id" class="form-label">Store ID</label>
                         <input asp-for="Store.Id" type="text" class="form-control">
                         <span asp-validation-for="Store.Id" class="text-danger"></span>
                     </div>
 
                     <div class="col-md-6">
-                        <label asp-for="Store.Address.StreetAddressLine1" class="form-label">Address *</label>
+                        <label asp-for="Store.Address.StreetAddressLine1" class="form-label">Address</label>
                         <input asp-for="Store.Address.StreetAddressLine1" type="text" class="form-control">
                         <span asp-validation-for="Store.Address.StreetAddressLine1" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
-                        <label asp-for="Store.Address.City" class="form-label">City *</label>
+                        <label asp-for="Store.Address.City" class="form-label">City</label>
                         <input asp-for="Store.Address.City" type="text" class="form-control">
                         <span asp-validation-for="Store.Address.City" class="text-danger"></span>
                     </div>
@@ -57,7 +57,7 @@
                         <span asp-validation-for="Store.Address.PostalCode" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
-                        <label asp-for="Store.Address.CountryName" class="form-label">Country *</label>
+                        <label asp-for="Store.Address.CountryName" class="form-label">Country</label>
                         <select asp-for="Store.Address.CountryName" class="form-select">
                             <option>Choose...</option>
                             @foreach (var country in Model.Countries)
@@ -93,7 +93,7 @@
                     </div>
 
                     <div class="col-12">
-                        <label asp-for="Store.ImageUrl" class="form-label">Store logo or photo Url</label>
+                        <label asp-for="Store.ImageUrl" class="form-label">Store image Url</label>
                         <input asp-for="Store.ImageUrl" type="url" class="form-control">
                         <span asp-validation-for="Store.ImageUrl" class="text-danger"></span>
                     </div>
@@ -236,8 +236,8 @@
 
         @if(!Model.IsNew)
         {
-            @Html.Raw("$('#Store_Id').disabled = true;");
-            @Html.Raw("$('#Store_Address_CountryName').disabled = true;");
+            @Html.Raw("$('#Store_Id').prop('disabled', true); ");
+            @Html.Raw("$('#Store_Address_CountryName').prop('disabled', true); ");
         }
 
         const alertPlaceholder = $('#alertPlaceholder');

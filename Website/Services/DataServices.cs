@@ -185,7 +185,7 @@ namespace StoreLocator.Services
 
                     tagCount++;
 
-                    sqlQuery += $"ARRAY_CONTAINS(s.tags, @tag{tagCount})";
+                    sqlQuery += $"ARRAY_CONTAINS(s.features, @tag{tagCount})";
                     queryParams.Add(($"@tag{tagCount}", tag.ToLower()));
                 }
             }

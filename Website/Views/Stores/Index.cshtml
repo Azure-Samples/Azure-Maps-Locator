@@ -11,7 +11,7 @@
         <!-- Search for a location -->
         <div class="input-group">
             <input id="locator-search" type="search" autocomplete="off" class="form-control shadow-none" placeholder="Search for a store, place or address" aria-label="Search">
-            <button class="btn btn-outline-secondary" type="button" id="btn-start-speech" onclick="handleStartSpeechButtonClick()" aria-label="Speech recognition">
+            <button type="button" class="btn btn-outline-secondary" onclick="locator.startSpeechRecognitionClicked(this)" aria-label="Speech recognition">
                 <i class="bi bi-mic"></i>
             </button>
             <button type="button" class="btn btn-outline-secondary" data-bs-toggle="offcanvas" data-bs-target="#filters" aria-controls="filters" aria-label="Filters">
@@ -89,7 +89,7 @@
 
                             <template id="template-filters-tag">
                                 <label class="list-group-item d-flex gap-2">
-                                    <input class="form-check-input flex-shrink-0" type="checkbox" value="{id}" onchange="handleCheckboxChange(this)">
+                                    <input class="form-check-input flex-shrink-0" type="checkbox" value="{id}" onchange="locator.handleFilterChange(this)">
                                     <span>{name}</span>
                                 </label>
                             </template>
@@ -98,9 +98,8 @@
                     </div>
 
                     <div class="d-flex flex-align-end bg-light">
-                        <div class="d-flex justify-content-between p-3 w-100">
-                            <button type="button" onclick="resetButtonClick(event)" class="btn btn-outline-danger">Reset</button>
-                            <button type="button" onclick="filterButtonClick(event)" class="btn btn-primary">Search</button>
+                        <div class="d-flex justify-content-end p-3 w-100">
+                            <button type="button" data-bs-toggle="offcanvas" onclick="locator.searchFiltersClicked()" class="btn btn-primary">Search</button>
                         </div>
                     </div>
                 </div>
@@ -169,7 +168,7 @@
     <link rel="stylesheet" href="https://atlas.microsoft.com/sdk/javascript/mapcontrol/3/atlas.min.css" crossorigin="anonymous">
 
     <!-- Custom style for the filters -->
-    <link rel="stylesheet" href="/styles/btn-toggle.css">
+    <link rel="stylesheet" href="/styles/btn-toggle.min.css">
 }
 
 @section scripts {
@@ -178,15 +177,11 @@
 
     <!-- Add the Azure Maps Store Locator script to the page. -->
     <!-- https://github.com/Azure-Samples/Azure-Maps-Locator -->
-    <script asp-append-version="true" src="/js/storelocator.js"></script>
+    <script src="/js/storelocator.min.js"></script>
 
     <script>
-
         // Azure Maps Store Locator instance.
         var locator;
-
-        // Array of features to filter by.
-        var features = [];
 
         // Initialize an Azure Maps instance
         var map = new atlas.Map('locator-map', {
@@ -233,90 +228,12 @@
             // Create a store locator instance
             locator = new storelocator(map, {
                 countrySet: ['US'], // An array of country region ISO2 values to limit searches to
-                language: 'en-US'   // Language in which search results should be returned.
+                language: 'en-US',  // Language in which search results should be returned.
+                rangeInKm: 25       // The radius in kilometers in which to search for stores.
             });
 
-            // Show all stores in the Netherlands.
+            // Show only stores in a specific country.
             locator.showStoresByCountry('US');
         });
-
-        const searchInput = document.getElementById('locator-search');
-
-        // Handle the filter button click event.
-        function filterButtonClick(e) {
-            // showNearbyStores
-        }
-
-        // Handle the reset button click event.
-        function resetButtonClick(e) {
-            features = [];
-            // showNearbyStores
-        }
-
-        // Handle checkbox change events for the filters.
-        function handleCheckboxChange(checkbox) {
-            if (checkbox.checked) {
-                features.push(checkbox.value);
-            } else {
-                var index = features.indexOf(checkbox.value);
-
-                if (index !== -1) {
-                    features.splice(index, 1);
-                }
-            }
-        }
-    </script>
-
-    <script>
-        // Speech Recognition
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        const SpeechGrammarList = window.SpeechGrammarList || window.webkitSpeechGrammarList;
-        const SpeechRecognitionEvent = window.SpeechRecognitionEvent || window.webkitSpeechRecognitionEvent;
-
-        const startSpeechButton = document.querySelector('#btn-start-speech');
-
-        function toggleSpeechButtonState(isListening = false) {
-            startSpeechButton.disabled = isListening;
-            startSpeechButton.className = isListening ? 'btn btn-success' : 'btn btn-outline-secondary';
-        }
-
-        function handleStartSpeechButtonClick() {
-            toggleSpeechButtonState(true);
-
-            startSpeechToText()
-                .then((results) => {
-                    toggleSpeechButtonState(false);
-
-                    const speechResult = results[0][0].transcript.toLowerCase();
-                    searchInput.value = removePunctuation(speechResult);
-                    locator.fuzzySearch(searchInput.value);
-                })
-                .catch((error) => {
-                    toggleSpeechButtonState(false);
-                    console.error(error);
-                });
-        }
-
-        function startSpeechToText() {
-            return new Promise((resolve, reject) => {
-                const recognition = new SpeechRecognition();
-                recognition.lang = 'nl-NL';
-                recognition.continuous = false;
-                recognition.interimResults = false;
-                recognition.maxAlternatives = 1;
-
-                recognition.start();
-
-                recognition.onresult = (event) => resolve(event.results);
-                recognition.onspeechend = () => recognition.stop();
-                recognition.onerror = (event) => reject(event.error);
-            });
-        }
-
-        function removePunctuation(str) {
-            return str
-                .replace(/[，。？！、；：]/g, '')
-                .replace(/[\.,]/g, '');
-        }
     </script>
 }

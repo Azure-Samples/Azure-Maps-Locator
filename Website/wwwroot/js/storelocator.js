@@ -7,28 +7,29 @@
 
 class storelocator {
 
-    map = null;                            // Azure Maps control
-    options = null;                        // Options for the store locator
+    map = null;                            // Azure Maps control.
+    options = null;                        // Options for the store locator.
 
     // Search related properties.
     search = {
         url: 'https://{azMapsDomain}/search/fuzzy/json?api-version=1.0&query={query}&typeahead={typeahead}&limit={limit}&countrySet={countrySet}&language={language}&lat={lat}&lon={lon}&view={view}',
-        control: null,                     // search input div
+        control: null,                     // Search input div.
+        features: [],                      // Array of features to filter by.
         input: {
-            minLength: 3,
+            minLength: 3,                  // Minimum length of input before performing a search.
             currentLength: 0,
-            keyStrokeDelay: 250
+            keyStrokeDelay: 250            // Delay in milliseconds between key strokes before performing a search.
         },
         autocomplete: {
-            control: null,                 // autocomplete div
-            locateMeTemplate: '',          // locate me template
-            locationsTemplate: '',         // locations template
-            storesTemplate: '',            // stores template
+            control: null,                 // Autocomplete div.
+            locateMeTemplate: '',          // Locate Me template.
+            locationsTemplate: '',         // Locations template.
+            storesTemplate: '',            // Stores template.
         },
-        resultsControl: null,              // results div
-        resultsTemplate: '',               // results template
+        resultsControl: null,              // Results div.
+        resultsTemplate: '',               // Results template.
         datasource: new atlas.source.DataSource(),
-        userLocation: [0, 0]                // user location marker
+        userLocation: [0, 0]               // User location marker.
     };
 
     // Isochrone related properties.
@@ -45,9 +46,13 @@ class storelocator {
             position: [0, 0],
             pixelOffset: [0, -18]
         }),
-        template: ''                       // store popup template
+        template: ''                       // Store popup template.
     };
 
+    // Speech Recognition.
+    speech = {
+        recognition: window.SpeechRecognition || window.webkitSpeechRecognition
+    };
 
     /**
     * Constructor for the Store Locator.
@@ -57,14 +62,16 @@ class storelocator {
     constructor(map, options = {}) {
         this.map = map;                    // Set the map instance for Azure Maps.
         this.options = {
-            countrySet: ['US'],            // An array of country region ISO2 values to limit searches to
+            countrySet: ['US'],            // An array of country region ISO2 values to limit searches to.
             language: 'en-US',             // Language in which search results should be returned.
-            rangeInKm: 25,                 // Default range in km for search
-            maxSearchResults: 5,           // Default max search results to show in list. (max 9)
-            walkingTime: 15,               // Default max walking time in minutes
-            drivingTime: 15,               // Default max driving time in minutes
+            rangeInKm: 25,                 // Default range in km for search.
+            maxSearchResults: 5,           // Default max search results to show in list. (max 9).
+            walkingTime: 15,               // Default max walking time in minutes.
+            drivingTime: 15,               // Default max driving time in minutes.
             ...options                     // Merge provided options with default values.
         };
+
+        this.search.userLocation = map.getCamera().center;
 
         this.initializeTemplates();
         this.initializeSearch();
@@ -73,10 +80,7 @@ class storelocator {
         this.initializeFilters();
     }
 
-
-    /**
-     * Initializes the templates used by the Store Locator.
-     */
+    // Initializes the templates used by the Store Locator.
     initializeTemplates() {
         // Get the store popup template from the main page.
         this.store.template = document.getElementById('template-storepopup').innerHTML;
@@ -90,6 +94,7 @@ class storelocator {
         this.search.resultsTemplate = document.getElementById('template-results').innerHTML;
     }
 
+    // Initializes the filters.
     initializeFilters() {
 
         this.getFeatures().then((categories) => {
@@ -119,9 +124,7 @@ class storelocator {
         });
     }
 
-    /**
-     * Initializes the search control and related event listeners.
-     */
+    // Initializes the search control and related event listeners.
     initializeSearch() {
         this.search.autocomplete.control = document.getElementById('locator-autocomplete');
         this.search.resultsControl = document.getElementById('locator-results');
@@ -138,10 +141,7 @@ class storelocator {
         });
     }
 
-
-    /**
-     * Initializes the stores data sources and layer for store pins.
-     */
+    // Initializes the stores data sources and layer for store pins.
     initializeStoresLayer() {
         // Create a layer that defines how to render the stores on the map.
         const storesLayer = new atlas.layer.SymbolLayer(this.store.datasource, 'stores', {
@@ -167,9 +167,7 @@ class storelocator {
         });
     }
 
-    /**
-     * Initializes the isochrone data sources and layers for walking and driving polygons.
-     */
+    // Initializes the isochrone data sources and layers for walking and driving polygons.
     initializeIsochroneLayers() {
         // Add a layer for the walking isochrone.
         const walkingLineLayer = new atlas.layer.LineLayer(this.isochrone.walkingDataSource, 'walking', {
@@ -190,6 +188,65 @@ class storelocator {
         this.map.layers.add(drivingLineLayer);
     }
 
+    // Handle the filter change event.
+    handleFilterChange(checkbox) {
+        if (checkbox.checked) {
+            this.search.features.push(checkbox.value);
+        } else {
+            var index = this.search.features.indexOf(checkbox.value);
+
+            if (index !== -1) {
+                this.search.features.splice(index, 1);
+            }
+        }
+    }
+
+    toggleSpeechButtonState(button, isListening = false) {
+        button.disabled = isListening;
+        button.className = isListening ? 'btn btn-success' : 'btn btn-outline-secondary';
+    }
+
+    // Handle the speech button click event.
+    startSpeechRecognitionClicked(button) {
+        this.toggleSpeechButtonState(button, true);
+
+        this.startSpeechToText()
+            .then((results) => {
+                this.toggleSpeechButtonState(button, false);
+
+                const speechResult = results[0][0].transcript.toLowerCase();
+                this.search.control.value = this.removePunctuation(speechResult);
+                this.fuzzySearch(this.search.control.value);
+            })
+            .catch((error) => {
+                this.toggleSpeechButtonState(button, false);
+                console.error(error);
+            });
+    }
+
+    // Start speech to text.
+    startSpeechToText() {
+        return new Promise((resolve, reject) => {
+            const recognition = new this.speech.recognition();
+            recognition.lang = this.options.language;
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            recognition.start();
+
+            recognition.onresult = (event) => resolve(event.results);
+            recognition.onspeechend = () => recognition.stop();
+            recognition.onerror = (event) => reject(event.error);
+        });
+    }
+
+    // Remove punctuation from a (speech recognition) string.
+    removePunctuation(str) {
+        return str
+            .replace(/[，。？！、；：]/g, '')  // Chinese punctuation
+            .replace(/[\.,]/g, '');          // English punctuation
+    }
 
     /**
      * Opens the popup and shows the details of the store.
@@ -223,7 +280,6 @@ class storelocator {
         this.store.popup.open(this.map);
     }
 
-
     /**
      * Handels the store ckick event, centers the map and opens the store popup.
      * @param {string} id
@@ -241,7 +297,6 @@ class storelocator {
         this.showPopup(shape);
     }
 
-
     /**
      * Handles the search event for the search control, hiding the autocomplete list if the input is too short.
      * @param {Event} e - The search event object.
@@ -257,6 +312,7 @@ class storelocator {
         }
     }
 
+    // Handles the locate me button click event.
     locateMe() {
         // Check to see if the user has allowed the browser to use their location.
         navigator.geolocation.getCurrentPosition((position) => {
@@ -273,7 +329,6 @@ class storelocator {
             { enableHighAccuracy: true }
         );
     }
-
 
     /**
     * Handles the keyup event for the search control, triggering fuzzy search and handling Enter key press.
@@ -308,6 +363,7 @@ class storelocator {
         this.search.input.currentLength = currentLength;
     }
 
+    // Get the category icon based on the category id.
     getCategoryIcon = (categoryId) => {
         const firstFourDigits = categoryId > 9999 ? Math.floor(categoryId / 1000) : categoryId;
 
@@ -349,7 +405,6 @@ class storelocator {
                 return 'bi-geo-alt'; // default icon for address
         }
     };
-
 
     /**
     * Performs a fuzzy search using the given query to find locations and points of interest.
@@ -440,6 +495,7 @@ class storelocator {
         this.showNearbyStores(coordinates);
     }
 
+    // Show stores by country.
     showStoresByCountry(country) {
         // Get stores bt Country.
         this.getStoresByCountry(country).then((stores) => {
@@ -466,10 +522,23 @@ class storelocator {
         });
     }
 
-    showNearbyStores(coordinates) {
+    // Handle the search filters button click event.
+    searchFiltersClicked(e) {
+        this.showNearbyStores();
+    }
 
-        // store the location as starting point.
-        this.search.userLocation = coordinates;
+    // Show nearby stores.
+    showNearbyStores(coordinates = null) {
+
+        const usingFilters = this.search.features.length > 0;
+
+        if (coordinates) {
+            // store the location as starting point.
+            this.search.userLocation = coordinates;
+        } else {
+            // Use the saved user location as starting point.
+            coordinates = this.search.userLocation;
+        }
 
         // Hide the autocomplete list.
         this.search.autocomplete.control.className = 'dropdown-menu';
@@ -493,11 +562,15 @@ class storelocator {
         });
 
         // Get nearby stores.
-        this.getNearbyStores(coordinates).then((stores) => {
+        this.getNearbyStores(coordinates, this.search.features).then((stores) => {
 
             let html = '';   // used to store the HTML for the list of stores.
             let count = 0;   // used to limit the number of stores shown in the list.
             let points = []; // stores the point features for the stores.
+
+            if (usingFilters) {
+                html = '<div class="alert alert-info" role="alert">Feel free to modify the filters if the results don\'t match your expectations.</div>';
+            }
 
             // Sort stores by distance.
             stores.sort((a, b) => a['distanceInKm'] - b['distanceInKm']);
@@ -533,13 +606,13 @@ class storelocator {
             this.store.datasource.clear();
             this.store.datasource.add(points);
 
-            // Add stores to the list in the UI.
-            this.search.resultsControl.innerHTML = html;
-
             // If no stores are found, display a message to the user.
             if (stores.length == 0) {
-                this.search.resultsControl.innerHTML = '<div class="alert alert-warning alert-dismissible" role="alert">No Results Found.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
+                html += '<div class="alert alert-warning alert-dismissible" role="alert">No Results Found.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
             }
+
+            // Add stores to the list in the UI.
+            this.search.resultsControl.innerHTML = html;
 
             this.map.resize();
         });
@@ -549,11 +622,9 @@ class storelocator {
         this.drawWalkingIsochrone(coordinates);
     }
 
-
     /**
     * Draw a driving isochrone on the map based on the provided position (latitude and longitude) and driving time budget.
     * @param {number[]} position - An array containing the latitude (index 0) and longitude (index 1) of the location.
-    * @returns {void} This function does not have a direct return value. It draws the driving isochrone on the map.
     */
     async drawDrivingIsochrone(position) {
         const requestUrl = this.isochrone.url
@@ -584,7 +655,6 @@ class storelocator {
     /**
     * Draw a walking isochrone on the map based on the provided position (latitude and longitude) and walking time budget.
     * @param {number[]} position - An array containing the latitude (index 0) and longitude (index 1) of the location.
-    * @returns {void} This function does not have a direct return value. It draws the walking isochrone on the map.
     */
     async drawWalkingIsochrone(position) {
         const requestUrl = this.isochrone.url
@@ -611,6 +681,7 @@ class storelocator {
         }
     }
 
+    // Get stores by country.
     async getStoresByCountry(country) {
         // Get the stores within the specified country.
         const response = await fetch(`/api/stores/search?country=${country}`);
@@ -622,6 +693,7 @@ class storelocator {
         return await response.json();
     }
 
+    // Get features.
     async getFeatures() {
         const response = await fetch('/api/stores/features');
 
@@ -631,7 +703,6 @@ class storelocator {
 
         return await response.json();
     }
-
 
     /**
      * Fetch nearby stores from the API based on the given position (latitude and longitude) and range in kilometers.
