@@ -1,20 +1,18 @@
 # Azure Maps Store Locator
 
-**Note: This project is currently a work in progress and may undergo changes.**
-
-Welcome to the Azure Maps Store Locator project! Enhance your website with a powerful store locator that helps potential customers easily discover your nearest locations based on their preferences. Whether it's finding stores, restaurants, office locations, lockers, or any other place of interest, the Azure Maps Store Locator offers a user-friendly and versatile solution with a comprehensive store location management system.
+Welcome to the Azure Maps Store Locator starter project! Enhance your website with a powerful store locator that helps potential customers easily discover your nearest locations based on their preferences. Whether it's finding stores, restaurants, office locations, lockers, or any other place of interest, the Azure Maps Store Locator offers a user-friendly and versatile solution with a comprehensive store location management system.
 
 ![Azure Maps Store Locator](Images/Animation.gif)
 
 ## Features
 
-The Azure Maps Store Locator project provides a range of powerful features, including:
+The Azure Maps Store Locator starter project provides a range of powerful features, including:
 
 - Autocomplete search for store names, addresses, points of interest (POI), or zip codes.
 - Display nearby stores and their distances.
 - Show travel time for both walking and driving.
 - Present store details via popups and directions.
-- Apply filters based on store properties or tags.
+- Apply filters based on dynamic store features.
 - Explore a store detail page with an embedded map.
 - Access an admin page for editing and adding store details.
 - Enable auto-deployment within your Azure subscription.
@@ -68,13 +66,13 @@ Follow these steps to get started with the Azure Maps Store Locator project:
 
 ### Azure Infrastructure
 
-1. **(Optional)** Run the PowerShell script `.\storelocator.ps1`. This script sets up the initial Azure services required for this project. Before running, review the [architecture diagram](Images/Architecture.png) to understand what will be created.
+1. **(Optional)** Run the PowerShell script `.\deployment\deploy.ps1`. This script sets up the initial Azure services required for this project. Before running, review the [architecture diagram](Images/Architecture.png) to understand what will be created.
 
 ![Architecture Diagram](Images/Architecture.png)
 
 ### Demo Data
 
-2. Launch Visual Studio and update the connection string in the `Secrets.json` file for the Cosmos DB in the `Demo Data Injector` project.
+2. Launch Visual Studio and update the connection string in the `Secrets.json` file for the Cosmos DB in the `Bulk Data Injector` project.
 
 ```json
 {
@@ -87,7 +85,7 @@ Follow these steps to get started with the Azure Maps Store Locator project:
 
 ![Secrets.json](Images/secrets.png)
 
-3. Execute the `Demo Data Injector` project to load the initial data into the backend.
+3. Execute the `Bulk Data Injector` project to load the initial data into the backend.
 
 ### Run the Store Locator Application
 

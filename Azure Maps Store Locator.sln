@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		SECURITY.md = SECURITY.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo Data Injector", "Data\Demo Data Injector.csproj", "{C3016918-2548-4162-ABFE-15CF551CE5D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bulk Data Injector", "Data\Bulk Data Injector.csproj", "{C3016918-2548-4162-ABFE-15CF551CE5D8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Store Locator Models", "Models\Store Locator Models.csproj", "{E5C2D45C-A45B-49E4-B9FE-680B10471B40}"
 EndProject
