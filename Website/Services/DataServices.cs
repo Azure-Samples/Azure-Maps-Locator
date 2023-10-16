@@ -93,12 +93,12 @@ namespace StoreLocator.Services
             }
         }
 
-        public async Task<List<Store>> GetStoresAsync()
+        public async Task<List<ListStoreModel>> GetStoresAsync()
         {
-            var queryText = "SELECT * FROM s";
+            var queryText = "SELECT s.id, s.name, s.address.streetAddressLine1 AS address, s.address.city AS city, s.address.countryName AS country FROM s ORDER BY s.name";
             var queryDefinition = new QueryDefinition(queryText);
 
-            return await QueryStoresAsync<Store>(queryDefinition);
+            return await QueryStoresAsync<ListStoreModel>(queryDefinition);
         }
 
         public async Task<List<Feature>> GetFeaturesAsync()

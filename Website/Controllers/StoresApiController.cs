@@ -22,7 +22,7 @@ namespace StoreLocator.Controllers
 
         // GET: api/stores
         [HttpGet()]
-        public async Task<ActionResult<List<Store>>> GetStoresAsync()
+        public async Task<ActionResult<List<ListStoreModel>>> GetStoresAsync()
         {
             var stores = await _database.GetStoresAsync();
 
