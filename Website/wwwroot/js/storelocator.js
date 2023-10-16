@@ -172,7 +172,7 @@ class storelocator {
         // Add a layer for the walking isochrone.
         const walkingLineLayer = new atlas.layer.LineLayer(this.isochrone.walkingDataSource, 'walking', {
             strokeColor: 'Green',
-            strokeWidth: 1,
+            strokeWidth: 3,
             strokeDashArray: [3, 3]
         });
         this.map.sources.add(this.isochrone.walkingDataSource);
@@ -181,7 +181,7 @@ class storelocator {
         // Add a layer for the driving isochrone.
         const drivingLineLayer = new atlas.layer.LineLayer(this.isochrone.drivingDataSource, 'driving', {
             strokeColor: 'Blue',
-            strokeWidth: 1,
+            strokeWidth: 3,
             strokeDashArray: [3, 3]
         });
         this.map.sources.add(this.isochrone.drivingDataSource);
