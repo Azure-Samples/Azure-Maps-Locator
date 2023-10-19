@@ -44,7 +44,7 @@ Open https://web-storelocator318564045.azurewebsites.net/ to access your Store L
 Done! Your Azure Maps Store Locator infrastructure and website are ready.
 ```
 
-> **Note**
+> [!NOTE]
 > Upon initial application launch, a database will be generated, and demo data will be added.
 > Please be aware that this may result in some temporary performance fluctuations during the initial startup.
 
