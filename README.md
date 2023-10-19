@@ -48,11 +48,9 @@ Done! Your Azure Maps Store Locator infrastructure and website are ready.
 > Upon initial application launch, a database will be generated, and demo data will be added.
 > Please be aware that this may result in some temporary performance fluctuations during the initial startup.
 
-For developers who need more control, follow the steps below to set up your development environment for the Azure Maps Store Locator.
-
 ## Prerequisites for Developers
 
-To get started, developers need to have the following prerequisites in place:
+For developers who need more control, follow the steps below to set up your development environment for the Azure Maps Store Locator.
 
 1. **Azure Subscription**: Sign up for a free Azure subscription [here](https://azure.microsoft.com/free).
 
