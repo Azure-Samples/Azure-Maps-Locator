@@ -752,7 +752,7 @@ class storelocator {
         var requestParams = this.map.authentication.signRequest({ url: url });
 
         // Transform the request.
-        var transform = this.map.getServiceOptions().tranformRequest;
+        var transform = this.map.getServiceOptions().transformRequest;
         if (transform) requestParams = transform(url);
 
         const response = await fetch(requestParams.url, {
