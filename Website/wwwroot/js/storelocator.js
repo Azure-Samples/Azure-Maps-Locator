@@ -765,7 +765,7 @@ class storelocator {
             throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
         }
 
-        return await response.json();
+        return response.json();
     }
 
     /**
