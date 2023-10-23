@@ -118,4 +118,7 @@ Follow these steps to get started with the Azure Maps Store Locator project:
 
 6. Run the `Store Locator Website` project to see the application in action.
 
+> [!NOTE]
+> For automatic minification of the `storelocator.js` file, you can make use of the Visual Studio Extension called "[Bundler & Minifier 2022+](https://marketplace.visualstudio.com/items?itemName=Failwyn.BundlerMinifier64)"
+
 Thank you for your interest in this project! We are actively working to improve and enhance it. If you encounter any issues or have suggestions, please feel free to contribute or reach out to us. Happy coding!
