@@ -1,25 +1,24 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace StoreLocator.Models.Validation
+namespace StoreLocator.Models.Validation;
+
+[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
+public class IdValidation : ValidationAttribute
 {
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
-    public class IdValidation : ValidationAttribute
+    private readonly char[] RestrictedCharacters = { '/', '\\', '?', '#', ' ' };
+
+    public IdValidation()
     {
-        private readonly char[] RestrictedCharacters = { '/', '\\', '?', '#', ' ' };
+        ErrorMessage = "Id cannot contain spaces or the characters '/', '\\', '?' and '#'.";
+    }
 
-        public IdValidation()
+    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+    {
+        if (value is string id && id.Intersect(RestrictedCharacters).Any())
         {
-            ErrorMessage = "Id cannot contain spaces or the characters '/', '\\', '?' and '#'.";
+            return new ValidationResult(ErrorMessage);
         }
 
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-        {
-            if (value is string id && id.Intersect(RestrictedCharacters).Any())
-            {
-                return new ValidationResult(ErrorMessage);
-            }
-
-            return ValidationResult.Success;
-        }
+        return ValidationResult.Success;
     }
 }

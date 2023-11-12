@@ -3,27 +3,21 @@ using Microsoft.AspNetCore.Mvc;
 using StoreLocator.Models;
 using System.Diagnostics;
 
-namespace StoreLocator.Controllers
+namespace StoreLocator.Controllers;
+
+[AllowAnonymous]
+public class HomeController(ILogger<HomeController> logger) : Controller
 {
-    [AllowAnonymous]
-    public class HomeController : Controller
+    private readonly ILogger<HomeController> _logger = logger;
+
+    public IActionResult Index()
     {
-        private readonly ILogger<HomeController> _logger;
+        return View();
+    }
 
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error()
+    {
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }

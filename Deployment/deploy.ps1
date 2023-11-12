@@ -73,7 +73,7 @@ try {
     # Create Webserver and Website
     echo "Creating a Webserver plan named '$webserverplan' for the Website '$webappname'..."
     az appservice plan create -g $group -n $webserverplan --location $Location | Out-Null
-    az webapp create -g $group -p $webserverplan -n $webappname -r "dotnet:7" | Out-Null
+    az webapp create -g $group -p $webserverplan -n $webappname -r "dotnet:8" | Out-Null
 
     # Use managed identities
     echo "- Utilizing managed identities for Azure Maps..."

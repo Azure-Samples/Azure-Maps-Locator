@@ -1,7 +1,6 @@
-﻿namespace StoreLocator.Models
+﻿namespace StoreLocator.Models;
+
+public class StoreWithDistance: Store
 {
-    public class StoreWithDistance: Store
-    {
-        public double DistanceInKm { get; set; }
-    }
+    public double DistanceInKm { get; set; }
 }
