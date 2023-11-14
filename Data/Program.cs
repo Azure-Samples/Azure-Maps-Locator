@@ -1,4 +1,4 @@
-﻿// Azure Maps Store Locator (version 1.0-rc.1)
+﻿// Azure Maps Store Locator (version 1.0-rc.2)
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // https://github.com/Azure-Samples/Azure-Maps-Locator
 //
