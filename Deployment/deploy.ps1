@@ -71,7 +71,7 @@ try {
     $connectionString = $(az cosmosdb keys list -g $group --name $cosmosdb --type connection-strings --query 'connectionStrings[0].connectionString' -o tsv)
 
     # Create Webserver and Website
-    echo "Creating a Webserver plan named '$webserverplan' for the Website '$webappname'..."
+    echo "- Creating a Webserver plan named '$webserverplan' for the Website '$webappname'..."
     az appservice plan create -g $group -n $webserverplan --location $Location | Out-Null
     az webapp create -g $group -p $webserverplan -n $webappname -r "dotnet:8" | Out-Null
 
