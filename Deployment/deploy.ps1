@@ -103,7 +103,7 @@ try {
 
     # Deploy Azure Maps Store Locator
     echo "- Initiating the deployment of the Store Locator website..."
-    iwr "https://samples.azuremaps.com/storelocator/storelocator.zip" -o storelocator$suffix.zip
+    iwr "https://samples.azuremaps.com/storelocator/storelocator.zip" -OutFile storelocator$suffix.zip
     az webapp deployment source config-zip -g $group -n $webappname --src storelocator$suffix.zip | Out-Null
     Remove-Item storelocator$suffix.zip | Out-Null
 
