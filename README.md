@@ -25,7 +25,11 @@ Getting started is easy! If you're not a developer, follow these simple steps:
 
 2. **Azure Shell**: Log in to the Azure Shell [shell.azure.com](https://shell.azure.com/).
 
-3. **Deployment script**: Run this PowerShell command (copy and paste) to install the Azure Maps Store Locator: `iex (iwr "https://samples.azuremaps.com/storelocator/deploy.ps1").Content`
+3. **Deployment script**: Run this PowerShell command (copy and paste) to install the Azure Maps Store Locator:
+
+```powershell
+iex (iwr "https://samples.azuremaps.com/storelocator/deploy.ps1").Content`
+```
 
 The output should look similar to this:
 
