@@ -35,7 +35,7 @@ class storelocator {
     // Isochrone related properties.
     isochrone = {
         url: 'https://{azMapsDomain}/route/range/json?api-version=1.0&query={query}&traffic={traffic}&travelMode={travelMode}&timeBudgetInSec={timeBudgetInSec}',
-        walkingDataSource: new atlas.source.DataSource(),
+        //walkingDataSource: new atlas.source.DataSource(),
         drivingDataSource: new atlas.source.DataSource()
     };
 
@@ -66,7 +66,7 @@ class storelocator {
             language: 'en-US',             // Language in which search results should be returned.
             rangeInKm: 25,                 // Default range in km for search.
             maxSearchResults: 5,           // Default max search results to show in list. (max 9).
-            walkingTime: 15,               // Default max walking time in minutes.
+            //walkingTime: 15,               // Default max walking time in minutes.
             drivingTime: 15,               // Default max driving time in minutes.
             ...options                     // Merge provided options with default values.
         };
@@ -170,13 +170,13 @@ class storelocator {
     // Initializes the isochrone data sources and layers for walking and driving polygons.
     initializeIsochroneLayers() {
         // Add a layer for the walking isochrone.
-        const walkingLineLayer = new atlas.layer.LineLayer(this.isochrone.walkingDataSource, 'walking', {
-            strokeColor: 'Green',
-            strokeWidth: 3,
-            strokeDashArray: [3, 3]
-        });
-        this.map.sources.add(this.isochrone.walkingDataSource);
-        this.map.layers.add(walkingLineLayer);
+        //const walkingLineLayer = new atlas.layer.LineLayer(this.isochrone.walkingDataSource, 'walking', {
+        //    strokeColor: 'Green',
+        //    strokeWidth: 3,
+        //    strokeDashArray: [3, 3]
+        //});
+        //this.map.sources.add(this.isochrone.walkingDataSource);
+        //this.map.layers.add(walkingLineLayer);
 
         // Add a layer for the driving isochrone.
         const drivingLineLayer = new atlas.layer.LineLayer(this.isochrone.drivingDataSource, 'driving', {
@@ -619,7 +619,7 @@ class storelocator {
 
         // Draw isochrones.
         this.drawDrivingIsochrone(coordinates);
-        this.drawWalkingIsochrone(coordinates);
+        //this.drawWalkingIsochrone(coordinates);
     }
 
     /**
@@ -656,30 +656,30 @@ class storelocator {
     * Draw a walking isochrone on the map based on the provided position (latitude and longitude) and walking time budget.
     * @param {number[]} position - An array containing the latitude (index 0) and longitude (index 1) of the location.
     */
-    async drawWalkingIsochrone(position) {
-        const requestUrl = this.isochrone.url
-            .replace('{query}', [position[1], position[0]])
-            .replace('{traffic}', false)
-            .replace('{travelMode}', 'pedestrian')
-            .replace('{timeBudgetInSec}', this.options.walkingTime * 60);
+    //async drawWalkingIsochrone(position) {
+    //    const requestUrl = this.isochrone.url
+    //        .replace('{query}', [position[1], position[0]])
+    //        .replace('{traffic}', false)
+    //        .replace('{travelMode}', 'pedestrian')
+    //        .replace('{timeBudgetInSec}', this.options.walkingTime * 60);
 
-        try {
-            const response = await this.processRequest(requestUrl);
-            const coordinates = new atlas.data.Position.fromLatLngs(response.reachableRange.boundary);
+    //    try {
+    //        const response = await this.processRequest(requestUrl);
+    //        const coordinates = new atlas.data.Position.fromLatLngs(response.reachableRange.boundary);
 
-            // Retrieve the first coordinate from the array
-            const firstCoordinate = coordinates[0];
+    //        // Retrieve the first coordinate from the array
+    //        const firstCoordinate = coordinates[0];
 
-            // Add the first coordinate to the end of the array
-            coordinates.push(firstCoordinate);
+    //        // Add the first coordinate to the end of the array
+    //        coordinates.push(firstCoordinate);
 
-            this.isochrone.walkingDataSource.clear();
-            this.isochrone.walkingDataSource.add(new atlas.data.LineString(coordinates));
-        } catch (error) {
-            // Handle the error appropriately, e.g., display a message to the user.
-            console.error('Error drawing walking isochrone:', error);
-        }
-    }
+    //        this.isochrone.walkingDataSource.clear();
+    //        this.isochrone.walkingDataSource.add(new atlas.data.LineString(coordinates));
+    //    } catch (error) {
+    //        // Handle the error appropriately, e.g., display a message to the user.
+    //        console.error('Error drawing walking isochrone:', error);
+    //    }
+    //}
 
     // Get stores by country.
     async getStoresByCountry(country) {
