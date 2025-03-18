@@ -155,9 +155,10 @@ public class DataServices
             parameterCount++;
 
             var searchText = query.ToLower();
-            sqlQuery += "LOWER(s.name) LIKE @name OR LOWER(s.address.city) LIKE @city";
+            sqlQuery += "LOWER(s.name) LIKE @name OR LOWER(s.address.city) LIKE @city OR LOWER(s.address.postalCode) LIKE @postalCode";
             queryParams.Add(("@name", $"%{searchText}%"));
             queryParams.Add(("@city", $"{searchText}%"));
+            queryParams.Add(("@postalCode", $"{searchText}%"));
         }
 
         if (!string.IsNullOrEmpty(countryCode))
