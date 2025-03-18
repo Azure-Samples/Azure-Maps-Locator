@@ -388,5 +388,312 @@
     ],
     "features": [ "airconditioning", "carpark", "womensclothing" ],
     "note": ""
+  },
+  {
+    "id": "d65214eb-1836-4914-a139-97c35bfa83d7",
+    "storeNumber": "",
+    "name": "Charing Cross Rail Simply Food",
+    "address": {
+      "streetAddressLine1": "Main Station Entrance Charing X ST",
+      "streetAddressLine2": "",
+      "streetAddressLine3": "",
+      "city": "London",
+      "postalCode": "WC2N 5HS",
+      "countryName": "United Kingdom",
+      "countryCode": "GB",
+      "countrySubdivisionCode": ""
+    },
+    "email": "support@contoso.com",
+    "phoneNumber": "020 7925 2451",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -0.12489,
+        51.50839
+      ]
+    },
+    "imageUrl": "https://samples.azuremaps.com/storelocator/store.webp",
+    "webUrl": "https://www.contoso.com/",
+    "timeZoneUtc": 0,
+    "openingHours": [],
+    "features": [
+      "carpark",
+      "airconditioning"
+    ],
+    "note": ""
+  },
+  {
+    "id": "bc48d4ae-978c-4689-b5a0-182eb0821bd0",
+    "storeNumber": "",
+    "name": "Shaftesbury Ave",
+    "address": {
+      "streetAddressLine1": "85 SHAFTESBURY AVE",
+      "streetAddressLine2": "",
+      "streetAddressLine3": "",
+      "city": "London",
+      "postalCode": "W1D 5DX",
+      "countryName": "United Kingdom",
+      "countryCode": "GB",
+      "countrySubdivisionCode": ""
+    },
+    "email": "support@contoso.com",
+    "phoneNumber": "0203 657 6710",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -0.1309,
+        51.51253
+      ]
+    },
+    "imageUrl": "https://samples.azuremaps.com/storelocator/store.webp",
+    "webUrl": "https://www.contoso.com/",
+    "timeZoneUtc": 0,
+    "openingHours": [],
+    "features": [],
+    "note": ""
+  },
+  {
+    "id": "60762c16-a66b-478e-81b5-80240d51e948",
+    "storeNumber": "",
+    "name": "London Waterloo Rail Simply Food",
+    "address": {
+      "streetAddressLine1": "Opposite Platform 6 & 7",
+      "streetAddressLine2": "",
+      "streetAddressLine3": "",
+      "city": "London",
+      "postalCode": "SE1 7LY",
+      "countryName": "United Kingdom",
+      "countryCode": "GB",
+      "countrySubdivisionCode": ""
+    },
+    "email": "support@contoso.com",
+    "phoneNumber": "02078030943",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -0.11595,
+        51.50312
+      ]
+    },
+    "imageUrl": "https://samples.azuremaps.com/storelocator/store.webp",
+    "webUrl": "https://www.contoso.com/",
+    "timeZoneUtc": 0,
+    "openingHours": [],
+    "features": [],
+    "note": ""
+  },
+  {
+    "id": "6f677a82-3b44-4cfc-81db-47e30be045a6",
+    "storeNumber": "",
+    "name": "Southbank Place",
+    "address": {
+      "streetAddressLine1": "Unit 1c Southbank Place, York Road",
+      "streetAddressLine2": "",
+      "streetAddressLine3": "",
+      "city": "London",
+      "postalCode": "SE1 7ND",
+      "countryName": "United Kingdom",
+      "countryCode": "GB",
+      "countrySubdivisionCode": ""
+    },
+    "email": "support@contoso.com",
+    "phoneNumber": "0208 036 3925",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -0.11537,
+        51.50329
+      ]
+    },
+    "imageUrl": "https://samples.azuremaps.com/storelocator/store.webp",
+    "webUrl": "https://www.contoso.com/",
+    "timeZoneUtc": 0,
+    "openingHours": [],
+    "features": [
+      "carpark"
+    ],
+    "note": ""
+  },
+  {
+    "id": "375ac62c-3c20-40c9-b596-24cb8fe3bff2",
+    "storeNumber": "",
+    "name": "Green Park Simply Food",
+    "address": {
+      "streetAddressLine1": "78 Piccadilly Devonshire House",
+      "streetAddressLine2": "",
+      "streetAddressLine3": "",
+      "city": "London",
+      "postalCode": "W1J 8AQ",
+      "countryName": "United Kingdom",
+      "countryCode": "GB",
+      "countrySubdivisionCode": ""
+    },
+    "email": "support@contoso.com",
+    "phoneNumber": "020 7491 0690",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -0.1428034,
+        51.506992
+      ]
+    },
+    "imageUrl": "https://samples.azuremaps.com/storelocator/store.webp",
+    "webUrl": "https://www.contoso.com/",
+    "timeZoneUtc": 0,
+    "openingHours": [],
+    "features": [],
+    "note": ""
+  },
+  {
+    "id": "c4e67ad0-1733-4b02-b000-2f7fec9f137c",
+    "storeNumber": "",
+    "name": "Waterloo Station South",
+    "address": {
+      "streetAddressLine1": "Unit 16 Platform 21/22, Waterloo Rd",
+      "streetAddressLine2": "",
+      "streetAddressLine3": "",
+      "city": "London",
+      "postalCode": "SE1 8SW",
+      "countryName": "United Kingdom",
+      "countryCode": "GB",
+      "countrySubdivisionCode": ""
+    },
+    "email": "support@contoso.com",
+    "phoneNumber": "00000",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -0.11314,
+        51.50314
+      ]
+    },
+    "imageUrl": "https://samples.azuremaps.com/storelocator/store.webp",
+    "webUrl": "https://www.contoso.com/",
+    "timeZoneUtc": 0,
+    "openingHours": [],
+    "features": [
+      "airconditioning"
+    ],
+    "note": ""
+  },
+  {
+    "id": "f7ce8db5-0536-4c61-96d4-83ebcec37468",
+    "storeNumber": "",
+    "name": "Pantheon 173 Oxford Street",
+    "address": {
+      "streetAddressLine1": "173 Oxford Street",
+      "streetAddressLine2": "",
+      "streetAddressLine3": "",
+      "city": "London",
+      "postalCode": "W1D 2JR",
+      "countryName": "United Kingdom",
+      "countryCode": "GB",
+      "countrySubdivisionCode": ""
+    },
+    "email": "support@contoso.com",
+    "phoneNumber": "020 7437 7722",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -0.1385671,
+        51.5155205
+      ]
+    },
+    "imageUrl": "https://samples.azuremaps.com/storelocator/store.webp",
+    "webUrl": "https://www.contoso.com/",
+    "timeZoneUtc": 0,
+    "openingHours": [],
+    "features": [],
+    "note": ""
+  },
+  {
+    "id": "2c2bfe02-b5a4-49a9-a0f2-92c09b9dfa35",
+    "storeNumber": "",
+    "name": "St Thomas Whs",
+    "address": {
+      "streetAddressLine1": "Westminster Bridge Road",
+      "streetAddressLine2": "",
+      "streetAddressLine3": "",
+      "city": "London",
+      "postalCode": "SE1 7EH",
+      "countryName": "United Kingdom",
+      "countryCode": "GB",
+      "countrySubdivisionCode": ""
+    },
+    "email": "support@contoso.com",
+    "phoneNumber": "0000",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -0.11377,
+        51.49967
+      ]
+    },
+    "imageUrl": "https://samples.azuremaps.com/storelocator/store.webp",
+    "webUrl": "https://www.contoso.com/",
+    "timeZoneUtc": 0,
+    "openingHours": [],
+    "features": [],
+    "note": ""
+  },
+  {
+    "id": "c63b4cfe-674f-4da1-b4f4-db95f49d3f22",
+    "storeNumber": "",
+    "name": "Tottenham Court Rd Simply Food",
+    "address": {
+      "streetAddressLine1": "55 Tottenham Court Rd",
+      "streetAddressLine2": "",
+      "streetAddressLine3": "",
+      "city": "London",
+      "postalCode": "W1T 2EQ",
+      "countryName": "United Kingdom",
+      "countryCode": "GB",
+      "countrySubdivisionCode": ""
+    },
+    "email": "support@contoso.com",
+    "phoneNumber": "02075802967",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -0.13333,
+        51.51945
+      ]
+    },
+    "imageUrl": "https://samples.azuremaps.com/storelocator/store.webp",
+    "webUrl": "https://www.contoso.com/",
+    "timeZoneUtc": 0,
+    "openingHours": [],
+    "features": [],
+    "note": ""
+  },
+  {
+    "id": "7d53d86f-04fb-4fc0-afec-9cb495180edc",
+    "storeNumber": "",
+    "name": "London Victoria Cardinal Place",
+    "address": {
+      "streetAddressLine1": "Cardinal Place Victoria Street",
+      "streetAddressLine2": "",
+      "streetAddressLine3": "",
+      "city": "London",
+      "postalCode": "SW1E 5JE",
+      "countryName": "United Kingdom",
+      "countryCode": "GB",
+      "countrySubdivisionCode": ""
+    },
+    "email": "support@contoso.com",
+    "phoneNumber": "020 7828 5190",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -0.1414886,
+        51.4977083
+      ]
+    },
+    "imageUrl": "https://samples.azuremaps.com/storelocator/store.webp",
+    "webUrl": "https://www.contoso.com/",
+    "timeZoneUtc": 0,
+    "openingHours": [],
+    "features": [],
+    "note": ""
   }
 ]

@@ -10,7 +10,7 @@ param(
     [Parameter(Mandatory=$false)]
     [switch]$Help,
 
-    [string]$Location = "eastus",
+    [string]$Location = "uksouth",
     [string]$Name = "storelocator",
     [string]$DatabaseName = "storelocator"
 )
