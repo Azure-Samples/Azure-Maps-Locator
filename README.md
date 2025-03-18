@@ -58,7 +58,7 @@ For developers who need more control, follow the steps below to set up your deve
 
 1. **Azure Subscription**: Sign up for a free Azure subscription [here](https://azure.microsoft.com/free).
 
-2. **.NET 8 Framework**: Install the .NET 8 framework from [dot.net](https://dot.net/).
+2. **.NET 9 Framework**: Install the .NET 9 framework from [dot.net](https://dot.net/).
 
 3. **Azure Command-Line Interface (CLI) Tools**: Learn how to install the Azure CLI by following the instructions [here](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli).
 
